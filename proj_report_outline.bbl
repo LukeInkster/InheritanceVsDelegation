@@ -1,39 +1,53 @@
 \begin{thebibliography}{1}
 
-\bibitem{Dum93}
-{\sc Dummett, M.}
-\newblock {\em The Seas of Language}.
-\newblock Oxford University Press, Oxford, England, 1993.
+\bibitem{ShapeOfJava}
+{\sc Baxter, G., Frean, M., Noble, J., Rickerby, M., Smith, H., Visser, M.,
+  Melton, H., and Tempero, E.}
+\newblock {Understanding the Shape of Java Software}.
+\newblock {\em Proceedings of the 21st annual ACM SIGPLAN conference on
+  Object-oriented programming systems, languages, and applications\/} (2006),
+  397--412.
 
-\bibitem{Dum93a}
-{\sc Dummett, M.}
-\newblock What is a theory of meaning? (i).
-\newblock In {\em The Seas of Language\/} \cite{Dum93}, pp.~1--33.
-\newblock First published in S. Guttenplan, editor, {\it Mind and Language},
-  Oxford University Press, Oxford, England, 1975.
+\bibitem{JavaMicropatterns}
+{\sc Gill, J.~Y., and Maman, I.}
+\newblock {Micro Patterns in Java Code}.
+\newblock {\em Proceedings of the 20th annual ACM SIGPLAN conference on
+  Object-oriented programming, systems, languages, and applications\/} (2005),
+  97--116.
 
-\bibitem{Dum93b}
-{\sc Dummett, M.}
-\newblock What is a theory of meaning? (ii).
-\newblock In {\em The Seas of Language\/} \cite{Dum93}, pp.~34--105.
-\newblock First published in G. Evans and J. McDowell, editors, {\it Truth and
-  Meaning}, Oxford University Press, Oxford, England, 1976.
+\bibitem{SaferConstruction}
+{\sc Gill, J.~Y., and Shragai, T.}
+\newblock {Are We Ready for a Safer Construction Environment?}
+\newblock {\em Genoa Proceedings of the 23rd European Conference on ECOOP\/}
+  (2009), 495--519.
 
-\bibitem{GMS94}
-{\sc Goosens, M., Mittelbach, F., and Samarin, A.}
-\newblock {\em The \LaTeX\ Companion}.
-\newblock Addison-Wesley, Reading, Massachusetts, USA, 1994.
+\bibitem{InheritanceWithoutClasses}
+{\sc Jones, T., Homer, M., Noble, J., and Bruce, K.}
+\newblock {Object Inheritance Without Classes}.
+\newblock {\em 30th European Conference on Object-Oriented Programming\/}
+  (2016).
 
-\bibitem{GRM97GC}
-{\sc Goosens, M., Rahtz, S. P.~Q., and Mittelbach, F.}
-\newblock {\em The \LaTeX\ Graphics Companion: illustrating documents with
-  \TeX\ and PostScript}.
-\newblock Addison-Wesley, Reading, Massachusetts, USA, 1997.
+\bibitem{QualitasCorpus}
+{\sc Tempero, E., Anslow, C., Dietrich, J., Han, T., Li, J., Lumpe, M., Melton,
+  H., and Noble, J.}
+\newblock {The Qualitas Corpus: A Curated Collection of Java Code for Empirical
+  Studies}.
+\newblock {\em Asia Pacific Software Engineering Conference\/} (2010),
+  336--345.
 
-\bibitem{Lam94}
-{\sc Lamport, L.}
-\newblock {\em \LaTeX: a document preparation system: user's guide and
-  reference manual}, {S}econd~ed.
-\newblock Addison-Wesley, Reading, Massachusetts, USA, 1994.
+\bibitem{HowProgramsUseInheritance}
+{\sc Tempero, E., Noble, J., and Melton, H.}
+\newblock {\em ECOOP 2008 -- Object-Oriented Programming: 22nd European
+  Conference Paphos, Cyprus, July 7-11, 2008 Proceedings}.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2008, ch.~How Do Java
+  Programs Use Inheritance? An Empirical Study of Inheritance in Java Software,
+  pp.~667--691.
+
+\bibitem{InheritanceInJava}
+{\sc Tempero, E., Yang, H.~Y., and Noble, J.}
+\newblock {\em ECOOP 2013 -- Object-Oriented Programming: 27th European
+  Conference, Montpellier, France, July 1-5, 2013. Proceedings}.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2013, ch.~What
+  Programmers Do with Inheritance in Java, pp.~577--601.
 
 \end{thebibliography}

@@ -8,44 +8,52 @@ A level-1 auxiliary file: example.aux
 A level-1 auxiliary file: conclusion.aux
 The style file: acm.bst
 Database file #1: sample.bib
-You've used 6 entries,
+Warning--I didn't find a database entry for "GRM97GC"
+Warning--I didn't find a database entry for "Dum93a"
+Warning--I didn't find a database entry for "Dum93b"
+Warning--I didn't find a database entry for "GMS94"
+Warning--I didn't find a database entry for "Lam94"
+Warning--can't use both author and editor fields in HowProgramsUseInheritance
+Warning--can't use both author and editor fields in InheritanceInJava
+You've used 7 entries,
             2253 wiz_defined-function locations,
-            566 strings with 4799 characters,
-and the built_in function-call counts, 1736 in all, are:
-= -- 171
-> -- 62
+            594 strings with 5901 characters,
+and the built_in function-call counts, 2892 in all, are:
+= -- 271
+> -- 164
 < -- 0
-+ -- 29
-- -- 20
-* -- 104
-:= -- 291
-add.period$ -- 20
-call.type$ -- 6
-change.case$ -- 25
++ -- 67
+- -- 60
+* -- 239
+:= -- 474
+add.period$ -- 21
+call.type$ -- 7
+change.case$ -- 49
 chr.to.int$ -- 0
-cite$ -- 6
-duplicate$ -- 80
-empty$ -- 146
-format.name$ -- 20
-if$ -- 369
+cite$ -- 9
+duplicate$ -- 89
+empty$ -- 209
+format.name$ -- 60
+if$ -- 601
 int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 10
-newline$ -- 35
-num.names$ -- 12
-pop$ -- 35
+int.to.str$ -- 7
+missing$ -- 9
+newline$ -- 38
+num.names$ -- 14
+pop$ -- 48
 preamble$ -- 1
-purify$ -- 22
+purify$ -- 44
 quote$ -- 0
-skip$ -- 55
+skip$ -- 66
 stack$ -- 0
-substring$ -- 79
-swap$ -- 20
+substring$ -- 180
+swap$ -- 32
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 16
-warning$ -- 0
-while$ -- 18
-width$ -- 7
-write$ -- 71
+type$ -- 24
+warning$ -- 2
+while$ -- 24
+width$ -- 8
+write$ -- 75
+(There were 7 warnings)

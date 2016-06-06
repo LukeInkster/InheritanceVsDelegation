@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (Web2C 2015) (preloaded format=pdflatex 2015.12.17)  31 MAY 2016 12:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (Web2C 2015) (preloaded format=pdflatex 2015.12.17)  6 JUN 2016 15:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -48,7 +48,7 @@ Modified to handle different degrees 2003
 Modified to handle duplex printing properly 2006
 \@abstract=\box28
 ) (./proj_report_outline.aux (./acknowledge.aux) (./introduction.aux)
-(./using.aux) (./example.aux) (./conclusion.aux))
+(./litreview.aux) (./conclusion.aux))
 \openout1 = `proj_report_outline.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
@@ -113,12 +113,7 @@ LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <24.88> not available
 
 
 ]
-(./proj_report_outline.toc
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 2.
-LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 5.
-)
+(./proj_report_outline.toc)
 \tf@toc=\write3
 \openout3 = `proj_report_outline.toc'.
 
@@ -138,87 +133,87 @@ LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <8> not available
 Chapter 1.
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <20.74> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1.
+
+LaTeX Warning: Reference `C:ex' on page 1 undefined on input line 4.
+
 ) [1
 
 
 ]
-\openout2 = `using.aux'.
+\openout2 = `litreview.aux'.
 
- (./using.tex [2
+ (./litreview.tex [2
 
 
 
 ]
 Chapter 2.
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 6.
-LaTeX Font Info:    Try loading font information for OMS+ppl on input line 21.
-(/usr/pkg/share/texmf-dist/tex/latex/psnfss/omsppl.fd
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 8.
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+[3]
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ú in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ù in font pplr7t!
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 30.
+ (/usr/pkg/share/texmf-dist/tex/latex/psnfss/omsppl.fd
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 21.
-LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 30.
- [3]
-LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 98.
-) [4] [5]
-\openout2 = `example.aux'.
-
-
-(./example.tex [6
-
-
-
-]
-Chapter 3.
-
-Underfull \vbox (badness 1478) has occurred while \output is active []
-
- [7]
-LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 13.
-
-[8]) [9]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 30.
+) [4]
 \openout2 = `conclusion.aux'.
 
- (./conclusion.tex [10
+
+(./conclusion.tex
+Chapter 3.
+) [5
 
 
 
-]
-Chapter 4.
-) [11] [12
+] [6
 
 
-] (./proj_report_outline.bbl) [13
+] (./proj_report_outline.bbl) [7
 
 ] (./proj_report_outline.aux
-(./acknowledge.aux) (./introduction.aux) (./using.aux) (./example.aux)
-(./conclusion.aux)) ) 
+(./acknowledge.aux) (./introduction.aux) (./litreview.aux) (./conclusion.aux))
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 732 strings out of 493889
- 9084 string characters out of 6158402
- 62825 words of memory out of 5000000
- 3999 multiletter control sequences out of 15000+600000
- 40613 words of font info for 103 fonts, out of 8000000 for 9000
+ 684 strings out of 493889
+ 8586 string characters out of 6158402
+ 58825 words of memory out of 5000000
+ 3971 multiletter control sequences out of 15000+600000
+ 28566 words of font info for 71 fonts, out of 8000000 for 9000
  774 hyphenation exceptions out of 8191
- 25i,11n,21p,3052b,275s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/pkg/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</u
-sr/pkg/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/pkg/sha
-re/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/pkg/share/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/pkg/share/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmtt12.pfb></usr/pkg/share/texmf-dist/fonts/type1/publ
-ic/mathpazo/fplmr.pfb></usr/pkg/share/texmf-dist/fonts/type1/public/mathpazo/fp
-lmri.pfb></usr/pkg/share/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/p
-kg/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/pkg/share/texmf-d
-ist/fonts/type1/urw/palatino/uplri8a.pfb></usr/pkg/share/texmf-dist/fonts/type1
-/vuw/vuw20.pfb>
-Output written on proj_report_outline.pdf (21 pages, 126754 bytes).
+ 25i,4n,22p,592b,226s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/pkg/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/pkg/share/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/pkg/share/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmtt10.pfb></usr/pkg/share/texmf-dist/fonts/type1/urw
+/palatino/uplb8a.pfb></usr/pkg/share/texmf-dist/fonts/type1/urw/palatino/uplr8a
+.pfb></usr/pkg/share/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/pkg/
+share/texmf-dist/fonts/type1/vuw/vuw20.pfb>
+Output written on proj_report_outline.pdf (15 pages, 101397 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
+ 78 PDF objects out of 1000 (max. 8388607)
+ 54 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
