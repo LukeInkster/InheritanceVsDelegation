@@ -1,8 +1,3 @@
-%% $RCSfile: using.tex,v $
-%% $Revision: 1.1 $
-%% $Date: 2010/04/23 01:57:05 $
-%% $Author: kevin $
-%%
 \chapter{Literature Review}\label{C:us}
 
 \section{Are we Ready for a Safer Construction Environment~\cite{SaferConstruction}}
@@ -21,8 +16,8 @@ This paper details an empirical study of a Java corpus to find details about the
 A further interesting finding of the study was a fairly wide variation in the occurrences of some patterns from project to project. This indicates that some architectural decisions may contribute heavily to the patterns employed by developers as the project goes on. This also makes it evident that it will be important, in my own empirical study, to ensure that I have a wide range of Java projects from which to gather my statistics to minimise the bias that would be introduced in a smaller dataset.
 
 \section{Micro Patterns in Java Code~\cite{JavaMicropatterns}}
-This paper explores the use of micropatterns found in Java programs. These micropatterns are described as “similar to design patterns, except standing at a lower, closer to the implementation, level of abstraction.”\newline
-The patterns I intend to search for as possible examples of forwarding and delegation fit under this definition as each can be expressed as a function on the content of the class.
+This paper explores the use of micro patterns found in Java programs. These micro patterns are described as “similar to design patterns, except standing at a lower, closer to the implementation, level of abstraction.”\newline
+The patterns I intend to search for as possible examples of forwarding and delegation fit under this definition as each can be expressed as a function over the content of the class.
 
 \section{The Qualitas Corpus: A Curated Collection of Java Code for Empirical Studies~\cite{QualitasCorpus}}
 This paper discusses many of the choices behind the construction of the Qualitas Corpus. Notably, the Java language was chosen for a few specific reasons:
@@ -34,8 +29,17 @@ This paper discusses many of the choices behind the construction of the Qualitas
 \section{What Programmers Do with Inheritance in Java~\cite{InheritanceInJava}}
 This paper goes into detail about the use of inheritance in Java projects and the extent to which classes extend others. To aid with this, the paper also contains a formal definitions of a few terms which are relevant to my study, including subtypes, supertypes and downcalls. These definitions are then used to indicate rates of presence in the Qualitas Corpus of a variety of combinations of the patterns. This is achieved by representing the dependencies within the projects as a graph structure and investigating the properties of that graph.
 
-\section{How Do Java Programs Use Inheritance? An Empirical Study of Inheritance in Java Software~\cite{HowProgramsUseInheritance}}
+\section{Towards a Metrics Suite for Object Oriented Design~\cite{MetricsSuite}}
+Included in this paper are a variety of useful terms for defining measurements of inheritance within programs written in object oriented languages. These include:
+\begin{itemize}
+	\item \textbf{Depth of Inheritance Tree (DIT)} - A measure of the number of ancestor classes which can potentially affect a given class. This is the depth of the class in the class hierarchy.
+	\item \textbf{Number of children (NOC)} - The number of immediate subclasses under a given class in the class hierarchy. This is the number of classes which will, unless explicitly overridden, inherit the methods of the parent class.
+	\item \textbf{Coupling between objects (CBO)} - A measure of the non-inheritance relationships a class shares with other classes. This can be seen as a measure of the interdependence of classes in a given program.
+\end{itemize}
 
+\section{How Do Java Programs Use Inheritance? An Empirical Study of Inheritance in Java Software~\cite{HowProgramsUseInheritance}}
+The authors here explore the use of inheritance in Java programs, primarily in large-scale software development projects, to form a more clear idea of the extent to which particular inheritance patterns are used. The analysis involved over 100,000 classes and interfaces across 90 Java projects. The results of this study show that approximately three quarters of all Java classes in the study had some transitive superclass other than Object in at least half of the examined corpus. \newline
+Another contribution of this paper is an explicit discussion of the distinction Java, along with similar languages, makes with regard to it's $extends$ and $implements$ relationships between classes and their superclasses and interfaces respectively. 
 
 \section{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}}
 Tim's paper talks about several different models of object based inheritance and the inherent limitations of both. From this, it becomes evident which Java programs are dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Knowing which classes are dependent on this model also informs us about which classes would need to be substantially rethought in order to reimplement them in a language which does not support uniform identity.

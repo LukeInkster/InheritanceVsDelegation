@@ -8,6 +8,11 @@
   Object-oriented programming systems, languages, and applications\/} (2006),
   397--412.
 
+\bibitem{MetricsSuite}
+{\sc Chidamber, S.~R., and Kemerer, C.~F.}
+\newblock Towards a metrics suite for object oriented design.
+\newblock {\em SIGPLAN Not. 26}, 11 (Nov. 1991), 197--211.
+
 \bibitem{JavaMicropatterns}
 {\sc Gill, J.~Y., and Maman, I.}
 \newblock {Micro Patterns in Java Code}.

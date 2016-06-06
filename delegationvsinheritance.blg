@@ -1,0 +1,54 @@
+This is BibTeX, Version 0.99d (Web2C 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: delegationvsinheritance.aux
+A level-1 auxiliary file: acknowledge.aux
+A level-1 auxiliary file: introduction.aux
+A level-1 auxiliary file: litreview.aux
+A level-1 auxiliary file: background.aux
+A level-1 auxiliary file: conclusion.aux
+The style file: acm.bst
+Database file #1: sample.bib
+Warning--can't use both author and editor fields in HowProgramsUseInheritance
+Warning--can't use both author and editor fields in InheritanceInJava
+You've used 8 entries,
+            2253 wiz_defined-function locations,
+            595 strings with 6021 characters,
+and the built_in function-call counts, 3218 in all, are:
+= -- 305
+> -- 176
+< -- 0
++ -- 72
+- -- 64
+* -- 270
+:= -- 526
+add.period$ -- 24
+call.type$ -- 8
+change.case$ -- 54
+chr.to.int$ -- 0
+cite$ -- 10
+duplicate$ -- 98
+empty$ -- 236
+format.name$ -- 64
+if$ -- 667
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 10
+newline$ -- 43
+num.names$ -- 16
+pop$ -- 51
+preamble$ -- 1
+purify$ -- 48
+quote$ -- 0
+skip$ -- 71
+stack$ -- 0
+substring$ -- 210
+swap$ -- 34
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 28
+warning$ -- 2
+while$ -- 28
+width$ -- 9
+write$ -- 85
+(There were 2 warnings)

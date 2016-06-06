@@ -1,0 +1,326 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (Web2C 2015) (preloaded format=pdflatex 2015.12.17)  6 JUN 2016 19:45
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**delegationvsinheritance.tex
+(./delegationvsinheritance.tex
+LaTeX2e <2015/01/01> patch level 2
+Babel <3.9l> and hyphenation patterns for 36 languages loaded.
+(/usr/pkg/share/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/pkg/share/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/pkg/share/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count88
+\float@exts=\toks14
+\float@box=\box26
+\@float@everytoks=\toks15
+\@floatcapt=\box27
+)
+(/usr/pkg/share/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/pkg/share/texmf-dist/tex/latex/listings/listings.sty
+(/usr/pkg/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+\lst@mode=\count89
+\lst@gtempboxa=\box28
+\lst@token=\toks17
+\lst@length=\count90
+\lst@currlwidth=\dimen103
+\lst@column=\count91
+\lst@pos=\count92
+\lst@lostspace=\dimen104
+\lst@width=\dimen105
+\lst@newlines=\count93
+\lst@lineno=\count94
+\lst@maxwidth=\dimen106
+
+(/usr/pkg/share/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count95
+\lst@skipnumbers=\count96
+\lst@framebox=\box29
+)
+(/usr/pkg/share/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+(/usr/pkg/share/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2014/10/28 v1.1a Standard LaTeX Color (DPC)
+
+(/usr/pkg/share/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 142.
+
+(/usr/pkg/share/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/pkg/share/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/pkg/share/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count97
+))
+(/usr/pkg/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+\@float@every@fig=\toks18
+\c@fig=\count98
+ (./vuwproject.sty
+(/usr/pkg/share/texmf-dist/tex/latex/psnfss/mathpazo.sty
+Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
+\symupright=\mathgroup4
+)
+VUW Honours reports modifications -- Mar 1995
+Modified to handle different degrees 2003
+Modified to handle duplex printing properly 2006
+\@abstract=\box30
+) (./delegationvsinheritance.aux (./acknowledge.aux) (./introduction.aux)
+(./litreview.aux) (./background.aux) (./conclusion.aux))
+\openout1 = `delegationvsinheritance.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 81.
+LaTeX Font Info:    ... okay on input line 81.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 81.
+LaTeX Font Info:    ... okay on input line 81.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 81.
+LaTeX Font Info:    ... okay on input line 81.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 81.
+LaTeX Font Info:    ... okay on input line 81.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 81.
+LaTeX Font Info:    ... okay on input line 81.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 81.
+LaTeX Font Info:    ... okay on input line 81.
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 81.
+
+(/usr/pkg/share/texmf-dist/tex/latex/psnfss/ot1ppl.fd
+File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
+)
+\c@lstlisting=\count99
+
+(/usr/pkg/share/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count100
+\scratchdimen=\dimen107
+\scratchbox=\box31
+\nofMPsegments=\count101
+\nofMParguments=\count102
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count103
+\MPscratchDim=\dimen108
+\MPnumerator=\count104
+\makeMPintoPDFobject=\count105
+\everyMPtoPDFconversion=\toks20
+)
+\big@size=\dimen109
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 98.
+
+ (/usr/pkg/share/texmf-dist/tex/latex/psnfss/omlzplm.fd
+File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 98.
+
+
+(/usr/pkg/share/texmf-dist/tex/latex/psnfss/omszplm.fd
+File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 98.
+
+
+(/usr/pkg/share/texmf-dist/tex/latex/psnfss/omxzplm.fd
+File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
+)
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 98.
+
+
+(/usr/pkg/share/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
+)
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <17.28> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 98.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 98.
+ [-1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [0]
+\openout2 = `acknowledge.aux'.
+
+ (./acknowledge.tex
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1.
+) [1
+
+
+
+] [2
+
+
+]
+(./delegationvsinheritance.toc)
+\tf@toc=\write3
+\openout3 = `delegationvsinheritance.toc'.
+
+ [3] [4
+
+]
+\openout2 = `introduction.aux'.
+
+ (./introduction.tex
+Chapter 1.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <20.74> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 4.
+) [1
+
+
+]
+\openout2 = `litreview.aux'.
+
+ (./litreview.tex [2
+
+
+
+]
+Chapter 2.
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+[3]
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ú in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ù in font pplr7t!
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 25.
+ (/usr/pkg/share/texmf-dist/tex/latex/psnfss/omsppl.fd
+File: omsppl.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 25.
+ [4]) [5]
+\openout2 = `background.aux'.
+
+
+(./background.tex [6
+
+
+
+]
+Chapter 3.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 4.
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--9
+
+ []
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <10.95> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 29.
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--32
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7]
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--58
+
+ []
+
+[8]) [9]
+\openout2 = `conclusion.aux'.
+
+ (./conclusion.tex [10
+
+
+
+]
+Chapter 4.
+) [11] [12
+
+
+] (./delegationvsinheritance.bbl) [13
+
+] (./delegationvsinheritance.aux (./acknowledge.aux) (./introduction.aux) (./li
+treview.aux) (./background.aux)
+(./conclusion.aux)) ) 
+Here is how much of TeX's memory you used:
+ 2772 strings out of 493889
+ 38256 string characters out of 6158402
+ 132992 words of memory out of 5000000
+ 6011 multiletter control sequences out of 15000+600000
+ 30612 words of font info for 76 fonts, out of 8000000 for 9000
+ 774 hyphenation exceptions out of 8191
+ 26i,5n,40p,956b,998s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/pkg/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</u
+sr/pkg/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/pkg/sha
+re/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/pkg/share/texmf-d
+ist/fonts/type1/urw/palatino/uplb8a.pfb></usr/pkg/share/texmf-dist/fonts/type1/
+urw/palatino/uplbi8a.pfb></usr/pkg/share/texmf-dist/fonts/type1/urw/palatino/up
+lr8a.pfb></usr/pkg/share/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/
+pkg/share/texmf-dist/fonts/type1/vuw/vuw20.pfb>
+Output written on delegationvsinheritance.pdf (19 pages, 124304 bytes).
+PDF statistics:
+ 95 PDF objects out of 1000 (max. 8388607)
+ 66 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
