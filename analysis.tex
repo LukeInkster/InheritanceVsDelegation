@@ -1,0 +1,12 @@
+\chapter{Analysis}\label{C:analysis} 
+The core of this empirical study is the analysis of corpora of code written in each of the investigated languages. This analysis makes use of many static code analysis methods including:
+\begin{itemize}
+	\item ANTLR
+	\item GREP
+	\item JSClassFinder
+	\item Esprima
+\end{itemize}
+Each of these tools helps to extract valuable information from one of more of the languages analysed in this study.
+
+\section{Assembling Corpora}
+Each language analysed in this study required a corpus of code representative of the ways programmers in the real world are using that language. In the case of Java, prior studies have resulted in the creation of The Qualitas Corpus which is a large collection of open source projects written in the Java language~\cite{QualitasCorpus}. \newline For the other studied languages, JavaScript, Python, Lua, and Scala, quality existing corpora could not be found. For each of these languages, the top 25 open source projects were sourced from GitHub's "Trending this month" list. This source was chosen because it provides a particularly up to date snapshot of development in each language which ensures that the analysis performed will be as relevant as possible to modern software development.
