@@ -2,11 +2,19 @@
 The core of this empirical study is the analysis of corpora of code written in each of the investigated languages. This analysis makes use of many static code analysis methods including:
 \begin{itemize}
 	\item ANTLR
-	\item GREP
+	\item grep
 	\item JSClassFinder
 	\item Esprima
 \end{itemize}
 Each of these tools helps to extract valuable information from one of more of the languages analysed in this study.
 
 \section{Assembling Corpora}
-Each language analysed in this study required a corpus of code representative of the ways programmers in the real world are using that language. In the case of Java, prior studies have resulted in the creation of The Qualitas Corpus which is a large collection of open source projects written in the Java language~\cite{QualitasCorpus}. \newline For the other studied languages, JavaScript, Python, Lua, and Scala, quality existing corpora could not be found. For each of these languages, the top 25 open source projects were sourced from GitHub's "Trending this month" list. This source was chosen because it provides a particularly up to date snapshot of development in each language which ensures that the analysis performed will be as relevant as possible to modern software development.
+Each language analysed in this study required a corpus of code representative of the ways programmers in the real world are using that language. In the case of Java, prior studies have resulted in the creation of The Qualitas Corpus which is a large collection of open source projects written in the Java language~\cite{QualitasCorpus}. \newline
+
+For the other studied languages, JavaScript, Python, Lua, and Scala, quality existing corpora could not be found. For each of these languages, the top 25 open source projects were sourced from GitHub's "Trending this month" list. This source was chosen because it provides a particularly up to date snapshot of development in each language which ensures that the analysis performed will be as relevant as possible to modern software development.
+
+\section{Java}
+The intent in analysing the Qualitas Corpus of Java code is to determine the extent to which developers are making use of Java's inbuilt language features and what developers are doing to work around these language features. Specifically, a Java developers' usage of class inheritance will represent them conforming to the classical inheritance model encouraged by the Java language. In contrast, instances of code which model call forwarding or call delegation will represent cases where the developer could have expressed themselves more concisely through other object inheritance models where delegation and forwarding are supported natively. \newline
+Finding occurrences of classical inheritance in Java is as simple as looking for the extends keyword with a grep search. Finding examples of delegation and forwarding is more difficult and requires more information about the syntax tree of the program. To achieve this, each program of the corpus was passed through ANTLR which parses each file according to a Java grammar and constructs an abstract syntax tree which can then be traversed to search for relevant patterns.
+
+\section{JavaScript}
