@@ -1,5 +1,11 @@
 \chapter{Literature Review}\label{C:us}
 
+\section{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}}
+Tim's paper talks about several different models of object based inheritance and the inherent limitations of both. From this, it becomes evident which Java programs are dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Knowing which classes are dependent on this model also informs us about which classes would need to be substantially rethought in order to reimplement them in a language which does not support uniform identity. 
+
+\section{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}
+JavaScript is a useful language to investigate for this study because it provides many examples where programmers use are deliberately using a language built for delegation and object based inheritance to model classical inheritance models. \textit{Does JavaScript Software Embrace Classes} explores the ways in which programmers typically model class inheritance and the ways this can be detected in corpora of JavaScript code. As part of this paper, the researchers also create a tool named JSClassFinder which serves the purpose of identifying both class declaration patterns and class method patterns. The figures returned by this tool can then be analysed to determine the extent to which JavaScript developers are working around the language's inbuilt structures.
+
 \section{Are we Ready for a Safer Construction Environment~\cite{SaferConstruction}}
 This paper by Yossi Gil and Tali Shragai discusses the cases where a Java program is dependent on subclasses being constructed under the Uniform Identity inheritance model. It discusses the three key stages of object creation and how each of these contributes to the issues surrounding the construction of objects within class hierarchies. These stages are:
 \begin{enumerate}
@@ -39,10 +45,4 @@ Included in this paper are a variety of useful terms for defining measurements o
 
 \section{How Do Java Programs Use Inheritance? An Empirical Study of Inheritance in Java Software~\cite{HowProgramsUseInheritance}}
 The authors here explore the use of inheritance in Java programs, primarily in large-scale software development projects, to form a more clear idea of the extent to which particular inheritance patterns are used. The analysis involved over 100,000 classes and interfaces across 90 Java projects. The results of this study show that approximately three quarters of all Java classes in the study had some transitive superclass other than Object in at least half of the examined corpus. \newline
-Another contribution of this paper is an explicit discussion of the distinction Java, along with similar languages, makes with regard to it's $extends$ and $implements$ relationships between classes and their superclasses and interfaces respectively. 
-
-\section{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}}
-Tim's paper talks about several different models of object based inheritance and the inherent limitations of both. From this, it becomes evident which Java programs are dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Knowing which classes are dependent on this model also informs us about which classes would need to be substantially rethought in order to reimplement them in a language which does not support uniform identity.
-
-\section{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}
-JavaScript is a useful language to investigate for this study because it provides many examples where programmers use are deliberately using a language built for delegation and object based inheritance to model classical inheritance models. \textit{Does JavaScript Software Embrace Classes} explores the ways in which programmers typically model class inheritance and the ways this can be detected in corpora of JavaScript code. As part of this paper, the researchers also create a tool named JSClassFinder which serves the purpose of identifying both class declaration patterns and class method patterns. The figures returned by this tool can then be analysed to determine the extent to which JavaScript developers are working around the language's inbuilt structures.
+Another contribution of this paper is an explicit discussion of the distinction Java, along with similar languages, makes with regard to it's $extends$ and $implements$ relationships between classes and their superclasses and interfaces respectively.
