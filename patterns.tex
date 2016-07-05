@@ -2,10 +2,10 @@
 
 \section{Examples in Java}
 \subsection{Forwarding}
-\textit{Forward this.f() calls to super.f() passing along any necessary information as call parameters} \newline\newline
-In Java, this involves looking for patterns where an object’s method does very little work besides forwarding the call to another method. This is the simplest form of delegating responsibility to another class and should be independent of the state of the delegatee, since it needs to be able respond correctly to requests from other delegators without influence from state set in previous requests.\newline 
-If the receiver of a forwarded requests were to hold state about an object delegating to it the we’d likely run into issues if other objects also forward requests to it. Likewise, if we re-implemented a stateful forwarding recipient in a language which supports forwarding as object inheritance then we’d run into the same problems when sharing it between parents.\newline
-In this example the Square object is forwarding responsibility for its area calculation to the SquareAreaCalculator. The SquareAreaCalculator could be shared by many Squares as it holds no state and therefore does not rely on being instantiated as an instance specific to any given square.
+\textit{Forward this.f(...) calls to other.f(...) passing along any necessary information as call parameters} \newline\newline
+In Java, this involves searching for patterns where an object’s method does very little work besides forwarding the call to method on another object. This is the simplest form of delegating responsibility to another class and should be independent from any state held by the delegatee, since it needs to be able respond correctly to requests from other delegators without influence from state set in previous requests.\newline 
+If the receiver of a forwarded request were to hold state about an object delegating to it then it would likely run into issues if other objects also forward requests to it. Likewise, if the system were re-implemented with a stateful forwarding recipient in a language which supports forwarding as object inheritance then it would run into the same problems when sharing it between parents.\newline
+In the following example, a Square object is forwarding responsibility for its area calculation to the SquareAreaCalculator. The SquareAreaCalculator could be shared by many Squares as it holds no state and therefore does not rely on being instantiated as an instance specific and isolated to any given square.
 
 \begin{lstlisting}
 class Square{
@@ -25,10 +25,10 @@ class SquareAreaCalculator{
 \end{lstlisting}
 
 \subsection{Delegation}
-\textit{Forward this.f() calls to super.f() \textbf{on behalf of this.}
-That is, call super.f() but have the self reference within that call set to my self reference.}\newline\newline
-Examples in Java which would be well suited to a language which supports delegation are where the code is effectively forwarding to an object which accepts \textbf{this} as either a constructor parameter or as a parameter to many of its public methods. This indicates that the object being called to is doing a lot of work which is dependent on the \textbf{this} reference being passed in. By using a language which supports delegation natively, it would be possible to change the self reference of the delegatee to instead be the self reference of the delegator.\newline
-In this example, the Square object is delegating responsibility for area calculation to the SquareAreaCalcuator. The SquareAreaCalculator contains a final field to point to the self reference of a single Square object which indicates that the calculator belongs to one instance of Square and always will. In an object delegation model the public final field could be removed, instead opting to have the self reference of the calculator set to the self reference of the Square object.
+\textit{Forward this.f(...) calls to other.f(...) \textbf{on behalf of this.}
+That is, call other.f(...) but have the self reference within that call set to my self reference.}\newline\newline
+Examples in Java which would be well suited to a language with native support for delegation are those where the code is effectively forwarding to an object which accepts \textbf{this} as either a constructor parameter or as a parameter to many of its public methods. This indicates that the object being called to is designed to do a lot of work which is dependent on the \textbf{this} reference of another object being passed in. By using a language which supports delegation natively, it would be possible to change the self reference of the delegatee to instead be the self reference of the delegator, removing the need to pass it as a parameter.\newline
+In this example, the Square object is delegating responsibility for area calculation to the SquareAreaCalcuator. The SquareAreaCalculator contains a final field to point to the self reference of a single Square object which indicates that the calculator belongs to one instance of Square and always will. In an object delegation model the public final field could be removed, instead opting to have the self reference of the SquareAreaCalculator set to the self reference of the Square object.
 \begin{lstlisting}
 class Square{
 	int x, y, wd;
@@ -52,9 +52,9 @@ class SquareAreaCalculator{
 
 \subsection{Uniform Identity}
 \textit{All examples of classical inheritance in Java follow the uniform identity construction model}\newline\newline
-Under uniform identity, objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialisers. This maintains a single object identity throughout the construction of the object.\newline
-To find examples to support Uniform Identity, we must simply look for typical uses of inheritance in Java where a subclass makes some use of functionality from the parent class. Uniform Identity is the most similar object inheritance model to Java’s class inheritance pattern but others can also model the behaviour fairly closely. For example, Merged Identity closely matches the c++ model of class inheritance and, with a few exceptions, most examples of Java class based inheritance could also function in a Merged Identity model. This is the implementation Java’s class based inheritance model encourages so it is expected to be the most common across corpus data, but any substantial usage of the previously mentioned examples would indicate that developers are intentionally dismissing Java’s in-built language features as they believe they can produce better code with other patterns.\newline
-In this example, the Square class inherits from another class which know’s how to calculate the area of a more general case so can also be used to offer the same functionality to the Square. 
+Under Uniform Identity, objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. This maintains a single object identity throughout construction of the object.\newline
+To find examples supporting the need for Uniform Identity, we must simply look for typical uses of inheritance in Java where a subclass makes some use of functionality from the parent class. Uniform Identity is the most similar object inheritance model to Java’s class inheritance pattern but others can also model the behaviour fairly closely. For example, Merged Identity closely matches the c++ model of class inheritance and, with a few exceptions, most examples of Java class based inheritance could also function in a Merged Identity model. Uniform Identity is the implementation Java’s class based inheritance model encourages so it is expected to be the most common across corpus data. Because of this, Any substantial usage of the previously mentioned examples would indicate that developers are intentionally dismissing Java’s in-built language features as they believe it is possible to produce better code with other patterns.\newline
+In this example, the Square class inherits from another class which knows how to calculate the area of a more general case so can also be used to offer the same functionality to the Square. 
 \begin{lstlisting}
 class Rectangle{
 	int x, y, wd, ht;
