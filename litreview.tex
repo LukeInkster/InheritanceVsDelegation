@@ -1,10 +1,9 @@
 \chapter{Literature Review}\label{C:us}
 \section{Object Inheritance Models}
-\subsection{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}}
-Tim's paper discusses a variety of different object inheritance models and the inherent benefits and limitations of each. From this work, it becomes evident which Java programs are dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Knowing which classes are dependent on this model also informs us about which classes would need to be substantially rethought in order to reimplement them in a language which does not support uniform identity. Additionally, this information also shows which patterns could be rewritten under other inheritance models without requiring much modification and, in some cases, more concisely.
-
-\subsection{Are we Ready for a Safer Construction Environment~\cite{SaferConstruction}}
-In this paper, Yossi Gil and Tali Shragai discuss the cases where a Java program is dependent on class instances being constructed under the Uniform Identity inheritance model. It covers the three key stages of object creation and how each of these contributes to the issues surrounding the construction of objects within class hierarchies. These stages are:
+The paper \textit{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}} by Tim Jones discusses a variety of different object inheritance models and the inherent benefits and limitations of each. From this work, it becomes evident which Java programs are dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Knowing which classes are dependent on this model also informs us about which classes would need to be substantially rethought in order to reimplement them in a language which does not support uniform identity. Additionally, this information also shows which patterns could be rewritten under other inheritance models without requiring much modification and, in some cases, more concisely.
+\newline
+\newline
+In a 2009 paper titled \textit{Are we Ready for a Safer Construction Environment ~\cite{SaferConstruction}}, Yossi Gil and Tali Shragai discuss the cases where a Java program is dependent on class instances being constructed under the Uniform Identity inheritance model. It covers the three key stages of object creation and how each of these contributes to the issues surrounding the construction of objects within class hierarchies. These stages are:
 \begin{enumerate}
 	\item Memory allocation
 	\item Preliminary field initialisation
@@ -13,6 +12,13 @@ In this paper, Yossi Gil and Tali Shragai discuss the cases where a Java program
 Each of these is dealt with differently across different programming languages. As an example, preliminary field initialisation is approached quite differently in c++ when compared with Java. Java takes the approach of initialising these fields to default values (nulls, zeros and falses) whereas, in the interest of performance, c++ simply leaves these fields with whatever bytes were already present in the memory locations. \newline
 Variations between different languages’ implementations of the final stage, the establishment of invariants, are what lead to differing rules surrounding what the developer can and can’t do safely in an object constructor. This is where we find that maintaining a Uniform Identity throughout construction is vital in ensuring that any references to the self which were stored externally during construction remain valid after this process is completed. Without the presence of a Uniform Identity, any self references which are passed out from the constructor before object creation is complete cannot be guaranteed to point back to the expected object. \newline
 We also run into another issue with the changing of the self reference during the construction of an object. During the initialisation of a subclass, it is necessary at some point to initialise the superclass so that its fields are guaranteed to be defined after construction. If, during the initialisation of the superclass, the self reference is different to that of the subclass, then any calls to overridden methods will execute the superclass's implementation rather than the subclass's.
+\newline
+\newline
+In Henry Lieberman's paper 1986 titled \textit{Using Prototypical Objects to Implement Shared Behavior in Object Oriented Systems ~\cite{UsingPrototypicalObjects}} he first coins the term "Delegation" with respect to software language design. Lieberman then provides a plain English definition of the term which allows a reader to clearly understand the concept he is describing:
+\begin{displayquote}
+	When a pen delegates a draw message to a prototypical pen, it is saying "I don't know how to handle the draw message. I'd like you answer it for me if you can, but if you have any further questions, like what is the value of my x variable, or need anything done, you should come back to me and ask."~\cite{UsingPrototypicalObjects}
+\end{displayquote}
+Lieberman's definition forms the basis of the delegation patterns considered in this paper.
 
 \section{JavaScript Analysis}
 \subsection{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}
