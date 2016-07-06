@@ -10,7 +10,6 @@ Each of these tools helps to extract valuable information from one of more of th
 
 \section{Assembling Corpora}
 Each language analysed in this study required a corpus of code representative of the ways programmers in the real world are using that language. In the case of Java, prior studies have resulted in the creation of The Qualitas Corpus which is a large collection of open source projects written in the Java language~\cite{QualitasCorpus}. \newline
-
 For the other studied languages, JavaScript, Python, Lua, and Scala, quality existing corpora could not be found. For each of these languages, the top 25 open source projects were sourced from GitHub's "Trending this month" list. This source was chosen because it provides a particularly up to date snapshot of development in each language which ensures that the analysis performed will be as relevant as possible to modern software development.
 
 \section{Java}
@@ -22,7 +21,9 @@ The process for extracting statistics from a Java project follows a pipeline str
 \includegraphics[scale=0.70]{AntlrPipeline.pdf}
 \newline
 \newline
-After each project has been parsed and analysed, the results are then further aggregated to produce corpus level analysis which can be found in the following table: \newline
+After each project has been parsed and analysed, the results are then further aggregated to produce corpus level analysis which can be found in the following table:
+\newline
+\newline
 \begin{tabular}{|l|l|l|l|}
 	\hline
 	& Count  & \% of classes & \% of extended classes \\ \hline
@@ -40,6 +41,7 @@ After each project has been parsed and analysed, the results are then further ag
 \end{tabular}
 
 \section{JavaScript}
+
 
 \section{Timeline}
 \begin{ganttchart}[

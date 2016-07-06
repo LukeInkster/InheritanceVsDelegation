@@ -51,7 +51,9 @@ class SquareAreaCalculator{
 \end{lstlisting}
 
 \subsection{Uniform Identity}
-\textit{All examples of classical inheritance in Java follow the uniform identity construction model}\newline\newline
+\textit{All examples of classical inheritance in Java follow the uniform identity construction model}
+\newline
+\newline
 Under Uniform Identity, objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. This maintains a single object identity throughout construction of the object.\newline
 To find examples supporting the need for Uniform Identity, we must simply look for typical uses of inheritance in Java where a subclass makes some use of functionality from the parent class. Uniform Identity is the most similar object inheritance model to Java’s class inheritance pattern but others can also model the behaviour fairly closely. For example, Merged Identity closely matches the c++ model of class inheritance and, with a few exceptions, most examples of Java class based inheritance could also function in a Merged Identity model. Uniform Identity is the implementation Java’s class based inheritance model encourages so it is expected to be the most common across corpus data. Because of this, Any substantial usage of the previously mentioned examples would indicate that developers are intentionally dismissing Java’s in-built language features as they believe it is possible to produce better code with other patterns.\newline
 In this example, the Square class inherits from another class which knows how to calculate the area of a more general case so can also be used to offer the same functionality to the Square. 
@@ -71,7 +73,7 @@ class Square extends Rectangle{
 }
 \end{lstlisting}
 
-\subsection{Java Patterns}
+\section{Java Patterns}
 \begin{tabular}{|p{5cm}|p{9cm}|}
 	\hline
 	\multicolumn{2}{|c|}{Java}                                                                                                                                               \\ \hline
@@ -81,7 +83,7 @@ class Square extends Rectangle{
 	Inheritance                    & class extends anything                                                                                                                                         \\ \hline
 \end{tabular}
 
-\subsection{JavaScript Patterns}
+\section{JavaScript Patterns}
 \begin{tabular}{|p{5cm}|p{9cm}|}
 	\hline
 	\multicolumn{2}{|c|}{JavaScript}                                                                                                                                                                  \\ \hline
