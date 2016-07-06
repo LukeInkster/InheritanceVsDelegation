@@ -42,15 +42,15 @@ The authors of \textit{How Do Java Programs Use Inheritance? An Empirical Study 
 A further contribution of this paper is an explicit discussion of the distinction Java, along with similar languages, makes with regard to its \textit{extends} and \textit{implements} relationships between classes and their superclasses or interfaces respectively. This distinction makes it clear that, in order for code to be reused through inheritance from classes further up the type hierarchy, an \textit{extends} relationship is required.
 
 \section{Analysing Corpora}
-\subsection{The Qualitas Corpus: A Curated Collection of Java Code for Empirical Studies~\cite{QualitasCorpus}}
-This paper discusses many of the choices behind the construction of the Qualitas Corpus. Notably, the Java language was chosen for a few specific reasons:
+\textit{The Qualitas Corpus: A Curated Collection of Java Code for Empirical Studies~\cite{QualitasCorpus}} discusses many of the choices behind the construction of the Qualitas Corpus. Notably, the paper clarifies that the Java language was chosen for a few specific reasons:
 \begin{itemize}
 	\item Open source Java code is abundant and easy to find. Much more so than c\#, and similarly to c++.
 	\item Java code tends to be relatively easier to parse and analyse than many other languages including c++ due to some of the more strict limitations it applies to program structure.
 \end{itemize}
-
-\subsection{Towards a Metrics Suite for Object Oriented Design~\cite{MetricsSuite}}
-Included in this paper are a variety of useful terms for defining measurements of inheritance within programs written in object oriented languages. These include:
+The paper also justifies the choice of projects in the corpus as they are open source and provide a wide array of different usages of the language to help to ensure variation in the code.
+\newline
+\newline
+Included in \textit{Towards a Metrics Suite for Object Oriented Design~\cite{MetricsSuite}} are a variety of useful terms for defining measurements of inheritance within programs written in object oriented languages. These include:
 \begin{itemize}
 	\item \textbf{Depth of Inheritance Tree (DIT)} - A measure of the number of ancestor classes which can potentially affect a given class. For a given class, this can be seen as its depth in the class hierarchy tree from the root object class.
 	\item \textbf{Number of children (NOC)} - The number of immediate subclasses under a given class in the class hierarchy. This is the number of classes which will, unless explicitly overridden, inherit the methods of the parent class. For a given class, this can be calculated as the number of elements in the type hierarchy tree rooted at that class. 
