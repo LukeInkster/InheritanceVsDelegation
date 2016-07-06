@@ -41,13 +41,21 @@ After each project has been parsed and analysed, the results are then further ag
 \end{tabular}
 
 \section{JavaScript}
-The JavaScript analysis of this study makes extensive use of the prior work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are deliberately circumventing the native delegation support of the language and are instead modelling their programs with classical inheritance structures.
+The JavaScript analysis of this study makes extensive use of the prior work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are deliberately circumventing the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
+\begin{enumerate}
+	\item The median CUR across the corpus was 0.15
+	\item The upper quartile CUR across the corpus was 0.36
+	\item The lower quartile CUR across the corpus was 0.005, which was heavily impacted by 13 systems which had a CUR of zero
+\end{enumerate}
 
 \section{Timeline}
 \begin{ganttchart}[
-	hgrid style/.style={draw=black!5, line width=.75pt},
+	hgrid,
 	vgrid={*{6}{draw=none},dotted},
 	x unit=0.9mm,
+	group peaks tip position=0,
+	group peaks height=.2,
+	group peaks width=2,
 	time slot format=isodate
 	]{2016-07-08}{2016-11-11}
 	14
