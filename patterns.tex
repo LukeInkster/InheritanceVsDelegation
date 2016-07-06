@@ -1,6 +1,6 @@
 \chapter{Code Patterns}\label{C:bg}
 
-\section{Examples in Java}
+\section{Forms of Code Reuse}
 \subsection{Forwarding}
 \textit{Forward this.f(...) calls to other.f(...) passing along any necessary information as call parameters} \newline\newline
 In Java, this involves searching for patterns where an object’s method does very little work besides forwarding the call to method on another object. This is the simplest form of delegating responsibility to another class and should be independent from any state held by the delegatee, since it needs to be able respond correctly to requests from other delegators without influence from state set in previous requests.\newline 
@@ -71,29 +71,23 @@ class Square extends Rectangle{
 }
 \end{lstlisting}
 
-\subsection{Patterns}
-\begin{table}[]
-	\centering
-	\label{javaPatterns}
-	\begin{tabular}{|p{5cm}|p{9cm}|}
-		\hline
-		\multicolumn{2}{|c|}{Java}                                                                                                                                               \\ \hline
-		Forwarding                     & anything name (anything)\{ \newline   return identifier{[}.identifier{]}*.name(anything);\newline \} \newline Where "name" is the same in both places \\ \hline
-		Delegation                     & anything name (anything) \{ \newline   return identifier{[}.identifier{]}*.name(this);\newline \}  \newline Where "name" is the same in both places                    \\ \hline
-		Constructor Delegation & anything anything = new anything ( this )                                                                                                  \\ \hline
-		Inheritance                    & class extends anything                                                                                                                                         \\ \hline
-	\end{tabular}
-\end{table}
-\begin{table}[]
-	\centering
-	\label{jsPatterns}
-	\begin{tabular}{|p{5cm}|p{9cm}|}
-		\hline
-		\multicolumn{2}{|c|}{JavaScript}                                                                                                                                                                  \\ \hline
-		Inheritance 1                  & var a = function ( b ) \{    c . call ( this , d );\}                                                                                      \\ \hline
-		Inheritance 2                  & function Bar   ( x , y ) \{    Foo . call ( this , x ) ;\}                                                                                 \\ \hline
-		Inheritance 3                  & Foo . prototype = object . create ( Bar . prototype )                                                                                      \\ \hline
-		Inheritance 4 - Node.js        & var className = defineClass(...)                                                                                                           \\ \hline
-		Inheritance 5 - Node.js        & util.inherits(...)                                                                                                                         \\ \hline
-	\end{tabular}
-\end{table}
+\subsection{Java Patterns}
+\begin{tabular}{|p{5cm}|p{9cm}|}
+	\hline
+	\multicolumn{2}{|c|}{Java}                                                                                                                                               \\ \hline
+	Forwarding                     & anything name (anything)\{ \newline   return identifier{[}.identifier{]}*.name(anything);\newline \} \newline Where "name" is the same in both places \\ \hline
+	Delegation                     & anything name (anything) \{ \newline   return identifier{[}.identifier{]}*.name(this);\newline \}  \newline Where "name" is the same in both places                    \\ \hline
+	Constructor Delegation & anything anything = new anything ( this )                                                                                                  \\ \hline
+	Inheritance                    & class extends anything                                                                                                                                         \\ \hline
+\end{tabular}
+
+\subsection{JavaScript Patterns}
+\begin{tabular}{|p{5cm}|p{9cm}|}
+	\hline
+	\multicolumn{2}{|c|}{JavaScript}                                                                                                                                                                  \\ \hline
+	Inheritance 1                  & var a = function ( b ) \{    c . call ( this , d );\}                                                                                      \\ \hline
+	Inheritance 2                  & function Bar   ( x , y ) \{    Foo . call ( this , x ) ;\}                                                                                 \\ \hline
+	Inheritance 3                  & Foo . prototype = object . create ( Bar . prototype )                                                                                      \\ \hline
+	Inheritance 4 - Node.js        & var className = defineClass(...)                                                                                                           \\ \hline
+	Inheritance 5 - Node.js        & util.inherits(...)                                                                                                                         \\ \hline
+\end{tabular}
