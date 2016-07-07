@@ -1,8 +1,7 @@
 \chapter{Code Patterns}\label{C:bg}
-To determine how developers are using delegation and inheritance, the first stage is to define methods to identifying each. This is achieved by defining code patterns which, when found in a project, indicate the use of delegation or inheritance.
+To determine how developers are using delegation and inheritance, the first stage is to define methods to identifying each. This is achieved by defining code patterns which, when found in a project, indicate the use of delegation or inheritance. This chapter outlines the patterns which are representative of forwarding, delegation and uniform identity.
 
-\section{Forms of Code Reuse}
-\subsection{Forwarding}
+\section{Forwarding}
 Under a forwarding model of object inheritance, calls to this.f(...) are passed to some other.f(...), transferring any necessary information as call parameters
 \newline
 
@@ -29,7 +28,7 @@ In Java, this involves searching for patterns where an object's method does very
 
 If the receiver of a forwarded request were to hold state about an object delegating to it then it would likely run into issues if other objects also forward requests to it. Likewise, if the system were re-implemented with a stateful forwarding recipient in a language which supports forwarding as object inheritance then it would run into the same problems when sharing it between parents.
 
-\subsection{Delegation}
+\section{Delegation}
 Delegation can be seen as forwarding this.f(...) calls to other.f(...) \textbf{on behalf of this.} That is, call other.f(...) but have the self reference within that call set to my self reference.
 \newline
 
@@ -57,7 +56,7 @@ class SquareAreaCalculator{
 
 Examples in Java which would be well suited to a language with native support for delegation are those where the code is effectively forwarding to an object which accepts \textbf{this} as either a constructor parameter or as a parameter to many of its public methods. This indicates that the object being called to is designed to do a lot of work which is dependent on the \textbf{this} reference of another object being passed in. By using a language which supports delegation natively, it would be possible to change the self reference of the delegatee to instead be the self reference of the delegator, removing the need to pass it as a parameter.
 
-\subsection{Uniform Identity}
+\section{Uniform Identity}
 Under Uniform Identity, objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. This maintains a single object identity throughout construction of the object.
 \newline
 
@@ -79,25 +78,3 @@ class Square extends Rectangle{
 \end{lstlisting}
 
 All examples of classical inheritance in Java follow the Uniform Identity construction model. Therefore, to find examples supporting the need for Uniform Identity, we must simply look for typical uses of inheritance in Java where a subclass makes some use of functionality from the parent class. Uniform Identity is the object inheritance model underlying Java's class inheritance structure, but others can also model the behaviour fairly closely. For example, Merged Identity closely matches the C++ model of class inheritance and, with a few exceptions, most examples of Java class based inheritance could also function in a Merged Identity model. Uniform Identity is the implementation Java's class based inheritance model encourages so it is expected to be the most common across corpus data. Because of this, any substantial use of forwarding or delegation would indicate that developers are intentionally dismissing Java's in-built language features as they believe it is possible to produce better code with other patterns.
-
-
-\section{Java Patterns}
-\begin{tabular}{|p{5cm}|p{9cm}|}
-	\hline
-	\multicolumn{2}{|c|}{Java}                                                                                                                                               \\ \hline
-	Forwarding                     & anything name (anything)\{ \newline   return identifier{[}.identifier{]}*.name(anything);\newline \} \newline Where "name" is the same in both places \\ \hline
-	Delegation                     & anything name (anything) \{ \newline   return identifier{[}.identifier{]}*.name(this);\newline \}  \newline Where "name" is the same in both places                    \\ \hline
-	Constructor Delegation & anything anything = new anything ( this )                                                                                                  \\ \hline
-	Inheritance                    & class extends anything                                                                                                                                         \\ \hline
-\end{tabular}
-
-\section{JavaScript Patterns}
-\begin{tabular}{|p{5cm}|p{9cm}|}
-	\hline
-	\multicolumn{2}{|c|}{JavaScript}                                                                                                                                                                  \\ \hline
-	Inheritance 1                  & var a = function ( b ) \{    c . call ( this , d );\}                                                                                      \\ \hline
-	Inheritance 2                  & function Bar   ( x , y ) \{    Foo . call ( this , x ) ;\}                                                                                 \\ \hline
-	Inheritance 3                  & Foo . prototype = object . create ( Bar . prototype )                                                                                      \\ \hline
-	Inheritance 4 - Node.js        & var className = defineClass(...)                                                                                                           \\ \hline
-	Inheritance 5 - Node.js        & util.inherits(...)                                                                                                                         \\ \hline
-\end{tabular}

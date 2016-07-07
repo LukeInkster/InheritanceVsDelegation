@@ -23,6 +23,15 @@ Finding occurrences of classical inheritance in Java is as simple as looking for
 
 The process for analysing a Java project follows a pipeline structure where each file is parsed and analysed in isolation. The resulting statistics of each file are then aggregated to form the overall statistics across the projects. This file isolation is important because the syntax trees produced by ANTLR consume large amounts of memory so it is not possible to hold all the Java files for a project in memory simultaneously.
 \newline
+\captionof{table}{Java Patterns}
+\begin{tabular}{|p{5cm}|p{9cm}|}
+	\hline
+	\multicolumn{2}{|c|}{Java}                                                                                                                                               \\ \hline
+	Forwarding                     & anything name (anything)\{ \newline   return identifier{[}.identifier{]}*.name(anything);\newline \} \newline Where "name" is the same in both places \\ \hline
+	Delegation                     & anything name (anything) \{ \newline   return identifier{[}.identifier{]}*.name(this);\newline \}  \newline Where "name" is the same in both places                    \\ \hline
+	Constructor Delegation & anything anything = new anything ( this )                                                                                                  \\ \hline
+	Inheritance                    & class extends anything                                                                                                                                         \\ \hline
+\end{tabular}
 
 \captionof{figure}{Java Analysis Pipeline}
 \includegraphics[scale=0.70]{AntlrPipeline.pdf}
@@ -48,6 +57,17 @@ The results are then aggregated to produce corpus level analysis which can be fo
 \end{tabular}
 
 \section{JavaScript}
+\captionof{table}{JavaScript Patterns}
+\begin{tabular}{|p{5cm}|p{9cm}|}
+	\hline
+	\multicolumn{2}{|c|}{JavaScript}                                                                                                                                                                  \\ \hline
+	Inheritance 1                  & var a = function ( b ) \{    c . call ( this , d );\}                                                                                      \\ \hline
+	Inheritance 2                  & function Bar   ( x , y ) \{    Foo . call ( this , x ) ;\}                                                                                 \\ \hline
+	Inheritance 3                  & Foo . prototype = object . create ( Bar . prototype )                                                                                      \\ \hline
+	Inheritance 4 - Node.js        & var className = defineClass(...)                                                                                                           \\ \hline
+	Inheritance 5 - Node.js        & util.inherits(...)                                                                                                                         \\ \hline
+\end{tabular}
+\newline
 The JavaScript analysis in this study makes extensive use of the prior work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are choosing not to use the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
 \begin{enumerate}
 	\item The median CUR across the corpus was 0.15
