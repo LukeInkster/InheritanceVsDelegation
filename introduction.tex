@@ -7,9 +7,9 @@ Code reuse mechanisms are a vital aspect of software development. They allow eng
 Typically, code reuse takes two major forms:
 \begin{itemize}
 	\item Inheritance - Inheriting the properties of some parent object to a child object.
-	\item Composition - Objects contain other objects and delegate responsibility to them.
+	\item Delegation - Objects pass messages to other objects, delegating responsibility to them.
 \end{itemize}
-Each of these has its uses and comes with distinct advantages and disadvantages. Languages built with native support for delegation typically encourage the use of composition over inheritance where possible. In contrast, languages built with native support for classical inheritance will usually encourage developers to reuse code through inheritance relationships between classes.
+Each of these has its uses and comes with distinct advantages and disadvantages. Languages built with native support for delegation object models typically encourage delegation of responsibility over inheriting properties where possible. In contrast, languages built with native support for classical inheritance will usually encourage developers to reuse code through inheritance relationships between classes.
 
 \section{Proposed Solution}
 To determine the use of delegation relative to classical inheritance. This study will compare the prevalence of patterns representative of delegation in inheritance based languages and the prevalence of class usage in languages which do not natively support classical inheritance. This investigation involves employing a variety of code analysis tools to detect these patterns from representative samples of each language allowing an empirical analysis to determine the extent to which programmers in each language are making use of each pattern.
