@@ -2,59 +2,71 @@
 \section{Object Inheritance Models}
 The paper \textit{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}} by Tim Jones discusses a variety of different object inheritance models and the inherent benefits and limitations of each. From this work, it becomes evident which Java programs are dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Knowing which classes are dependent on this model also informs us about which classes would need to be substantially rethought in order to reimplement them in a language which does not support Uniform Identity. Additionally, this information also shows which patterns could be rewritten under other inheritance models without requiring much modification and, in some cases, more concisely.
 \newline
+
+Henry Lieberman's 1986 paper \textit{Using Prototypical Objects to Implement Shared Behavior in Object Oriented Systems~\cite{UsingPrototypicalObjects}} coins the term "Delegation" with respect to software language design. Lieberman provides a plain English example of delegation which allows a reader to clearly understand the concept he is describing:
+\begin{displayquote}
+	When a pen delegates a draw message to a prototypical pen, it is saying "I don't know how to handle the draw message. I'd like you answer it for me if you can, but if you have any further questions, like what is the value of my x variable, or need anything done, you should come back to me and ask."~\cite{UsingPrototypicalObjects}
+\end{displayquote}
+Lieberman's definition forms the basis of the delegation patterns considered in this report. This definition is important as delegation is the object inheritance model natively supported by JavaScript.
 \newline
+
 In a 2009 paper titled \textit{Are we Ready for a Safer Construction Environment ~\cite{SaferConstruction}}, Yossi Gil and Tali Shragai discuss the cases where a Java program is dependent on class instances being constructed under the Uniform Identity inheritance model. It covers the three key stages of object creation and how each of these contributes to the issues surrounding the construction of objects within class hierarchies. These stages are:
 \begin{enumerate}
 	\item Memory allocation
 	\item Preliminary field initialisation
 	\item Establishment of invariants
 \end{enumerate}
-Each of these is dealt with differently across different programming languages. As an example, preliminary field initialisation is approached quite differently in c++ when compared with Java. Java takes the approach of initialising these fields to default values (nulls, zeros and falses) whereas, in the interest of performance, c++ simply leaves these fields with whatever bytes were already present in the memory locations. \newline
-Variations between different languages’ implementations of the final stage, the establishment of invariants, are what lead to differing rules surrounding what the developer can and can’t do safely in an object constructor. This is where we find that maintaining a Uniform Identity throughout construction is vital in ensuring that any references to the self which were stored externally during construction remain valid after this process is completed. Without the presence of a Uniform Identity, any self references which are passed out from the constructor before object creation is complete cannot be guaranteed to point back to the expected object. \newline
+Each of these is dealt with differently across different programming languages. As an example, preliminary field initialisation is approached quite differently in C++ when compared with Java. Java takes the approach of initialising these fields to default values (nulls, zeros and falses) whereas, in the interest of performance, C++ simply leaves these fields with whatever bytes were already present in the memory locations.
+
+Variations between different languages’ implementations of the final stage, the establishment of invariants, lead to different rules about what the program can and can't do safely in an object constructor. This is where we find that maintaining a Uniform Identity throughout construction is vital in ensuring that any references to the self which were stored externally during construction remain valid after this process is completed. Without Uniform Identity, any self references which are passed out from the constructor before object creation is complete cannot be guaranteed to point back to the constructed object after initialisation has completed.
+\newline
+
 We also run into another issue with the changing of the self reference during the construction of an object. During the initialisation of a subclass, it is necessary at some point to initialise the superclass so that its fields are guaranteed to be defined after construction. If, during the initialisation of the superclass, the self reference is different to that of the subclass, then any calls to overridden methods will execute the superclass's implementation rather than the subclass's.
 \newline
-\newline
-In Henry Lieberman's paper 1986 titled \textit{Using Prototypical Objects to Implement Shared Behavior in Object Oriented Systems~\cite{UsingPrototypicalObjects}} he first coins the term "Delegation" with respect to software language design. Lieberman then provides a plain English definition of the term which allows a reader to clearly understand the concept he is describing:
-\begin{displayquote}
-	When a pen delegates a draw message to a prototypical pen, it is saying "I don't know how to handle the draw message. I'd like you answer it for me if you can, but if you have any further questions, like what is the value of my x variable, or need anything done, you should come back to me and ask."~\cite{UsingPrototypicalObjects}
-\end{displayquote}
-Lieberman's definition forms the basis of the delegation patterns considered in this paper.
 
 \section{JavaScript Analysis}
 \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}} explores the prevalence of classical inheritance patterns in a JavaScript corpus. JavaScript is a useful language to investigate for this study because it provides many examples where developers are deliberately using a language built for delegation and object based inheritance to model classical inheritance structures. The paper explores the ways in which JavaScript developers typically model class inheritance and the ways these patterns can be detected in corpora of JavaScript projects. As part of this paper, the researchers also create a tool named JSClassFinder which serves the purpose of identifying both class declaration patterns and method declaration patterns. The statistics returned by this tool can then be analysed to determine the extent to which JavaScript developers are working around the language's inbuilt structures. The researchers also defined the term "Class Usage Ratio" which is a measure of the proportion of functions in a JavaScript project which are used to model class behaviour. This Class Usage Ratio is defined as:
 \[CUR = \frac{\left\vert methods \right\vert + \left\vert classes \right\vert}{\left\vert functions \right\vert}\]
 
 \section{Java Analysis}
-\textit{Understanding the Shape of Java Software~\cite{ShapeOfJava}} details an empirical study of a large Java corpus to uncover details about the structure of typical Java programs. The study collected a large set of Java classes and looked at the occurrence frequency of various common patterns including the ways developers are typically making use of inheritance and composition. As a result of this study, it was found that the frequency of several of these patterns, when broken down by project, exhibited a power-law distribution. \newline
-A further interesting finding of the study was a fairly wide variation in the occurrence frequency of some patterns from project to project. This indicates that some architectural decisions made in a project's infancy may contribute heavily to the patterns employed by developers as the project progresses. This also makes it evident that it will be important, in my own empirical study, to ensure that I have a wide range of projects for each language from which to gather statistics to minimise the biases that could be introduced by using a smaller dataset.
+\textit{Understanding the Shape of Java Software~\cite{ShapeOfJava}} details an empirical study of a large Java corpus to uncover details about the structure of typical Java programs. The study collected a large set of Java classes and looked at the occurrence frequency of various common patterns including the ways developers are typically making use of inheritance and composition. As a result of this study, it was found that the frequency of several of these patterns, when broken down by project, exhibited a power-law distribution.
 \newline
+
+A further interesting finding of the study was a fairly wide variation in the occurrence frequency of some patterns from project to project. This indicates that some architectural decisions may contribute heavily to the patterns employed by developers as the project progresses. This variation also makes it evident that it will be important, in my own empirical study, to ensure that I have a wide range of projects for each language from which to gather statistics to minimise the biases that could be introduced by using a smaller dataset.
 \newline
+
 \textit{Micro Patterns in Java Code~\cite{JavaMicropatterns}} explores the use of micro patterns found in Java programs. The paper also provides a clear definition of a micro pattern upon which further work can be based.
 \begin{displayquote}
 	Micro patterns are similar to design patterns, except standing at a lower, closer to the implementation, level of abstraction."~\cite{JavaMicropatterns}
 \end{displayquote}
 The patterns this study will be attempting to uncover as possible examples of forwarding and delegation fit under this definition. As such, the detection of each can be expressed as a function over the content of the class.
 \newline
+
+\textit{What Programmers Do with Inheritance in Java~\cite{InheritanceInJava}} goes into detail about the use of inheritance in Java projects and the extent to which classes extend other classes. To aid with this hierarchical analysis, the paper also contains a formal definitions of terms which are relevant to my study. These include:
+\begin{enumerate}
+	\item Subtypes - A type $S$ is a subtype of type $T$ if an instance of $S$ can be supplied where an object of type $T$ is expected.
+	\item Supertypes - A type $T$ is a supertype of types $S_1..S_n$ if an instance of any of $S_1..S_n$ can be supplied where an object of type $T$ is expected.
+	\item Downcalls - A call from classes $C$ (child) to $D$ (parent) is a downcall when a method $c()$ declared in $D$ invokes a method $m()$ that is declared in $C$.
+\end{enumerate}
+These definitions are then used to measure the frequency of occurrence in the Qualitas Corpus of a variety of combinations of the patterns. This is achieved by representing the dependencies within the projects as a graph structure and investigating the properties of that graph.
 \newline
-\textit{What Programmers Do with Inheritance in Java~\cite{InheritanceInJava}} goes into detail about the use of inheritance in Java projects and the extent to which classes extend others. To aid with this, the paper also contains a formal definitions of a few terms which are relevant to my study, including subtypes, supertypes and downcalls. These definitions are then used to indicate rates of presence in the Qualitas Corpus of a variety of combinations of the patterns. This is achieved by representing the dependencies within the projects as a graph structure and investigating the properties of that graph.
-\newline
-\newline
+
 The authors of \textit{How Do Java Programs Use Inheritance? An Empirical Study of Inheritance in Java Software~\cite{HowProgramsUseInheritance}} explore the use of classical inheritance in Java programs, primarily in large-scale software development projects. This forms a more clear idea of the extent to which particular inheritance patterns are used in the real world. The analysis performed in this study involved over 100,000 classes and interfaces across 90 Java projects. The results of this study show that approximately three quarters of all Java classes in the study had some transitive superclass other than Object in at least half of the examined corpus. \newline
 A further contribution of this paper is an explicit discussion of the distinction Java, along with similar languages, makes with regard to its \textit{extends} and \textit{implements} relationships between classes and their superclasses or interfaces respectively. This distinction makes it clear that, in order for code to be reused through inheritance from classes further up the type hierarchy, an \textit{extends} relationship is required.
 
 \section{Analysing Corpora}
-\textit{The Qualitas Corpus: A Curated Collection of Java Code for Empirical Studies~\cite{QualitasCorpus}} discusses many of the choices behind the construction of the Qualitas Corpus. Notably, the paper clarifies that the Java language was chosen for a few specific reasons:
+\textit{The Qualitas Corpus: A Curated Collection of Java Code for Empirical Studies~\cite{QualitasCorpus}} discusses many of the choices behind the construction of the Qualitas Corpus. A corpus is defined as \textit{"a collection of writings, conversations, speeches, etc., that people use to study and describe a language"}. In the Qualitas Corpus, the collection is of projects written in the Java programming language. This paper explores the reasoning behind the choices which led to the structure of the corpus as it is. Notably, the paper clarifies that the Java language was chosen for a few specific reasons:
 \begin{itemize}
-	\item Open source Java code is abundant and easy to find. Much more so than c\#, and similarly to c++.
-	\item Java code tends to be relatively easier to parse and analyse than many other languages including c++ due to some of the more strict limitations it applies to program structure.
+	\item Open source Java code is abundant and easy to find. Much more so than C\#, and similarly to C++.
+	\item Java code tends to be relatively easier to parse and analyse than many other languages including C++ due to the simpler grammar of the language.
 \end{itemize}
 The paper also justifies the choice of projects in the corpus as they are open source and provide a wide array of different usages of the language to help to ensure variation in the code.
 \newline
-\newline
-Included in \textit{Towards a Metrics Suite for Object Oriented Design~\cite{MetricsSuite}} are a variety of useful terms for defining measurements of inheritance within programs written in object oriented languages. These include:
+
+\textit{Towards a Metrics Suite for Object Oriented Design~\cite{MetricsSuite}} includes a variety of useful terms for defining measurements of inheritance within programs written in object oriented languages. These include:
 \begin{itemize}
 	\item \textbf{Depth of Inheritance Tree (DIT)} - A measure of the number of ancestor classes which can potentially affect a given class. For a given class, this can be seen as its depth in the class hierarchy tree from the root object class.
-	\item \textbf{Number of children (NOC)} - The number of immediate subclasses under a given class in the class hierarchy. This is the number of classes which will, unless explicitly overridden, inherit the methods of the parent class. For a given class, this can be calculated as the number of elements in the type hierarchy tree rooted at that class. 
-	\item \textbf{Coupling between objects (CBO)} - A measure of the non-inheritance relationships a class shares with other classes. This is an effective measure of the interdependence of classes in a given program which are neither subclasses nor superclasses of eachother.
+	\item \textbf{Number of Children (NOC)} - The number of immediate subclasses under a given class in the class hierarchy. This is the number of classes which will, unless explicitly overridden, inherit the methods of the parent class. For a given class, this can be calculated as the number of elements in the type hierarchy tree rooted at that class.
+	\item \textbf{Coupling Between Objects (CBO)} - A measure of the non-inheritance relationships a class shares with other classes. This is an effective measure of the interdependence of classes in a given program which are neither subclasses nor superclasses of eachother.
 \end{itemize}
 
