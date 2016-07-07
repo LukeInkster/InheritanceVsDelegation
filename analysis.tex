@@ -20,9 +20,6 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 
 Finding occurrences of classical inheritance in Java is as simple as looking for the extends keyword with a "grep" regular expression search. Finding examples of delegation and forwarding is more difficult and requires more information about the syntax tree of the program. To achieve this, each program of the corpus was passed through ANTLR which parses each file according to a Java grammar and constructs an abstract syntax tree which can then be traversed to search for relevant patterns.
 \newline
-
-The process for analysing a Java project follows a pipeline structure where each file is parsed and analysed in isolation. The resulting statistics of each file are then aggregated to form the overall statistics across the projects. This file isolation is important because the syntax trees produced by ANTLR consume large amounts of memory so it is not possible to hold all the Java files for a project in memory simultaneously.
-\newline
 \captionof{table}{Java Patterns}
 \begin{tabular}{|p{5cm}|p{9cm}|}
 	\hline
@@ -31,7 +28,10 @@ The process for analysing a Java project follows a pipeline structure where each
 	Delegation                     & anything name (anything) \{ \newline   return identifier{[}.identifier{]}*.name(this);\newline \}  \newline Where "name" is the same in both places                    \\ \hline
 	Constructor Delegation & anything anything = new anything ( this )                                                                                                  \\ \hline
 	Inheritance                    & class extends anything                                                                                                                                         \\ \hline
-\end{tabular}
+\end{tabular}\newline\newline
+
+The process for analysing a Java project follows a pipeline structure where each file is parsed and analysed in isolation. The resulting statistics of each file are then aggregated to form the overall statistics across the projects. This file isolation is important because the syntax trees produced by ANTLR consume large amounts of memory so it is not possible to hold all the Java files for a project in memory simultaneously.
+\newline
 
 \captionof{figure}{Java Analysis Pipeline}
 \includegraphics[scale=0.70]{AntlrPipeline.pdf}
@@ -57,6 +57,7 @@ The results are then aggregated to produce corpus level analysis which can be fo
 \end{tabular}
 
 \section{JavaScript}
+In JavaScript, there are many ways developers make use of classical inheritance patterns despite the lack of native support in the language. This is largely a result of the numerous libraries which offer their own implementation of classical inheritance behaviour. Some examples of these patterns can be found in the following table:
 \captionof{table}{JavaScript Patterns}
 \begin{tabular}{|p{5cm}|p{9cm}|}
 	\hline
@@ -67,7 +68,7 @@ The results are then aggregated to produce corpus level analysis which can be fo
 	Inheritance 4 - Node.js        & var className = defineClass(...)                                                                                                           \\ \hline
 	Inheritance 5 - Node.js        & util.inherits(...)                                                                                                                         \\ \hline
 \end{tabular}
-\newline
+\newline\newline\newline
 The JavaScript analysis in this study makes extensive use of the prior work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are choosing not to use the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
 \begin{enumerate}
 	\item The median CUR across the corpus was 0.15

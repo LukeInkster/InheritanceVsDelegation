@@ -11,14 +11,14 @@ In the following example, a Square object is forwarding responsibility for its a
 class Square{
 	int x, y, wd;
 	SquareAreaCalculator areaCalculator = new SquareAreaCalculator();
-	
+
 	int area(){return areaCalculator.calculate(wd);}
-	
+
 	Square(int x, int y, int wd){
 		this.x = x; this.y = y; this.wd = wd;
 	}
 }
-	
+
 class SquareAreaCalculator{
 	int calculate(int wd){return wd * wd;}
 }
@@ -37,9 +37,9 @@ In this example, the Square object is delegating responsibility for area calcula
 class Square{
 	int x, y, wd;
 	SquareAreaCalculator areaCalculator = new SquareAreaCalculator(this);
-	
+
 	int area(){return areaCalculator.calculate();}
-	
+
 	Square(int x, int y, int wd){
 		this.x = x; this.y = y; this.wd = wd;
 	}
@@ -64,9 +64,9 @@ In this example, the Square class inherits from another class which knows how to
 \begin{lstlisting}
 class Rectangle{
 	int x, y, wd, ht;
-	
+
 	int area(){return wd * ht;}
-	
+
 	Rectangle(int x, int y, int wd, int ht){
 		this.x = x; this.y = y; this.wd = wd; this.ht = ht;
 	}
