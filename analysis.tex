@@ -20,6 +20,7 @@ For the other studied languages, Python, Lua, and Scala, quality existing corpor
 \section{Java}
 The intent in analysing the Qualitas Corpus of Java code is to determine the extent to which developers are making use of Java's inbuilt language features and what developers are doing to work around these language features. Specifically, a Java developers' usage of class inheritance will represent them conforming to the classical inheritance model encouraged by the Java language. In contrast, instances of code which model call forwarding or call delegation will represent cases where the developer could have expressed themselves more concisely through other object inheritance models where delegation and forwarding are supported natively. The following patterns are used to identify instances of each model of reuse within the Java projects.
 \newline
+
 \captionof{table}{Java Patterns}
 \begin{tabular}{|p{5cm}|p{9cm}|}
 	\hline
@@ -28,7 +29,8 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 	Call Delegation                     & anything name (anything) \{ \newline   return identifier{[}.identifier{]}*.name(this);\newline \}  \newline Where "name" is the same in both places                    \\ \hline
 	Constructor Delegation & anything anything = new anything ( this )                                                                                                  \\ \hline
 	Inheritance                    & class extends anything                                                                                                                                         \\ \hline
-\end{tabular}\newline\newline\newline\newline
+\end{tabular}\newline\newline\newline
+
 The presence of two patterns representing delegation is because there are two main ways this behaviour can be represented in Java. The first, call delegation, is where an object passes itself as a parameter to some delegatee and has that delegatee perform some action on its behalf. The second, constructor delegation, is where a delegatee is constructed specifically for the instance of the delegator. This delegatee can then act on that constructor argument when its other methods are called.
 \newline
 
@@ -82,10 +84,11 @@ The JavaScript analysis in this study makes extensive use of the prior work in d
 \end{enumerate}
 
 \section{Timeline}
+The corpora for each of the remaining languages have been collected and the next stage is to analyse each to gather statistics which can be compared to those gathered for Java and JavaScript. The aim is to have a paper ready for the upcoming ECOOP paper submission deadline. \newline
 \begin{ganttchart}[
 	hgrid,
 	vgrid={*{6}{draw=none},dotted},
-	x unit=0.9mm,
+	x unit=0.87mm,
 	group peaks tip position=0,
 	group peaks height=.2,
 	group peaks width=2,
