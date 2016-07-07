@@ -1,29 +1,36 @@
 \chapter{Analysis}\label{C:analysis} 
-The core of this empirical study is the analysis of corpora of code written in each of the investigated languages. This analysis makes use of many static code analysis methods including:
+The core of this empirical study is the analysis of corpora of code written in each of the investigated languages. This analysis makes use of many static code analysis methods including the following:
 \begin{itemize}
-	\item ANTLR
-	\item grep
-	\item JSClassFinder
-	\item Esprima
+	\item Grep is used to perform regular expression searches on files. This can detect the more simple patterns explored in this paper.
+	\item ANTLR is a tool which accepts a language grammar and a valid file in that language. From this it constructs a syntax tree to represent the file.
+	\item JSClassFinder is a tool which detects class and method declarations in JavaScript code.
+	\item Esprima accepts a JavaScript file as input and produces a JSON representation of the syntax tree of that file. This JSON file is then used as the input to JSClassFinder.
 \end{itemize}
 Each of these tools helps to extract valuable information from one of more of the languages analysed in this study.
 
 \section{Assembling Corpora}
-Each language analysed in this study required a corpus of code representative of the ways programmers in the real world are using that language. In the case of Java, prior studies have resulted in the creation of The Qualitas Corpus which is a large collection of open source projects written in the Java language~\cite{QualitasCorpus}. \newline
-For the other studied languages, JavaScript, Python, Lua, and Scala, quality existing corpora could not be found. For each of these languages, the top 25 open source projects were sourced from GitHub's "Trending this month" list. This source was chosen because it provides a particularly up to date snapshot of development in each language which ensures that the analysis performed will be as relevant as possible to modern software development.
+To analyse each language, we first needed to collect a corpus representative of that language's use in real world software development projects. In the case of Java, we adopted The Qualitas Corpus, which is a large collection of open source projects written in the Java language~\cite{QualitasCorpus}.
+\newline
+
+For the other studied languages, JavaScript, Python, Lua, and Scala, quality existing corpora could not be found. For each of these languages, the top 25 open source projects were sourced from GitHub's "Trending this month" list for June, 2016. This source was chosen because it provides a group of projects for each language which are in active development as measured by GitHub, and which are easy to access. This helps to ensure that the analysis performed will be as relevant as possible to modern software development.
 
 \section{Java}
-The intent in analysing the Qualitas Corpus of Java code is to determine the extent to which developers are making use of Java's inbuilt language features and what developers are doing to work around these language features. Specifically, a Java developers' usage of class inheritance will represent them conforming to the classical inheritance model encouraged by the Java language. In contrast, instances of code which model call forwarding or call delegation will represent cases where the developer could have expressed themselves more concisely through other object inheritance models where delegation and forwarding are supported natively. \newline
-Finding occurrences of classical inheritance in Java is as simple as looking for the extends keyword with a grep search. Finding examples of delegation and forwarding is more difficult and requires more information about the syntax tree of the program. To achieve this, each program of the corpus was passed through ANTLR which parses each file according to a Java grammar and constructs an abstract syntax tree which can then be traversed to search for relevant patterns. \newline \newline
-The process for extracting statistics from a Java project follows a pipeline structure where each file is parsed and analysed in isolation. The resulting statistics of each file are then aggregated to form the overall statistics across the projects. This file isolation is important because the syntax trees produced by ANTLR consume large amounts of memory so it is not possible to hold all the Java files for a project in memory simultaneously.
+The intent in analysing the Qualitas Corpus of Java code is to determine the extent to which developers are making use of Java's inbuilt language features and what developers are doing to work around these language features. Specifically, a Java developers' usage of class inheritance will represent them conforming to the classical inheritance model encouraged by the Java language. In contrast, instances of code which model call forwarding or call delegation will represent cases where the developer could have expressed themselves more concisely through other object inheritance models where delegation and forwarding are supported natively.
 \newline
+
+Finding occurrences of classical inheritance in Java is as simple as looking for the extends keyword with a "grep" regular expression search. Finding examples of delegation and forwarding is more difficult and requires more information about the syntax tree of the program. To achieve this, each program of the corpus was passed through ANTLR which parses each file according to a Java grammar and constructs an abstract syntax tree which can then be traversed to search for relevant patterns.
 \newline
+
+The process for analysing a Java project follows a pipeline structure where each file is parsed and analysed in isolation. The resulting statistics of each file are then aggregated to form the overall statistics across the projects. This file isolation is important because the syntax trees produced by ANTLR consume large amounts of memory so it is not possible to hold all the Java files for a project in memory simultaneously.
+\newline
+
+\captionof{figure}{Java Analysis Pipeline}
 \includegraphics[scale=0.70]{AntlrPipeline.pdf}
+
+The results are then aggregated to produce corpus level analysis which can be found in the following table:
 \newline
-\newline
-After each project has been parsed and analysed, the results are then further aggregated to produce corpus level analysis which can be found in the following table:
-\newline
-\newline
+
+\captionof{table}{Java Analysis Results}
 \begin{tabular}{|l|l|l|l|}
 	\hline
 	& Count  & \% of classes & \% of extended classes \\ \hline
@@ -41,7 +48,7 @@ After each project has been parsed and analysed, the results are then further ag
 \end{tabular}
 
 \section{JavaScript}
-The JavaScript analysis in this study makes extensive use of the prior work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are deliberately circumventing the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
+The JavaScript analysis in this study makes extensive use of the prior work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are choosing not to use the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
 \begin{enumerate}
 	\item The median CUR across the corpus was 0.15
 	\item The upper quartile CUR across the corpus was 0.36
