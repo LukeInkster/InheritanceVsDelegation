@@ -2,7 +2,7 @@
 To determine how developers are using delegation and inheritance, the first stage is to define methods to identifying each. This is achieved by defining code patterns which, when found in a project, indicate the use of delegation or inheritance. This chapter outlines the patterns which are representative of forwarding, delegation and uniform identity.
 
 \section{Forwarding}
-Under a forwarding model of object inheritance, calls to this.f(...) are passed to some other.f(...), transferring any necessary information as call parameters
+Under a forwarding model of object inheritance, calls to this.f(...) are passed to some other.f(...), transferring any necessary information as call parameters.
 \newline
 
 In the following example, a Square object is forwarding responsibility for its area calculation to the SquareAreaCalculator. The SquareAreaCalculator could be shared by many Squares as it holds no state and therefore does not rely on being instantiated as an instance specific and isolated to any given square.

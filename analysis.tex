@@ -25,8 +25,8 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 \begin{tabular}{|p{5cm}|p{9cm}|}
 	\hline
 	\multicolumn{2}{|c|}{Java}                                                                                                                                               \\ \hline
-	Forwarding                     & anything name (anything)\{ \newline   return identifier{[}.identifier{]}*.name(anything);\newline \} \newline Where "name" is the same in both places \\ \hline
-	Call Delegation                     & anything name (anything) \{ \newline   return identifier{[}.identifier{]}*.name(this);\newline \}  \newline Where "name" is the same in both places                    \\ \hline
+	Forwarding                     & anything name (anything)\{ \newline  \hphantom{----}return identifier{[}.identifier{]}*.name(anything);\newline \}  \\ \hline
+	Call Delegation                     & anything name (anything) \{ \newline   \hphantom{----}return identifier{[}.identifier{]}*.name(this);\newline \}  \\ \hline
 	Constructor Delegation & anything anything = new anything ( this )                                                                                                  \\ \hline
 	Inheritance                    & class extends anything                                                                                                                                         \\ \hline
 \end{tabular}\newline\newline\newline
