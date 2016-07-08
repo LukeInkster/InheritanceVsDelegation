@@ -15,6 +15,8 @@
 \usepackage{csquotes}
 \usepackage{pgfgantt}
 \usepackage{caption}
+\usepackage{appendix}
+
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -115,7 +117,6 @@ This report covers an empirical study of how delegation and inheritance are used
 \include{conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \backmatter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,5 +124,11 @@ This report covers an empirical study of how delegation and inheritance are used
 %\bibliographystyle{ieeetr}
 \bibliographystyle{acm}
 \bibliography{sample}
+
+\begin{appendices}
+\chapter{Project Proposal Slides}
+This appendix includes the presentation slides from the proposal of this project.
+\includepdf[pages=-]{ProposalSlides.pdf}
+\end{appendices}
 
 \end{document}
