@@ -38,6 +38,17 @@
 	tabsize=3
 }
 
+\lstdefinelanguage{cs}{%
+	keywords={class,function,this,if,
+		for,while,do,in,of,var,const,let,new,return,virtual,override},
+	keywords=[2]{prototype},
+	morecomment=[l]{//},
+	string=[b]"
+}
+
+\newcommand{\cs}[1]{\lstinline[language=cs]{#1}}
+\newcommand{\java}[1]{\lstinline[language=Java]{#1}}
+
 %
 %  We don't want figures to float so we define
 %

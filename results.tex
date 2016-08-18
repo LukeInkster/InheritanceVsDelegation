@@ -91,11 +91,14 @@ Often functions called class() will be created to encapsulate the setmetatable()
 		function something.new( &                    &        &            \\ \hline
 		& Total matches      & 31     &            \\ \hline
 		& Files with matches & 30     & 1.08\%     \\ \hline
+		Union of all three      &                    &        &            \\ \hline
+		& Total matches      & 653    &            \\ \hline
+		& Files with matches & 473    & 17.04\%    \\ \hline
 	\end{tabular}
 \end{center}{
 
 \section{C\#}
-C\# is a useful language to investigate because it requires use of the "virtual" keyword to enable overriding of any given method. This is interesting because it makes it much more clear whether there could potentially be construction issues if we had a different way of initialising objects. When the "virtual" keyword is required, the only method calls which could miss their intended target when used in a constructor are those which are explicitly labelled as virtual dispatch calls.
+C\# is a useful language to investigate because it requires use of the \cs{virtual} keyword to enable overriding of any given method. This is interesting because it makes it much more clear whether there could potentially be construction issues if we had a different way of initialising objects. When the \cs{virtual} keyword is required, the only method calls which could miss their intended target when used in a constructor are those which are explicitly labelled as \cs{virtual} dispatch calls.
 
 \begin{center}
 	\captionof{table}{C\# Analysis Results}
@@ -127,3 +130,5 @@ C\# is a useful language to investigate because it requires use of the "virtual"
 		Percent of classes that extend       & 31.59\% &                  &                    \\ \hline
 	\end{tabular}
 \end{center}
+
+Here, we find that just 1.95\% of all method declarations contain the \cs{virtual} keyword.
