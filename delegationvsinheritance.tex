@@ -46,8 +46,16 @@
 	string=[b]"
 }
 
-\newcommand{\cs}[1]{\lstinline[language=cs]{#1}}
+\lstdefinelanguage{code}{%
+	keywords={},
+	keywords=[2]{},
+	morecomment=[l]{//},
+	string=[b]"
+}
+
 \newcommand{\java}[1]{\lstinline[language=Java]{#1}}
+\newcommand{\cs}[1]{\lstinline[language=cs]{#1}}
+\newcommand{\code}[1]{\lstinline[language=code]{#1}}
 
 %
 %  We don't want figures to float so we define

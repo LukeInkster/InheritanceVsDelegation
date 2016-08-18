@@ -7,11 +7,25 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 	\captionof{table}{Java Patterns}
 	\begin{tabular}{|p{5cm}|p{9cm}|}
 		\hline
-		\multicolumn{2}{|c|}{Java}                                                                                                                                               \\ \hline
-		Forwarding                     & anything name (anything)\{ \newline  \hphantom{----}return identifier{[}.identifier{]}*.name(anything);\newline \}  \\ \hline
-		Call Delegation                     & anything name (anything) \{ \newline   \hphantom{----}return identifier{[}.identifier{]}*.name(this);\newline \}  \\ \hline
-		Constructor Delegation & anything anything = new anything ( this )                                                                                                  \\ \hline
-		Inheritance                    & class extends anything                                                                                                                                         \\ \hline
+		
+		\multicolumn{2}{|c|}{Java}                                                                   
+		
+		\\ \hline
+		
+		Forwarding                     & \code{anything name (anything)\{} \newline  \hphantom{----}\java{return identifier{[}.identifier{]}*.name(anything);} \newline
+		\java{\}}  \\ 
+		\hline
+		
+		Call Delegation                     & \code{anything name (anything) \{} \newline   \hphantom{----}\code{return identifier{[}.identifier{]}*.name(this);} \newline \code{\}}		
+		\\ \hline
+		
+		Constructor Delegation & \code{anything anything = new anything ( this )}
+		
+		\\ \hline
+		
+		Inheritance                    & \code{class extends anything}
+
+		\\ \hline
 	\end{tabular}\newline\newline
 \end{center}
 
@@ -57,11 +71,11 @@ In JavaScript, there are many ways developers make use of classical inheritance 
 	\begin{tabular}{|p{5cm}|p{9cm}|}
 		\hline
 		\multicolumn{2}{|c|}{JavaScript}                                                                                                                                                                  \\ \hline
-		Inheritance 1                  & var a = function ( b ) \{    c . call ( this , d );\}                                                                                      \\ \hline
-		Inheritance 2                  & function Bar   ( x , y ) \{    Foo . call ( this , x ) ;\}                                                                                 \\ \hline
-		Inheritance 3                  & Foo . prototype = object . create ( Bar . prototype )                                                                                      \\ \hline
-		Inheritance 4 - Node.js        & var className = defineClass(...)                                                                                                           \\ \hline
-		Inheritance 5 - Node.js        & util.inherits(...)                                                                                                                         \\ \hline
+		Inheritance 1                  & \code{var a = function( b )\{    c.call ( this , d );\}}                                                                                      \\ \hline
+		Inheritance 2                  & \code{function Bar( x , y )\{    Foo.call ( this , x ) ;\}}                                                                                 \\ \hline
+		Inheritance 3                  & \code{Foo.prototype = object.create ( Bar.prototype )}                                                                                      \\ \hline
+		Inheritance 4 - Node.js        & \code{var className = defineClass(...)}                                                                                                           \\ \hline
+		Inheritance 5 - Node.js        & \code{ util.inherits(...)}                                                                                                                         \\ \hline
 	\end{tabular}\newline\newline
 \end{center}
 
@@ -74,7 +88,7 @@ The JavaScript analysis in this study makes extensive use of the prior work in d
 \section{Lua}
 Table \ref{LuaResults} shows a variety of patterns often representative of class usage and the percentage of files in the corpus which exhibit one or more of those patterns.\newline
 
-Often functions called class() will be created to encapsulate the setmetatable() logic which is used to create classes. It is also common to declare functions with the name "new" for use as constructors.
+Often functions called class() will be created to encapsulate the \java{setmetatable()} logic which is used to create classes. It is also common to declare functions with the name "new" for use as constructors.
 
 \begin{center}
 	\captionof{table}{Lua Analysis Results}
