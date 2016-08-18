@@ -82,3 +82,26 @@ The JavaScript analysis in this study makes extensive use of the prior work in d
 	\item The upper quartile CUR across the corpus was 0.36
 	\item The lower quartile CUR across the corpus was 0.005, which was heavily impacted by 13 systems which had a CUR of zero
 \end{enumerate}
+\section{Lua}
+Table \ref{LuaResults} shows a variety of patterns often representative of class usage and the percentage of files in the corpus which exhibit one or more of those patterns.\newline
+
+Often functions called class() will be created to encapsulate the setmetatable() logic which is used to create classes. It is also common to declare functions with the name "new" for use as constructors.
+
+\begin{table}[]
+	\centering
+	\caption{Lua Analysis Results}
+	\label{LuaResults}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Pattern                 & Test               & Result & Percentage \\ \hline
+		= setmetatable()        &                    &        &            \\ \hline
+		& Total matches      & 135    &            \\ \hline
+		& Files with matches & 74     & 2.67\%     \\ \hline
+		class(                  &                    &        &            \\ \hline
+		& Total matches      & 487    &            \\ \hline
+		& Files with matches & 380    & 13.69\%    \\ \hline
+		function something.new( &                    &        &            \\ \hline
+		& Total matches      & 31     &            \\ \hline
+		& Files with matches & 30     & 1.08\%     \\ \hline
+	\end{tabular}
+\end{table}
