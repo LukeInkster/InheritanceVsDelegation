@@ -21,8 +21,23 @@ Each of these is dealt with differently across different programming languages. 
 Variations between different languages’ implementations of the final stage, the establishment of invariants, lead to different rules about what the program can and can't do safely in an object constructor. This is where we find that maintaining a Uniform Identity throughout construction is vital in ensuring that any references to the self which were stored externally during construction remain valid after this process is completed. Without Uniform Identity, any self references which are passed out from the constructor before object creation is complete cannot be guaranteed to point back to the constructed object after initialisation has completed.
 \newline
 
-We also run into another issue with the changing of the self reference during the construction of an object. During the initialisation of a subclass, it is necessary at some point to initialise the superclass so that its fields are guaranteed to be defined after construction. If, during the initialisation of the superclass, the self reference is different to that of the subclass, then any calls to overridden methods will execute the superclass's implementation rather than the subclass's.
-\newline
+The establishment of invariants phase of object construction also introduces potential issues with the changing of the self reference during the construction of an object~\cite{SaferConstruction}. During the initialisation of a subclass, it is necessary at some point to initialise the superclass so that its fields are guaranteed to be defined after construction. If, during the initialisation of the superclass, the self reference is different to that of the subclass, then any calls to overridden methods will execute the superclass's implementation rather than the subclass's.
+
+Section 12.5 of the Java Language Specification~\cite{JavaLangSpec} makes Java's approach to this problem of superclass constructor downcalls clear:
+\begin{displayquote}\textit{
+		Unlike C++, the Java programming language does not specify altered rules for method dispatch during the creation of a new class instance. If methods are invoked that are overridden in subclasses in the object being initialized, then these overriding methods are used, even before the new object is completely initialized.~\cite{JavaLangSpec}}
+\end{displayquote}
+To give a short example of this, when constructing an instance of \code{B} in the following program, the call to \code{m()} in A's constructor will execute the method \code{m()} declared on \code{B}, printing the string "B".
+\begin{lstlisting}
+class A{
+	A(){ this.m(); }
+	void m(){ System.out.println("A"); }
+}
+class B extends A{
+	B(){}
+	void m(){ System.out.println("B"); }
+}
+\end{lstlisting}
 
 \section{JavaScript Analysis}
 \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}} explores the prevalence of classical inheritance patterns in a JavaScript corpus. JavaScript is a useful language to investigate for this study because it provides many examples where developers are deliberately using a language built for delegation and object based inheritance to model classical inheritance structures. The paper explores the ways in which JavaScript developers typically model class inheritance and the ways these patterns can be detected in corpora of JavaScript projects. As part of this paper, the researchers also create a tool named JSClassFinder which serves the purpose of identifying both class declaration patterns and method declaration patterns. The statistics returned by this tool can then be analysed to determine the extent to which JavaScript developers are working around the language's inbuilt structures. The researchers also defined the term "Class Usage Ratio" which is a measure of the proportion of functions in a JavaScript project which are used to model class behaviour. This Class Usage Ratio is defined as:
