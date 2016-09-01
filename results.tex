@@ -114,6 +114,7 @@ Often functions called class() will be created to encapsulate the \java{setmetat
 \section{C\#}
 C\# is a useful language to investigate because it requires use of the \cs{virtual} keyword to enable overriding of any given method. This is interesting because it makes it much more clear whether there could potentially be construction issues if we had a different way of initialising objects. When the \cs{virtual} keyword is required, the only method calls which could miss their intended target when used in a constructor are those which are explicitly labelled as \cs{virtual} dispatch calls.
 
+\subsection{Results from GREP}
 \begin{center}
 	\captionof{table}{C\# Analysis Results}
 	\label{CsResults}
@@ -144,5 +145,18 @@ C\# is a useful language to investigate because it requires use of the \cs{virtu
 		Percent of classes that extend       & 31.59\% &                  &                    \\ \hline
 	\end{tabular}
 \end{center}
-
 Here, we find that just 1.95\% of all method declarations contain the \cs{virtual} keyword.
+\newline\newline
+\subsection{Results from ANTLR}
+Projects: 15\newline
+Files: 8154\newline
+Classes: 15706\newline
+Extending Classes: 7033\newline
+Methods: 37745\newline
+Virtual Methods: 5624\newline
+Override Methods: 6229\newline
+Classes with calls to local methods in constructors: 420\newline
+Classes with calls to local virtual methods in constructors: 26\newline
+Classes with calls to local override methods in constructors: 22\newline
+Classes with calls to local abstract methods in constructors: 5\newline
+Classes with calls to methods that couldn't be found in constructors: 189\newline
