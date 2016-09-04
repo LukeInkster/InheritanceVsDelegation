@@ -12,18 +12,18 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 		
 		\\ \hline
 		
-		Forwarding                     & \code{anything name (anything)\{} \newline  \hphantom{----}\java{return identifier{[}.identifier{]}*.name(anything);} \newline
+		Forwarding                     & \java{anything name (anything)\{} \newline  \hphantom{----}\java{return identifier{[}.identifier{]}*.name(anything);} \newline
 		\java{\}}  \\ 
 		\hline
 		
-		Call Delegation                     & \code{anything name (anything) \{} \newline   \hphantom{----}\code{return identifier{[}.identifier{]}*.name(this);} \newline \code{\}}		
+		Call Delegation                     & \java{anything name (anything) \{} \newline   \hphantom{----}\java{return identifier{[}.identifier{]}*.name(this);} \newline \java{\}}		
 		\\ \hline
 		
-		Constructor Delegation & \code{anything anything = new anything ( this )}
+		Constructor Delegation & \java{anything anything = new anything ( this )}
 		
 		\\ \hline
 		
-		Inheritance                    & \code{class extends anything}
+		Inheritance                    & \java{class extends anything}
 
 		\\ \hline
 	\end{tabular}\newline\newline
