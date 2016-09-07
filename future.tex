@@ -1,12 +1,12 @@
 \chapter{Limitations and Future Work}\label{C:future}
 
 \section{Limitations}
-There are some innate limitations to the data which can be gathered through static analysis of source code as carried out in this study. These limitations are largely a result of two factors. These are the inability to analyse code which is used by, but is not part of, the project and the disconnect between how often particular patterns are written and how often they are actually used during execution.
+There are some innate limitations to the data which can be gathered through static analysis of source code as carried out in this study. These limitations are largely a result of two factors. First, the inability to analyse code which is used by, but is not part of, the project; second, the disconnect between how often particular patterns are written (static frequency) and how often they are actually used during execution (dynamic frequency).
 
-\subsection{Compiled Units}
+\subsection{Inaccessible External Code}
 When only analysing source files, it is not possible to collect information about pre-compiled units which are used by those source files at runtime. An example of where this can limit the effectiveness of the analysis in this study is the absence of information about calls dispatched to a superclass when that superclass is defined in a pre-compiled library. If a source file defines a class \code{A} which extends a class \code{B} where \code{B} is defined in a library with inaccessible source code, we cannot determine whether a local call in \code{A} to a method defined on \code{B} will be dispatched statically or virtually because we cannot see the method declaration. This could cause unforeseen changes to the behaviour of the methods on \code{A} if another class \code{C} were to extend \code{A} and override methods from \code{B} which we were previously unaware were virtually dispatched calls.
 
-\subsection{Extent of Usage}
+\subsection{Static vs. Dynamic Frequency}
 It is generally not possible to determine whether any particular class or method is actually used in the execution of a program, or to determine which classes and methods are used more heavily than others. For example, we might prefer give different weight in our analyses to the patterns used in unit test files on the assumption that these are typically written with the expectation that they will rarely have to undergo structural changes after they are written, and will be executed less frequently than other core functionality.
 
 \section{Future Work}
