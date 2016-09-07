@@ -9,6 +9,9 @@ When only analysing source files, it is not possible to collect information abou
 \subsection{Static vs. Dynamic Frequency}
 It is generally not possible to determine whether any particular class or method is actually used in the execution of a program, or to determine which classes and methods are used more heavily than others. For example, we might prefer give different weight in our analyses to the patterns used in unit test files on the assumption that these are typically written with the expectation that they will rarely have to undergo structural changes after they are written, and will be executed less frequently than other core functionality.
 
+\subsection{Technical Limitations}
+The Mono project in the C\# corpus had to be modified to allow the project to be analysed successfully due to technical constraints. As the Mono project sets out to provide an open source implementation of the necessary components of a C\# compiler, it contained a copy of the entire .NET core library. This library was over 500MB in size so, after conversion to syntax trees through ANTLR, could not be reasonably analysed within 16GB of ram. For this reason, and because none of the other projects in this study or in \cite{QualitasCorpus} included copies of the source of their libraries, the library was removed from the Mono project.
+
 \section{Future Work}
 There are a few other methods of software analysis which can work around the issues outlined above to provide a clearer understanding of a software project than analysis based solely on source code.
 
