@@ -32,22 +32,7 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 The presence of two patterns representing delegation is because there are two main ways this behaviour can be represented in Java. The first, call delegation, is where an object passes itself as a parameter to some delegatee and has that delegatee perform some action on its behalf. The second, constructor delegation, is where a delegatee is constructed specifically for the instance of the delegator. This delegatee can then act on that constructor argument when its other methods are called.
 \newline
 
-Due to the imprecise definition of what it means to model delegation in Java, it is expected that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some of the patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. To continue the example of the \java{Square} class, an instance of \java{Square} could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
-\begin{lstlisting}
-public Square(Canvas canvas){
-	canvas.register(this);
-}
-\end{lstlisting}
-And a \java{Square} could be added to the \java{Canvas} as follows:
-\begin{lstlisting}
-void addSquare(){
-	Square s = new Square(this);
-}
-\end{lstlisting}
-This matches the pattern of Constructor Delegation in \ref{JavaPatterns} but , in reality, is modelling a different intent. Because of this, the statistics gathered for delegation should be treated as an upper bound on the actual frequency of occurrence of the behaviour.
-\newline
-
-The results are then aggregated to produce corpus level analysis which can be found in the following table:
+The frequency of occurrence of each of the above patterns was calculated and aggregated to produce corpus level analysis which can be found in the following table:
 
 \begin{center}
 	\captionof{table}{Java Analysis Results}
@@ -67,6 +52,82 @@ The results are then aggregated to produce corpus level analysis which can be fo
 		Classes with delegation                                                                         & 5183   & 4.45\%        &                        \\ \hline
 	\end{tabular}
 \end{center}
+
+
+Due to the imprecise definition of what it means to model delegation in Java, it is expected that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some of the patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. To continue the example of the \java{Square} class, an instance of \java{Square} could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
+\begin{lstlisting}
+public Square(Canvas canvas){
+	canvas.register(this);
+}
+\end{lstlisting}
+And a \java{Square} could be added to the \java{Canvas} as follows:
+\begin{lstlisting}
+void addSquare(){
+	Square s = new Square(this);
+}
+\end{lstlisting}
+This matches the pattern of Constructor Delegation in \ref{JavaPatterns} but , in reality, is modelling a different intent. Because of this, the statistics gathered for delegation should be treated as an upper bound on the actual frequency of occurrence of the behaviour.
+\newline
+
+\section{C\#}
+C\# is a useful language to investigate because it requires use of the \cs{virtual} keyword to enable overriding of any given method. This is interesting because it makes it much more clear whether there could potentially be construction issues if we had a different way of initialising objects. When the \cs{virtual} keyword is required, the only method calls which could miss their intended target when used in a constructor are those which are explicitly labelled as \cs{virtual} dispatch calls.
+
+\begin{center}
+	\centering
+	\captionof{table}{C\# Analysis Results}
+	\label{CsResults}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		& Total  & Percent of methods & Percent of classes \\ \hline
+		Projects                                                                                                       & 25     &                    &                    \\ \hline
+		Files                                                                                                          & 31615  &                    &                    \\ \hline
+		Classes                                                                                                        & 71162  &                    &                    \\ \hline
+		Extending Classes                                                                                              & 25654  &                    & 36.05\%            \\ \hline
+		Methods                                                                                                        & 232282 &                    &                    \\ \hline
+		Virtual Methods                                                                                                & 11194  & 4.82\%             &                    \\ \hline
+		Override Methods                                                                                               & 28815  & 12.41\%            &                    \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ methods in constructors\end{tabular}                  & 1731   &                    & 2.43\%             \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ virtual methods in constructors\end{tabular}          & 117    &                    & 0.16\%             \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ override methods in constructors\end{tabular}         & 56     &                    & 0.08\%             \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ abstract methods in constructors\end{tabular}         & 17     &                    & 0.02\%             \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Classes with calls to methods\\ that couldn't be found in constructors\end{tabular} & 479    &                    & 0.67\%             \\ \hline
+	\end{tabular}\newline\newline
+\end{center}
+
+The first notable difference between the C\# results and those for Java is the drastic reduction in the number of calls to local methods from constructors, 2.43\% for C\# compared with 13.18\% for Java.
+\newline
+
+The valuable information gained from the C\# analysis which was not able to be retrieved is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.26\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rare occurrence of these cases is valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate potential construction issues under a new object initialisation environment.
+\newline
+
+\subsection{Methods that couldn't be found}
+As with Java, there were some limitations to the accuracy of the analysis performed due to some of the limitations of pure source code analysis. The limits are most obvious in the final row of \ref{CsResults} where we find that 0.67\% of classes contained a local method call where the destination of that call could not be found. This can occur when the analysis comes across a couple of cases.
+\begin{itemize}
+	\item A constructor contains a non-local method call which is indistinguishable from a local method call without more information. An example of this is the use of C\%'s \cs{using static} syntax which imports the static functions from another namespace and a allows those functions to be called in a way that looks identical to a local method call. The \cs{using static} pattern allows this code:
+	\begin{lstlisting}[language=cs]
+	using System.Console;
+	class Program : SuperProgram
+	{ 
+		static void Main() 
+		{ 
+			Console.WriteLine("Hello world!"); 
+		} 
+	}
+	\end{lstlisting}
+	to be changed to this:
+	\begin{lstlisting}[language=cs]
+	using static System.Console;
+	class Program : SuperProgram
+	{ 
+		static void Main() 
+		{ 
+			WriteLine("Hello world!"); 
+		} 
+	}
+	\end{lstlisting}
+	And without information about the contents of \cs{System.Console}, it is not possible to determine that \cs{WriteLine()} is a function defined in that namespace.
+	\item A class extends a class in a pre-compiled library. If a call is made from a constructor to a local virtual or abstract method defined in a pre-compiled superclass then, unless that method has been overridden by the class being analysed, there is no way to know that the method was virtual or abstract.
+\end{itemize}
 
 \section{JavaScript}
 In JavaScript, there are many ways developers make use of classical inheritance patterns despite the lack of native support in the language. This is largely a result of the numerous libraries which offer their own implementation of classical inheritance behaviour. Some examples of these patterns can be found in the following table:
@@ -115,12 +176,19 @@ Often functions called class() will be created to encapsulate the \java{setmetat
 	\end{tabular}
 \end{center}{
 
-\section{C\#}
-C\# is a useful language to investigate because it requires use of the \cs{virtual} keyword to enable overriding of any given method. This is interesting because it makes it much more clear whether there could potentially be construction issues if we had a different way of initialising objects. When the \cs{virtual} keyword is required, the only method calls which could miss their intended target when used in a constructor are those which are explicitly labelled as \cs{virtual} dispatch calls.
 
+
+
+
+
+
+
+
+
+\iffalse
 \subsection{Results from GREP}
 \begin{center}
-	\captionof{table}{C\# Analysis Results}
+	%\captionof{table}{C\# Analysis Results}
 	\label{CsResults}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -150,17 +218,4 @@ C\# is a useful language to investigate because it requires use of the \cs{virtu
 	\end{tabular}
 \end{center}
 Here, we find that just 1.95\% of all method declarations contain the \cs{virtual} keyword.
-\newline\newline
-\subsection{Results from ANTLR}
-Projects: 15\newline
-Files: 8154\newline
-Classes: 15706\newline
-Extending Classes: 7033\newline
-Methods: 37745\newline
-Virtual Methods: 5624\newline
-Override Methods: 6229\newline
-Classes with calls to local methods in constructors: 420\newline
-Classes with calls to local virtual methods in constructors: 26\newline
-Classes with calls to local override methods in constructors: 22\newline
-Classes with calls to local abstract methods in constructors: 5\newline
-Classes with calls to methods that couldn't be found in constructors: 189\newline
+\fi
