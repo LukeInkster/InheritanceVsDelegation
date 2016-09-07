@@ -30,7 +30,7 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 \end{center}
 
 The presence of two patterns representing delegation is because there are two main ways this behaviour can be represented in Java. The first, call delegation, is where an object passes itself as a parameter to some delegatee and has that delegatee perform some action on its behalf. The second, constructor delegation, is where a delegatee is constructed specifically for the instance of the delegator. This delegatee can then act on that constructor argument when its other methods are called.
-\newline
+\newline\newline\newline
 
 The frequency of occurrence of each of the above patterns was calculated and aggregated to produce corpus level analysis which can be found in the following table:
 
@@ -53,7 +53,7 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 	\end{tabular}
 \end{center}
 
-
+\subsection{Detecting Delegation}
 Due to the imprecise definition of what it means to model delegation in Java, it is expected that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some of the patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. To continue the example of the \java{Square} class, an instance of \java{Square} could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
 \begin{lstlisting}
 public Square(Canvas canvas){
@@ -70,7 +70,7 @@ This matches the pattern of Constructor Delegation in \ref{JavaPatterns} but , i
 \newline
 
 \section{C\#}
-C\# is a useful language to investigate because it requires use of the \cs{virtual} keyword to enable overriding of any given method. This is interesting because it makes it much more clear whether there could potentially be construction issues if we had a different way of initialising objects. When the \cs{virtual} keyword is required, the only method calls which could miss their intended target when used in a constructor are those which are explicitly labelled as \cs{virtual} dispatch calls.
+C\# is a useful language to investigate because it requires use of the \cs{virtual} keyword to enable overriding of any given method, otherwise defaulting to static method dispatch. This is interesting because it forces the developer to make their intent to override a method explicit, in contrast to Java where virtual dispatch is the default and occurs when the developer has simply omitted the \java{final} modifier. This makes it much more clear whether there could potentially be construction issues if we had a different way of initialising objects in place of Uniform Identity. When the \cs{virtual} keyword is required, the only method calls which could miss their intended target when used in a constructor are those which are explicitly labelled as \cs{virtual} dispatch calls.
 
 \begin{center}
 	\centering
@@ -78,7 +78,7 @@ C\# is a useful language to investigate because it requires use of the \cs{virtu
 	\label{CsResults}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
-		& Total  & Percent of methods & Percent of classes \\ \hline
+		& Total  & \% of methods & \% of classes \\ \hline
 		Projects                                                                                                       & 25     &                    &                    \\ \hline
 		Files                                                                                                          & 31615  &                    &                    \\ \hline
 		Classes                                                                                                        & 71162  &                    &                    \\ \hline
@@ -97,7 +97,7 @@ C\# is a useful language to investigate because it requires use of the \cs{virtu
 The first notable difference between the C\# results and those for Java is the drastic reduction in the number of calls to local methods from constructors, 2.43\% for C\# compared with 13.18\% for Java.
 \newline
 
-The valuable information gained from the C\# analysis which was not able to be retrieved is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.26\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rare occurrence of these cases is valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate potential construction issues under a new object initialisation environment.
+The valuable information gained from the C\# analysis which was not able to be retrieved in the Java analysis is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.26\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rare occurrence of these cases is valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate potential construction issues under a new object initialisation environment.
 \newline
 
 \subsection{Methods that couldn't be found}
