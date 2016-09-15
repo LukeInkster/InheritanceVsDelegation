@@ -42,14 +42,14 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 		& Count  & \% of classes & \% of extended classes \\ \hline
 		Projects                                                                                   & 112 &               &                        \\ \hline
 		Classes                                                                                   & 116427 &               &                        \\ \hline
-		Classes extend another class                                                                    & 71203  & 61.16\%       &                        \\ \hline
-		Classes are extended by another class                                                           & 20751  & 17.82\%       &                        \\ \hline
+		Extending Classes                                                                    & 71203  & 61.16\%       &                        \\ \hline
+		Extended Classes                                                           & 20751  & 17.82\%       &                        \\ \hline
 		Classes with forwarding                                                                         & 7087   & 6.09\%        &                        \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with forwarding\\ that extend another class\end{tabular}     & 3381   & 2.90\%        &                        \\ \hline
-		Classes with downcalls in constructors                                                          & 16101  & 13.83\%       &                        \\ \hline
-		Classes storing this in constructors                                                            & 2392   & 2.05\%        &                        \\ \hline
-		\begin{tabular}[c]{@{}l@{}}Classes with downcalls or\\ storing this in constructor\end{tabular} & 17099  & 14.69\%       &                        \\ \hline
-		\begin{tabular}[c]{@{}l@{}}Extended classes with\\ downcalls in constructors\end{tabular}       & 1545   & 1.33\%        & 7.45\%                 \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Classes with local\\ method calls in constructors\end{tabular}                                                          & 16101  & 13.83\%       &                        \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Classes storing this\\ in constructors\end{tabular}                                                            & 2392   & 2.05\%        &                        \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Classes with local method calls\\ or storing this in constructor\end{tabular} & 17099  & 14.69\%       &                        \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Extended classes with local\\ method calls in constructors\end{tabular}       & 1545   & 1.33\%        & 7.45\%                 \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Extended classes storing\\ this in constructors\end{tabular}         & 178    & 0.15\%        & 0.86\%                 \\ \hline
 		Classes with delegation                                                                         & 5183   & 4.45\%        &                        \\ \hline
 	\end{tabular}
@@ -72,6 +72,7 @@ This matches the pattern of Constructor Delegation in \ref{JavaPatterns} but , i
 \newline
 
 \subsection{Unique Class Name Assumption}
+\label{uniqueNames}
 As the Java analysis in this study was performed on source code alone, there are cases of ambiguous class names which would only be disambiguated through full namespace analysis. Because of this, the results are dependent on classes in a package being named uniquely. In cases where this assumption does not hold there is a risk classes being considered to be extended when they are not. More specifically, the question ``Is class A extended by another class" will evaluate to true when any class in the package with the name ``A" is extended by another class. This limits the accuracy of the ``Classes that are extended by another class" metric in table \ref{JavaResults}
 
 \section{C\#}
@@ -100,13 +101,15 @@ C\# is a useful language to investigate because it requires use of the \cs{virtu
 	\end{tabular}\newline\newline
 \end{center}
 
-The first notable difference between the C\# results and those for Java is the drastic reduction in the number of calls to local methods from constructors, 2.43\% for C\# compared with 13.18\% for Java.
+\subsection{Fewer Local Method Calls from Constructors}
+The first notable difference between the C\# results and those for Java is the drastic reduction in the number of calls to local methods from constructors, 2.43\% for C\# compared with 13.18\% for Java. There are likely a variety of reasons for this drastic reduction, but of note is that the Microsoft Developer Network Blog strongly discourages this practice~\cite{NoDowncalls}, and the widely used Visual Studio extension ReSharper provides IDE warnings against the practice~\cite{ResharperWarning}.
 \newline
 
-The valuable information gained from the C\# analysis which was not able to be retrieved in the Java analysis is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.26\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rare occurrence of these cases is valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate potential construction issues under a new object initialisation environment.
+\subsection{Virtual Calls from Constructors are Rare}
+The valuable information gained from the C\# analysis which could not be retrieved in the Java analysis is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.26\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rare occurrence of these cases is valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate potential construction issues under a new object initialisation environment.
 \newline
 
-\subsection{Methods that couldn't be found}
+\subsection{Methods that could not be found}
 As with Java, there were some limitations to the accuracy of the analysis performed due to some of the limitations of pure source code analysis. The limits are most obvious in the final row of \ref{CsResults} where we find that 0.67\% of classes contained a local method call where the destination of that call could not be found. This can occur when the analysis comes across a couple of cases.
 \begin{itemize}
 	\item A constructor contains a non-local method call which is indistinguishable from a local method call without more information. An example of this is the use of C\#'s \cs{using static} syntax which imports the static functions from another namespace and a allows those functions to be called in a way that looks identical to a local method call. The \cs{using static} pattern allows this code:
@@ -149,7 +152,10 @@ In C\#, however, this distinction cannot be determined from source code alone as
 class Square : Rectangle { }
 class Square : IShape { }
 \end{lstlisting}
-To counteract this, the analysis is dependent on the members of the corpus following the C\# naming conventions for interfaces as outlines by Microsoft~\cite{InterfaceNaming}. This study considers any base type to be an interface when the name of that type is a capital ``I'' followed by any other uppercase letter.
+To counteract this, the analysis is dependent on the members of the corpus following the C\# naming conventions for interfaces as outlined by Microsoft~\cite{InterfaceNaming}. This study considers any base type to be an interface when the name of that type is a capital ``I'' character followed by any other uppercase character.
+
+\subsection{Unique Class Name Assumption}
+The C\# results are dependent on the same assumption of unique class names as Java. The reasons for this match those explained in section \ref{uniqueNames}.
 
 \section{JavaScript}
 In JavaScript, there are many ways developers make use of classical inheritance patterns despite the lack of native support in the language. This is largely a result of the numerous libraries which offer their own implementation of classical inheritance behaviour. Some examples of these patterns can be found in the following table:
