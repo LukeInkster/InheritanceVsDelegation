@@ -24,7 +24,7 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 		\\ \hline
 		
 		Inheritance                    & \java{class extends anything}
-
+		
 		\\ \hline
 	\end{tabular}\newline\newline
 \end{center}
@@ -36,10 +36,12 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 
 \begin{center}
 	\captionof{table}{Java Analysis Results}
+	\label{JavaResults}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		& Count  & \% of classes & \% of extended classes \\ \hline
-		Total classes                                                                                   & 116427 &               &                        \\ \hline
+		Projects                                                                                   & 112 &               &                        \\ \hline
+		Classes                                                                                   & 116427 &               &                        \\ \hline
 		Classes extend another class                                                                    & 71203  & 61.16\%       &                        \\ \hline
 		Classes are extended by another class                                                           & 20751  & 17.82\%       &                        \\ \hline
 		Classes with forwarding                                                                         & 7087   & 6.09\%        &                        \\ \hline
@@ -57,17 +59,20 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 Due to the imprecise definition of what it means to model delegation in Java, it is expected that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some of the patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. To continue the example of the \java{Square} class, an instance of \java{Square} could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
 \begin{lstlisting}
 public Square(Canvas canvas){
-	canvas.register(this);
+canvas.register(this);
 }
 \end{lstlisting}
 And a \java{Square} could be added to the \java{Canvas} as follows:
 \begin{lstlisting}
 void addSquare(){
-	Square s = new Square(this);
+Square s = new Square(this);
 }
 \end{lstlisting}
 This matches the pattern of Constructor Delegation in \ref{JavaPatterns} but , in reality, is modelling a different intent. Because of this, the statistics gathered for delegation should be treated as an upper bound on the actual frequency of occurrence of the behaviour.
 \newline
+
+\subsection{Unique Class Name Assumption}
+As the Java analysis in this study was performed on source code alone, there are cases of ambiguous class names which would only be disambiguated through full namespace analysis. Because of this, the results are dependent on classes in a package being named uniquely. In cases where this assumption does not hold there is a risk classes being considered to be extended when they are not. More specifically, the question ``Is class A extended by another class" will evaluate to true when any class in the package with the name ``A" is extended by another class. This limits the accuracy of the ``Classes that are extended by another class" metric in table \ref{JavaResults}
 
 \section{C\#}
 C\# is a useful language to investigate because it requires use of the \cs{virtual} keyword to enable overriding of any given method, otherwise defaulting to static method dispatch. This is interesting because it forces the developer to make their intent to override a method explicit, in contrast to Java where virtual dispatch is the default and occurs when the developer has simply omitted the \java{final} modifier. This makes it much more clear whether there could potentially be construction issues if we had a different way of initialising objects in place of Uniform Identity. When the \cs{virtual} keyword is required, the only method calls which could miss their intended target when used in a constructor are those which are explicitly labelled as \cs{virtual} dispatch calls.
@@ -80,12 +85,13 @@ C\# is a useful language to investigate because it requires use of the \cs{virtu
 		\hline
 		& Total  & \% of methods & \% of classes \\ \hline
 		Projects                                                                                                       & 25     &                    &                    \\ \hline
-		Files                                                                                                          & 31615  &                    &                    \\ \hline
 		Classes                                                                                                        & 71162  &                    &                    \\ \hline
-		Extending Classes                                                                                              & 25654  &                    & 36.05\%            \\ \hline
+		Extending Classes                                                                                              & 19453  &                    & 27.34\%            \\ \hline
+		Extended Classes                                                                                              & 9580  &                    & 13.46\%            \\ \hline
 		Methods                                                                                                        & 232282 &                    &                    \\ \hline
 		Virtual Methods                                                                                                & 11194  & 4.82\%             &                    \\ \hline
 		Override Methods                                                                                               & 28815  & 12.41\%            &                    \\ \hline
+		Delegates                                                                                               & 686  &             &                    \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ methods in constructors\end{tabular}                  & 1731   &                    & 2.43\%             \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ virtual methods in constructors\end{tabular}          & 117    &                    & 0.16\%             \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ override methods in constructors\end{tabular}         & 56     &                    & 0.08\%             \\ \hline
@@ -103,15 +109,15 @@ The valuable information gained from the C\# analysis which was not able to be r
 \subsection{Methods that couldn't be found}
 As with Java, there were some limitations to the accuracy of the analysis performed due to some of the limitations of pure source code analysis. The limits are most obvious in the final row of \ref{CsResults} where we find that 0.67\% of classes contained a local method call where the destination of that call could not be found. This can occur when the analysis comes across a couple of cases.
 \begin{itemize}
-	\item A constructor contains a non-local method call which is indistinguishable from a local method call without more information. An example of this is the use of C\%'s \cs{using static} syntax which imports the static functions from another namespace and a allows those functions to be called in a way that looks identical to a local method call. The \cs{using static} pattern allows this code:
+	\item A constructor contains a non-local method call which is indistinguishable from a local method call without more information. An example of this is the use of C\#'s \cs{using static} syntax which imports the static functions from another namespace and a allows those functions to be called in a way that looks identical to a local method call. The \cs{using static} pattern allows this code:
 	\begin{lstlisting}[language=cs]
 	using System.Console;
 	class Program : SuperProgram
 	{ 
-		static void Main() 
-		{ 
-			Console.WriteLine("Hello world!"); 
-		} 
+	static void Main() 
+	{ 
+	Console.WriteLine("Hello world!"); 
+	} 
 	}
 	\end{lstlisting}
 	to be changed to this:
@@ -119,15 +125,31 @@ As with Java, there were some limitations to the accuracy of the analysis perfor
 	using static System.Console;
 	class Program : SuperProgram
 	{ 
-		static void Main() 
-		{ 
-			WriteLine("Hello world!"); 
-		} 
+	static void Main() 
+	{ 
+	WriteLine("Hello world!"); 
+	} 
 	}
 	\end{lstlisting}
 	And without information about the contents of \cs{System.Console}, it is not possible to determine that \cs{WriteLine()} is a function defined in that namespace.
 	\item A class extends a class in a pre-compiled library. If a call is made from a constructor to a local virtual or abstract method defined in a pre-compiled superclass then, unless that method has been overridden by the class being analysed, there is no way to know that the method was virtual or abstract.
 \end{itemize}
+
+\subsection{Superclasses and Interfaces}
+In Java, source code alone clearly identifies the distinction between extending a class and implementing an interface. An inheritance relationship is written as
+\begin{lstlisting}[language=java]
+class Square extends Rectangle { }
+\end{lstlisting}
+whereas indicating that a class implements a given interface is written as
+\begin{lstlisting}[language=java]
+class Square implements Shape { }
+\end{lstlisting}
+In C\#, however, this distinction cannot be determined from source code alone as the syntax elements for both are identical.
+\begin{lstlisting}[language=cs]
+class Square : Rectangle { }
+class Square : IShape { }
+\end{lstlisting}
+To counteract this, the analysis is dependent on the members of the corpus following the C\# naming conventions for interfaces as outlines by Microsoft~\cite{InterfaceNaming}. This study considers any base type to be an interface when the name of that type is a capital ``I'' followed by any other uppercase letter.
 
 \section{JavaScript}
 In JavaScript, there are many ways developers make use of classical inheritance patterns despite the lack of native support in the language. This is largely a result of the numerous libraries which offer their own implementation of classical inheritance behaviour. Some examples of these patterns can be found in the following table:
@@ -153,7 +175,7 @@ The JavaScript analysis in this study makes extensive use of the prior work in d
 \section{Lua}
 Table \ref{LuaResults} shows a variety of patterns often representative of class usage and the percentage of files in the corpus which exhibit one or more of those patterns.\newline
 
-Often functions called class() will be created to encapsulate the \java{setmetatable()} logic which is used to create classes. It is also common to declare functions with the name "new" for use as constructors.
+Often functions called class() will be created to encapsulate the \java{setmetatable()} logic which is used to create classes. It is also common to declare functions with the name ``new" for use as constructors.
 
 \begin{center}
 	\captionof{table}{Lua Analysis Results}
