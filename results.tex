@@ -59,13 +59,13 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 Due to the imprecise definition of what it means to model delegation in Java, it is expected that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some of the patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. To continue the example of the \java{Square} class, an instance of \java{Square} could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
 \begin{lstlisting}
 public Square(Canvas canvas){
-canvas.register(this);
+	canvas.register(this);
 }
 \end{lstlisting}
 And a \java{Square} could be added to the \java{Canvas} as follows:
 \begin{lstlisting}
 void addSquare(){
-Square s = new Square(this);
+	Square s = new Square(this);
 }
 \end{lstlisting}
 This matches the pattern of Constructor Delegation in \ref{JavaPatterns} but , in reality, is modelling a different intent. Because of this, the statistics gathered for delegation should be treated as an upper bound on the actual frequency of occurrence of the behaviour.
@@ -110,28 +110,28 @@ The valuable information gained from the C\# analysis which could not be retriev
 \newline
 
 \subsection{Methods that could not be found}
-As with Java, there were some limitations to the accuracy of the analysis performed due to some of the limitations of pure source code analysis. The limits are most obvious in the final row of \ref{CsResults} where we find that 0.67\% of classes contained a local method call where the destination of that call could not be found. This can occur when the analysis comes across a couple of cases.
+As with Java, there were some limitations to the accuracy of the analysis performed due to some of the limitations of pure source code analysis. The limits are most obvious in the final row of table \ref{CsResults} where we find that 0.67\% of classes contained a local method call where the destination of that call could not be found. This can occur when the analysis comes across a couple of cases.
 \begin{itemize}
-	\item A constructor contains a non-local method call which is indistinguishable from a local method call without more information. An example of this is the use of C\#'s \cs{using static} syntax which imports the static functions from another namespace and a allows those functions to be called in a way that looks identical to a local method call. The \cs{using static} pattern allows this code:
+	\item A constructor contains a non-local method call which is indistinguishable from a local method call without more information. An example of this is the use of C\#'s \cs{using static} syntax which imports the static functions from another namespace and a allows those functions to be called in a way that looks identical to a local method call. The \cs{using static} pattern allows the following code:
 	\begin{lstlisting}[language=cs]
 	using System.Console;
 	class Program : SuperProgram
 	{ 
-	static void Main() 
-	{ 
-	Console.WriteLine("Hello world!"); 
-	} 
+		static void Main() 
+		{ 
+			Console.WriteLine("Hello world!"); 
+		} 
 	}
 	\end{lstlisting}
-	to be changed to this:
+	to be replaced with this implementation:
 	\begin{lstlisting}[language=cs]
 	using static System.Console;
 	class Program : SuperProgram
 	{ 
-	static void Main() 
-	{ 
-	WriteLine("Hello world!"); 
-	} 
+		static void Main() 
+		{ 
+			WriteLine("Hello world!"); 
+		} 
 	}
 	\end{lstlisting}
 	And without information about the contents of \cs{System.Console}, it is not possible to determine that \cs{WriteLine()} is a function defined in that namespace.

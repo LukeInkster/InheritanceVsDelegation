@@ -1,5 +1,5 @@
 \chapter{Code Patterns}\label{C:bg}
-To determine how developers are using delegation and inheritance, the first stage is to define methods to identifying each. This is achieved by defining code patterns which, when found in a project, indicate the use of delegation or inheritance. This chapter outlines the patterns which are representative of forwarding, delegation and uniform identity.
+To determine how developers are using delegation and inheritance, the first stage is to define a clear way of identifying the behaviour each pattern. This is achieved by defining code patterns which, when found in a project, indicate the use of delegation or inheritance. This chapter outlines the patterns which are representative of forwarding, delegation and uniform identity.
 
 \section{Forwarding}
 Under a forwarding model of object inheritance, calls to \java{this.f(...)} are passed to some \java{other.f(...)}, transferring any necessary information as call parameters.
@@ -29,7 +29,7 @@ In Java, this involves searching for patterns where an object's method does very
 If the receiver of a forwarded request were to hold state about an object delegating to it then it would likely run into issues if other objects also forward requests to it. Likewise, if the system were re-implemented with a stateful forwarding recipient in a language which supports forwarding as object inheritance then it would run into the same problems when sharing it between parents.
 
 \section{Delegation}
-Delegation can be seen as forwarding \java{this.f(...)} calls to \java{other.f(...)} \textbf{on behalf of this.} That is, call \java{other.f(...)} but have the self reference within that call set to my self reference.
+Delegation is often described as forwarding \java{this.f(...)} calls to \java{other.f(...)} \textbf{on behalf of this.} That is, dispatch the call to \java{other.f(...)} but have the self reference within that call point back to my self reference.
 \newline
 
 In this example, the \java{Square} object is delegating responsibility for area calculation to the \java{SquareAreaCalcuator}. The \java{SquareAreaCalculator} contains a final field to point to the self reference of a single \java{Square} object which indicates that the \java{SquareAreaCalculator} belongs to one instance of \java{Square} and always will. In an object delegation model the public final field could be removed, instead opting to have the self reference of the \java{SquareAreaCalculator} set to the self reference of the \java{Square} object.
