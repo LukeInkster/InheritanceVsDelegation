@@ -12,14 +12,14 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 		
 		\\ \hline
 		
-		Forwarding                     & \java{anything name (anything)\{} \newline  \hphantom{----}\java{return identifier{[}.identifier{]}*.name(anything);} \newline
+		Forwarding                     & \java{Anything name (anything)\{} \newline  \hphantom{----}\java{return identifier{[}.identifier{]}*.name(anything);} \newline
 		\java{\}}  \\ 
 		\hline
 		
-		Call Delegation                     & \java{anything name (anything) \{} \newline   \hphantom{----}\java{return identifier{[}.identifier{]}*.name(this);} \newline \java{\}}		
+		Call Delegation                     & \java{Anything name (anything) \{} \newline   \hphantom{----}\java{return identifier{[}.identifier{]}*.name(this);} \newline \java{\}}		
 		\\ \hline
 		
-		Constructor Delegation & \java{anything anything = new anything ( this )}
+		Constructor Delegation & \java{Anything anything = new anything ( this )}
 		
 		\\ \hline
 		
@@ -189,7 +189,7 @@ Often functions called class() will be created to encapsulate the \java{setmetat
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		Pattern                 & Test               & Result & Percentage \\ \hline
-		= setmetatable()        &                    &        &            \\ \hline
+		= setmetatable(        &                    &        &            \\ \hline
 		& Total matches      & 135    &            \\ \hline
 		& Files with matches & 74     & 2.67\%     \\ \hline
 		class(                  &                    &        &            \\ \hline
