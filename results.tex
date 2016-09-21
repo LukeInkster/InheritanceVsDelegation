@@ -56,6 +56,7 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 \end{center}
 
 \subsection{Detecting Delegation}
+\label{DetectingDelegation}
 Due to the imprecise definition of what it means to model delegation in Java, it is expected that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some of the patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. To continue the example of the \java{Square} class, an instance of \java{Square} could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
 \begin{lstlisting}
 public Square(Canvas canvas){
@@ -110,35 +111,37 @@ The valuable information gained from the C\# analysis which could not be retriev
 \newline
 
 \subsection{Methods that could not be found}
+\label{MethodNotFound}
 As with Java, there were some limitations to the accuracy of the analysis performed due to some of the limitations of pure source code analysis. The limits are most obvious in the final row of table \ref{CsResults} where we find that 0.67\% of classes contained a local method call where the destination of that call could not be found. This can occur when the analysis comes across a couple of cases.
 \begin{itemize}
 	\item A constructor contains a non-local method call which is indistinguishable from a local method call without more information. An example of this is the use of C\#'s \cs{using static} syntax which imports the static functions from another namespace and a allows those functions to be called in a way that looks identical to a local method call. The \cs{using static} pattern allows the following code:
 	\begin{lstlisting}[language=cs]
-	using System.Console;
-	class Program : SuperProgram
+using System.Console;
+class Program : SuperProgram
+{ 
+	static void Main() 
 	{ 
-		static void Main() 
-		{ 
-			Console.WriteLine("Hello world!"); 
-		} 
-	}
+		Console.WriteLine("Hello world!"); 
+	} 
+}
 	\end{lstlisting}
 	to be replaced with this implementation:
 	\begin{lstlisting}[language=cs]
-	using static System.Console;
-	class Program : SuperProgram
+using static System.Console;
+class Program : SuperProgram
+{ 
+	static void Main() 
 	{ 
-		static void Main() 
-		{ 
-			WriteLine("Hello world!"); 
-		} 
-	}
+		WriteLine("Hello world!"); 
+	} 
+}
 	\end{lstlisting}
 	And without information about the contents of \cs{System.Console}, it is not possible to determine that \cs{WriteLine()} is a function defined in that namespace.
 	\item A class extends a class in a pre-compiled library. If a call is made from a constructor to a local virtual or abstract method defined in a pre-compiled superclass then, unless that method has been overridden by the class being analysed, there is no way to know that the method was virtual or abstract.
 \end{itemize}
 
 \subsection{Superclasses and Interfaces}
+\label{interfaceNaming}
 In Java, source code alone clearly identifies the distinction between extending a class and implementing an interface. An inheritance relationship is written as
 \begin{lstlisting}[language=java]
 class Square extends Rectangle { }
@@ -181,7 +184,7 @@ The JavaScript analysis in this study makes extensive use of the prior work in d
 \section{Lua}
 Table \ref{LuaResults} shows a variety of patterns often representative of class usage and the percentage of files in the corpus which exhibit one or more of those patterns.\newline
 
-Often functions called class() will be created to encapsulate the \java{setmetatable()} logic which is used to create classes. It is also common to declare functions with the name ``new" for use as constructors.
+Often functions called \code{class()} will be created to encapsulate the \java{setmetatable()} logic which is used to create classes. It is also common to declare functions with the name \code{new()} for use as constructors.
 
 \begin{center}
 	\captionof{table}{Lua Analysis Results}
@@ -202,48 +205,31 @@ Often functions called class() will be created to encapsulate the \java{setmetat
 		& Total matches      & 653    &            \\ \hline
 		& Files with matches & 473    & 17.04\%    \\ \hline
 	\end{tabular}
-\end{center}{
-
-
-
-
-
-
-
-
-
-
-\iffalse
-\subsection{Results from GREP}
-\begin{center}
-	%\captionof{table}{C\# Analysis Results}
-	\label{CsResults}
-	\begin{tabular}{|l|l|l|l|}
-		\hline
-		& Count   & Percent of files & Percent of methods \\ \hline
-		Total projects                       & 25      &                  &                    \\ \hline
-		Total C\# files                      & 73094   &                  &                    \\ \hline
-		Total methods                        & 1415919 &                  &                    \\ \hline
-		Files with methods                   & 67480   & 92.32\%          &                    \\ \hline
-		Average methods per file             & 19.37   &                  &                    \\ \hline
-		&         &                  &                    \\ \hline
-		Total override methods               & 85347   &                  & 6.03\%             \\ \hline
-		Files with override methods          & 18437   & 25.22\%          &                    \\ \hline
-		Average override methods per file    & 1.17    &                  &                    \\ \hline
-		&         &                  &                    \\ \hline
-		Total virtual methods                & 27668   &                  & 1.95\%             \\ \hline
-		Files with virtual methods           & 4553    & 6.23\%           &                    \\ \hline
-		Average virtual methods per file     & 0.38    &                  &                    \\ \hline
-		&         &                  &                    \\ \hline
-		Total classes                        & 159680  &                  &                    \\ \hline
-		Files with classes                   & 59488   & 81.39\%          &                    \\ \hline
-		Average classes per file             & 2.18    &                  &                    \\ \hline
-		&         &                  &                    \\ \hline
-		Classes that extend                  & 50442   &                  &                    \\ \hline
-		Files with classes that extend       & 30424   & 41.62\%          &                    \\ \hline
-		Average classes that extend per file & 0.69    &                  &                    \\ \hline
-		Percent of classes that extend       & 31.59\% &                  &                    \\ \hline
-	\end{tabular}
 \end{center}
-Here, we find that just 1.95\% of all method declarations contain the \cs{virtual} keyword.
-\fi
+
+These results show that the proportion of Lua developers making use of classical inheritance patterns is high, with around 17\% of all Lua files in the examined corpus presenting class-like behaviour of some kind.
+
+\section{Evaluation}
+The accuracy of the results of this study can be measured in terms of false positives against true positives and false negatives against true negatives. These can each be measured in different ways, but the process of testing for false positives is easier and more reliable than testing false negatives.
+\newline
+
+False positives occur when the algorithms used to detect patterns in the corpora claim to have found an instance of that pattern, but the code does not match the definition exactly. Detecting false positives in the data can be achieved by investigating the results returned as matches against the patterns in the analysis to determine whether the are, in fact, exhibiting the behaviour for which the pattern is searching. In cases where the algorithms used to detect the patterns could be modified to ignore the false positives, the were, but in cases where the algorithms could not be easily fixed, this has been explained. Examples of these are as follows.
+\begin{itemize}
+	\item False positives may be returned for extendedness when the interface naming assumption explained in section \ref{interfaceNaming} fails and an interface is named in a way that makes in indistinguishable from a class.
+	\item False positives may be returned for extendedness when the unique class name assumption explained in section \ref{uniqueNames} fails as classes may be considered extended when another class of the identical name is extended.
+	\item False positives for delegation can occur when developers use code patterns which look identical to those of delegation but are modelling different intents. This is explained in more detail in section \ref{DetectingDelegation}.
+	\newline
+\end{itemize} 
+
+False negatives occur when the algorithms overlook code segments in the corpora which fulfil the criteria to be defined as an instance of the patterns under investigation. Examples of these cases are as follows.
+\begin{itemize}
+	\item There is room for false negatives in the C\# statistics on calls to local methods from constructors. The accuracy of this data is limited by the problem of inaccessible external code and the \cs{using static} pattern as explained in section \ref{MethodNotFound}. This is reflected in the final row of the table which measures the number of calls from constructors where the receiver of the call could not be found.
+\end{itemize}
+
+
+
+
+
+
+
+

@@ -4,6 +4,7 @@
 There are some innate limitations to the data which can be gathered through static analysis of source code as carried out in this study. These limitations are largely a result of two factors. First, the inability to analyse code which is used by, but is not part of, the project; second, the disconnect between how often particular patterns are written (static frequency) and how often they are actually used during execution (dynamic frequency).
 
 \subsection{Inaccessible External Code}
+\label{InaccessibleCode}
 When only analysing source files, it is not possible to collect information about pre-compiled units which are used by those source files at runtime~\cite{StaticAnalysisLimits}. An example of where this can limit the effectiveness of the analysis in this study is the absence of information about calls dispatched to a superclass when that superclass is defined in a pre-compiled library. If a source file defines a class \code{A} which extends a class \code{B} where \code{B} is defined in a library with inaccessible source code, we cannot determine whether a local call in \code{A} to a method defined on \code{B} will be dispatched statically or virtually because we cannot see the method declaration. This could cause unforeseen changes to the behaviour of the methods on \code{A} if another class \code{C} were to extend \code{A} and override methods from \code{B} which we were previously unaware were virtually dispatched calls.
 
 \subsection{Static vs. Dynamic Frequency}
