@@ -24,7 +24,8 @@ class SquareAreaCalculator{
 }
 \end{lstlisting}
 
-In Java, this involves searching for patterns where an object's method does very little work besides forwarding the call to method on another object. This is the simplest form of transferring responsibility to another class and should be independent from any state held by the forwardee. This is because needs to be able respond correctly to requests from other forwarders without influence from state set in previous requests.
+In Java, detecting this behaviour involves searching for patterns where an object contains method which does very little work besides forwarding the call to a method on another object. This is the simplest form of transferring responsibility to another class and should be independent from any state held by the forwardee. This is because needs to be able respond correctly to requests from other forwarders without influence from state set in previous requests.
+\newline
 
 If the receiver of a forwarded request were to hold state about an object delegating to it then it would likely run into issues if other objects also forward requests to it. Likewise, if the system were re-implemented with a stateful forwarding recipient in a language which supports forwarding as object inheritance then it would run into the same problems when sharing it between parents.
 

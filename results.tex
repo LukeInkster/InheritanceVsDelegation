@@ -160,6 +160,105 @@ To counteract this, the analysis is dependent on the members of the corpus follo
 \subsection{Unique Class Name Assumption}
 The C\# results are dependent on the same assumption of unique class names as Java. The reasons for this match those explained in section \ref{uniqueNames}.
 
+\subsection{Distribution of Number of Subclasses}
+The C\# analysis conducted as part of this study resulted in an interesting finding relating to the distribution of the number of subclasses across the classes in the corpus. The analysis revealed that the number of subclasses of C\# classes approximates a power law distribution. This distribution can be seen in the following chart:
+
+\begin{figure}[H]
+	\label{CSharpSubclassDistribution}
+	\captionof{figure}{Distribution of Number of Subclasses C\# (Log Scale)}
+	\begin{center}
+		
+	\begin{tikzpicture}
+	\begin{axis}[
+		xmode = log,
+		ymode = log,
+		xlabel = Number of Subclasses,
+		ylabel = Frequency,
+		%title = Distribution of Number of Subclasses C\# (Log Scale)
+	]
+	\addplot [line width=1pt] table {
+		1	3492
+		2	1083
+		3	401
+		4	261
+		5	192
+		6	107
+		7	59
+		8	73
+		9	34
+		10	25
+		11	28
+		12	20
+		13	18
+		14	12
+		15	18
+		16	12
+		17	8
+		18	9
+		19	6
+		20	10
+		21	3
+		22	3
+		23	2
+		25	7
+		26	5
+		27	2
+		28	4
+		29	6
+		30	2
+		31	2
+		32	2
+		33	2
+		34	2
+		35	2
+		36	4
+		37	1
+		39	1
+		40	1
+		42	4
+		45	2
+		46	1
+		48	1
+		49	2
+		50	2
+		52	2
+		53	1
+		55	2
+		60	1
+		61	1
+		62	1
+		63	3
+		64	2
+		65	1
+		66	1
+		67	2
+		72	1
+		75	1
+		78	1
+		84	1
+		86	1
+		87	1
+		112	1
+		114	1
+		116	1
+		125	1
+		131	2
+		134	2
+		157	1
+		158	1
+		160	1
+		197	1
+		199	1
+		208	1
+		226	1
+		302	1
+	};
+	
+	\end{axis}
+	\end{tikzpicture}
+	\end{center}
+\end{figure}
+
 \section{JavaScript}
 In JavaScript, there are many ways developers make use of classical inheritance patterns despite the lack of native support in the language. This is largely a result of the numerous libraries which offer their own implementation of classical inheritance behaviour. Some examples of these patterns can be found in the following table:
 \begin{center}
@@ -205,9 +304,11 @@ Often functions called \code{class()} will be created to encapsulate the \java{s
 		& Total matches      & 653    &            \\ \hline
 		& Files with matches & 473    & 17.04\%    \\ \hline
 	\end{tabular}
+	\newline\newline
 \end{center}
 
 These results show that the proportion of Lua developers making use of classical inheritance patterns is high, with around 17\% of all Lua files in the examined corpus presenting class-like behaviour of some kind.
+
 
 \section{Evaluation}
 The accuracy of the results of this study can be measured in terms of false positives against true positives and false negatives against true negatives. These can each be measured in different ways, but the process of testing for false positives is easier and more reliable than testing false negatives.
