@@ -142,7 +142,7 @@
 %DIFDELCMD < %%%
 \DIFdelend \DIFaddbegin \newpage \DIFaddend \begin{abstract}
 
-This report covers an empirical study of how delegation and inheritance are used in existing programming languages. The aim of this study is to answer the question "Is delegation useful?" in a way that can be used to drive the design of new programming languages. This is achieved through an exploration of patterns of delegation and inheritance in languages which support their implementation and through a comparison of the uses of both.
+This report covers an empirical study of how delegation and inheritance are used in existing programming languages. The aim of this study is to answer the question \DIFdelbegin \DIFdel{"}\DIFdelend \DIFaddbegin \DIFadd{``}\DIFaddend Is delegation useful?" in a way that can be used to drive the design of new programming languages. This is achieved through an exploration of patterns \DIFdelbegin \DIFdel{of }\DIFdelend \DIFaddbegin \DIFadd{representing }\DIFaddend delegation and inheritance in languages which support their implementation \DIFdelbegin \DIFdel{and through }\DIFdelend \DIFaddbegin \DIFadd{followed by }\DIFaddend a comparison of \DIFdelbegin \DIFdel{the uses of both}\DIFdelend \DIFaddbegin \DIFadd{their use}\DIFaddend .
 
 \end{abstract} \DIFaddbegin \newpage 
 \DIFaddend 
@@ -172,34 +172,40 @@ This report covers an empirical study of how delegation and inheritance are used
 %DIFDELCMD < %%%
 \DIFdelend % individual chapters included here
  \newpage \chapter{Introduction}\label{C:intro}
-The aim of this study is to \DIFdelbegin \DIFdel{provide a }\DIFdelend \DIFaddbegin \DIFadd{determine whether delegation is useful in modern programming languages and whether it could replace a classical object inheritance model in existing software projects. This involves first providing a }\DIFaddend clearer understanding of the ways delegation and classical inheritance are used in real world software development projects across programming languages with varying native support for each. \DIFdelbegin \DIFdel{This is achieved by examining existing examples of software projects }\DIFdelend \DIFaddbegin \DIFadd{To achieve this, corpora of existing software projects are examined }\DIFaddend to produce empirical evidence of the frequency at which these two structures are used in typical \DIFdelbegin \DIFdel{programs}\DIFdelend \DIFaddbegin \DIFadd{software projects}\DIFaddend .
+The aim of this study is to \DIFdelbegin \DIFdel{provide a clearer understanding of the ways }\DIFdelend \DIFaddbegin \DIFadd{determine the usefulness of delegation in modern programming languages. It also explores replacing classical object inheritance models in existing software projects with that of delegation. A clearer understanding must be formed detailing the use of }\DIFaddend delegation and classical inheritance \DIFdelbegin \DIFdel{are used }\DIFdelend in real world software development projects\DIFdelbegin \DIFdel{across programming }\DIFdelend \DIFaddbegin \DIFadd{. These projects must cover }\DIFaddend languages with varying native support for \DIFdelbegin \DIFdel{each. This is achieved by examining existing examples of software projects }\DIFdelend \DIFaddbegin \DIFadd{the object inheritance models. In order }\DIFaddend to produce empirical evidence of the frequency at which these \DIFdelbegin \DIFdel{two structures are used in typical programs}\DIFdelend \DIFaddbegin \DIFadd{structures are utilised in typical software projects, the corpora of existing projects are examined}\DIFaddend .
 
 \section{Motivation}
-Code reuse mechanisms are a vital aspect of software development. They allow engineers to write code once and make use of it in various places without duplicating that code. Code reuse aims to reduce the time and resources required to produce a software system by maximising the usefulness of each asset produced. Reuse of code also ensures that, when changes must be made to the system, a single software modification can enact the desired change in more areas of the program.
+Code reuse mechanisms are a vital aspect of software development. They allow engineers to write code once and make use of \DIFdelbegin \DIFdel{it }\DIFdelend \DIFaddbegin \DIFadd{the code }\DIFaddend in various places without duplicating \DIFdelbegin \DIFdel{that code}\DIFdelend \DIFaddbegin \DIFadd{it}\DIFaddend . Code reuse aims to reduce the time and resources required to produce a software system by maximising the \DIFdelbegin \DIFdel{usefulness }\DIFdelend \DIFaddbegin \DIFadd{use }\DIFaddend of each asset produced. Reuse of code also ensures that, when changes must be made to the system, a single software modification can enact the desired change in more areas of the program.
 \newline
-Typically, code reuse takes two major forms:
+Typically, code reuse \DIFdelbegin \DIFdel{takes }\DIFdelend \DIFaddbegin \DIFadd{mechanisms take }\DIFaddend two major forms:
 \begin{itemize}
 	\item Inheritance - Inheriting the properties of some parent object to a child object.
 	\item Delegation - Objects pass messages to other objects, delegating responsibility to them.
 \end{itemize}
-Each of these has its uses and comes with distinct advantages and disadvantages. Languages built with native support for delegation object models typically encourage delegation of responsibility over inheriting properties where possible. In contrast, languages built with native support for classical inheritance will usually encourage developers to reuse code through inheritance relationships between classes.
+Each of these \DIFdelbegin \DIFdel{has its uses }\DIFdelend \DIFaddbegin \DIFadd{is optimised for different scenarios }\DIFaddend and comes with distinct advantages and disadvantages. Languages built with native support for delegation object models typically encourage delegation of responsibility over inheriting properties where possible. In contrast, languages built with native support for classical inheritance will usually encourage developers to reuse code through inheritance relationships between classes.
 
 \section{Proposed Solution}
 To determine the use of delegation relative to classical inheritance, this study will compare the prevalence of patterns representative of delegation in inheritance based languages and the prevalence of class usage in languages which do not natively support classical inheritance. This investigation involves employing a variety of code analysis tools to detect these patterns from representative samples of each language. The collected data will be used in an empirical analysis to determine the extent to which programmers in each language are making use of each pattern.
 
 \section{Goals}
-The goal of this study is to answer the question "Is delegation useful?". The question will be investigated by studying the extent to which developers make use of delegation in their software projects and the ways they could if their language had stronger native support. The results can inform the design of new programming languages which must, to some extent, make a choice between an inheritance or delegation based object model. The study will be a success if it is able to produce information which can drive design decisions in new programming languages by offering an empirical perspective on the use of delegation and inheritance across software development projects in existing languages. \newpage 
+The goal of this study is to answer the question \DIFdelbegin \DIFdel{"}\DIFdelend \DIFaddbegin \DIFadd{``}\DIFaddend Is delegation useful?". \DIFdelbegin \DIFdel{The }\DIFdelend \DIFaddbegin \DIFadd{This }\DIFaddend question will be investigated by studying the extent to which developers make use of delegation in their software projects and \DIFdelbegin \DIFdel{the ways they could if their language had stronger native }\DIFdelend \DIFaddbegin \DIFadd{whether this might increase with stronger language-level }\DIFaddend support. The results can inform the design of new programming languages which must, to some extent, make a choice between \DIFdelbegin \DIFdel{an inheritance or }\DIFdelend \DIFaddbegin \DIFadd{classical inheritance or a }\DIFaddend delegation based object model.
+\DIFaddbegin \newline
+
+\DIFadd{The next stage is to investigate software written under a classical inheritance model to determine which components of their implementation are dependent on the model. This will provide a collection of examples which would be difficult to reimplement under a delegation model. From these examples, an investigation can be carried out to determine how much effort it would be expected to take to move these projects to a delegation model.
+}\newline
+
+\DIFaddend The study will be a success if it is able to produce information which can drive design decisions in new programming languages by offering an empirical perspective on the use of delegation and inheritance across software development projects in existing languages. \newpage 
  \newpage \chapter{Literature Review}\label{C:us}
 \section{Object Inheritance Models}
 The paper \textit{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}} by Tim Jones discusses a variety of different object inheritance models and the inherent benefits and limitations of each. This paper also describes the Uniform Identity model where objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. From this work, it becomes evident which Java programs are dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Classes which are dependent on the Uniform Identity model can be expected to be more difficult to reimplement in a language without that native support. Additionally, this information shows which patterns could be rewritten under other inheritance models without requiring much modification and, in some cases, more concisely.
 \newline
 
-Henry Lieberman's 1986 paper \textit{Using Prototypical Objects to Implement Shared Behavior in Object Oriented Systems~\cite{UsingPrototypicalObjects}} coins the term "Delegation" with respect to software language design. Lieberman provides a plain English example of delegation which allows a reader to clearly understand the concept he is describing:
+Henry Lieberman's 1986 paper \textit{Using Prototypical Objects to Implement Shared Behavior in Object Oriented Systems~\cite{UsingPrototypicalObjects}} coins the term \DIFdelbegin \DIFdel{"}\DIFdelend \DIFaddbegin \DIFadd{``}\DIFaddend Delegation" with respect to software language design. Lieberman provides a plain English example of delegation which allows a reader to clearly understand the concept he is describing:
 \begin{displayquote}\DIFdelbegin \DIFdel{When a pen delegates a draw message to a prototypical pen, it is saying "I don't know how to handle the draw message. I'd like you answer it for me if you can, but if you have any further questions, like what is the value of my x variable, or need anything done, you should come back to me and ask."~\mbox{%DIFAUXCMD
 \cite{UsingPrototypicalObjects}
 }%DIFAUXCMD
 }\DIFdelend \DIFaddbegin \textit{\DIFadd{
-	When a pen delegates a draw message to a prototypical pen, it is saying "I don't know how to handle the draw message. I'd like you answer it for me if you can, but if you have any further questions, like what is the value of my x variable, or need anything done, you should come back to me and ask."~\mbox{%DIFAUXCMD
+	When a pen delegates a draw message to a prototypical pen, it is saying ``I don't know how to handle the draw message. I'd like you answer it for me if you can, but if you have any further questions, like what is the value of my x variable, or need anything done, you should come back to me and ask."~\mbox{%DIFAUXCMD
 \cite{UsingPrototypicalObjects}
 }%DIFAUXCMD
 }}
@@ -236,7 +242,7 @@ makes Java's approach to this problem of superclass constructor downcalls clear:
 }%DIFAUXCMD
 }}
 \end{displayquote}
-\DIFadd{To give a short example of this, when constructing an instance of }\code{B} \DIFadd{in the following program, the call to }\code{m()} \DIFadd{in A's constructor will execute the method }\code{m()} \DIFadd{declared on }\code{B}\DIFadd{, printing the string "B".
+\DIFadd{To give a short example of this, when constructing an instance of }\code{B} \DIFadd{in the following program, the call to }\code{m()} \DIFadd{in A's constructor will execute the method }\code{m()} \DIFadd{declared on }\code{B}\DIFadd{, printing the string ``B".
 }\begin{lstlisting}
 \DIFadd{class A}{
 	\DIFadd{A()}{ \DIFadd{this.m(); }}
@@ -251,7 +257,7 @@ makes Java's approach to this problem of superclass constructor downcalls clear:
 }
 
 \DIFaddend \section{JavaScript Analysis}
-\textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}} explores the prevalence of classical inheritance patterns in a JavaScript corpus. JavaScript is a useful language to investigate for this study because it provides many examples where developers are deliberately using a language built for delegation and object based inheritance to model classical inheritance structures. The paper explores the ways in which JavaScript developers typically model class inheritance and the ways these patterns can be detected in corpora of JavaScript projects. As part of this paper, the researchers also create a tool named JSClassFinder which serves the purpose of identifying both class declaration patterns and method declaration patterns. The statistics returned by this tool can then be analysed to determine the extent to which JavaScript developers are working around the language's inbuilt structures. The researchers also defined the term "Class Usage Ratio" which is a measure of the proportion of functions in a JavaScript project which are used to model class behaviour. This Class Usage Ratio is defined as:
+\textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}} explores the prevalence of classical inheritance patterns in a JavaScript corpus. JavaScript is a useful language to investigate for this study because it provides many examples where developers are deliberately using a language built for delegation and object based inheritance to model classical inheritance structures. The paper explores the ways in which JavaScript developers typically model class inheritance and the ways these patterns can be detected in corpora of JavaScript projects. As part of this paper, the researchers also create a tool named JSClassFinder which serves the purpose of identifying both class declaration patterns and method declaration patterns. The statistics returned by this tool can then be analysed to determine the extent to which JavaScript developers are working around the language's inbuilt structures. The researchers also defined the term \DIFdelbegin \DIFdel{"}\DIFdelend \DIFaddbegin \DIFadd{``}\DIFaddend Class Usage Ratio" which is a measure of the proportion of functions in a JavaScript project which are used to model class behaviour. This Class Usage Ratio is defined as:
 \[CUR = \frac{\left\vert methods \right\vert + \left\vert classes \right\vert}{\left\vert functions \right\vert}\]
 In this ratio, a class is considered to be any function which is used to mirror classical inheritance behaviour. Methods are functions which are held as members of instances of classes and perform some action related to that class~\cite{JSClassFinder}.
 
@@ -277,7 +283,7 @@ A further interesting finding of the study was a fairly wide variation in the oc
 \cite{JavaMicropatterns}
 }%DIFAUXCMD
 }\DIFdelend \DIFaddbegin \textit{\DIFadd{
-	Micro patterns are similar to design patterns, except standing at a lower, closer to the implementation, level of abstraction."~\mbox{%DIFAUXCMD
+	Micro patterns are similar to design patterns, except standing at a lower, closer to the implementation, level of abstraction.~\mbox{%DIFAUXCMD
 \cite{JavaMicropatterns}
 }%DIFAUXCMD
 }}\DIFaddend \end{displayquote}
@@ -318,7 +324,7 @@ The authors of \textit{How Do Java Programs Use Inheritance? An Empirical Study 
 }
 
 \DIFaddend \section{Analysing Corpora}
-\textit{The Qualitas Corpus: A Curated Collection of Java Code for Empirical Studies~\cite{QualitasCorpus}} discusses many of the choices behind the construction of the Qualitas Corpus. A corpus is defined as \textit{"a collection of writings, conversations, speeches, etc., that people use to study and describe a language"}. In the Qualitas Corpus, the collection is of projects written in the Java programming language. This paper explores the reasoning behind the choices which led to the structure of the corpus as it is. Notably, the paper clarifies that the Java language was chosen for a few specific reasons:
+\textit{The Qualitas Corpus: A Curated Collection of Java Code for Empirical Studies~\cite{QualitasCorpus}} discusses many of the choices behind the construction of the Qualitas Corpus. A corpus is defined as \textit{\DIFdelbegin \DIFdel{"}\DIFdelend \DIFaddbegin \DIFadd{``}\DIFaddend a collection of writings, conversations, speeches, etc., that people use to study and describe a language"}. In the Qualitas Corpus, the collection is of projects written in the Java programming language. This paper explores the reasoning behind the choices which led to the structure of the corpus as it is. Notably, the paper clarifies that the Java language was chosen for a few specific reasons:
 \begin{itemize}
 	\item Open source Java code is abundant and easy to find. Much more so than C\#, and similarly to C++.
 	\item Java code tends to be relatively easier to parse and analyse than many other languages including C++ due to the simpler grammar of the language.\DIFaddbegin \newline
@@ -469,7 +475,7 @@ All examples of classical inheritance in Java follow the Uniform Identity constr
 .
 	}\DIFaddend \item Esprima accepts a JavaScript \DIFaddbegin \DIFadd{code }\DIFaddend file as input and produces a JSON representation of the syntax tree of that file \DIFaddbegin \DIFadd{as output}\DIFaddend . This JSON file \DIFdelbegin \DIFdel{is then }\DIFdelend \DIFaddbegin \DIFadd{can then be }\DIFaddend used as the input to \DIFdelbegin \DIFdel{JSClassFinder}\DIFdelend \DIFaddbegin \DIFadd{the JSClassFinder tool}\DIFaddend .
 \end{itemize}
-Each of these tools helps to extract valuable information from one of more of the languages analysed in this study.
+Each of these tools helps to extract valuable information from one \DIFdelbegin \DIFdel{of }\DIFdelend \DIFaddbegin \DIFadd{or }\DIFaddend more of the languages analysed in this study.
 
 \section{\DIFdelbegin \DIFdel{Selecting Languages}\DIFdelend \DIFaddbegin \DIFadd{Java Analysis}\DIFaddend }
 \DIFdelbegin \DIFdel{The languages which have been explored thus far are limited to Java and JavaScript. These languages were covered first because they both have large open source communities and they differ on their native method of object inheritance which provides a good avenue for comparison. The other languages which will be explored in the remainder of the project are Python, Lua and Scala. These are included to ensure that a wide enough variety of languages are analysed that it is possible to make conclusions about the usage of delegation and inheritance across languages.
@@ -480,16 +486,14 @@ Each of these tools helps to extract valuable information from one of more of th
 \DIFdelbegin \section{\DIFdel{Assembling Corpora}}
 %DIFAUXCMD
 \addtocounter{section}{-1}%DIFAUXCMD
-\DIFdel{To analyse each language, we first needed to collect a corpus representative of that language's use in real world software development projects.In the case of Java, we adopted The Qualitas Corpus, which is a large collection of open source projects written in the Java language~\mbox{%DIFAUXCMD
+\DIFdel{To analyse each language, we first needed to collect a corpus representative of that language's use in real world software development projects.
+In the case of Java, we adopted The Qualitas Corpus, which is a large collection of open source projects written in the Java language~\mbox{%DIFAUXCMD
 \cite{QualitasCorpus}
 }%DIFAUXCMD
-. Likewise, with JavaScript, we have adopted an existing corpus used by the team that developed JSClassFinder~\mbox{%DIFAUXCMD
-\cite{JSClassFinder}
-}%DIFAUXCMD
-. }\DIFdelend \DIFaddbegin \DIFadd{The process for analysing a Java project follows a pipeline structure where each file is parsed and analysed in isolation. The resulting statistics of each file are then aggregated to form the overall statistics across the projects. This file isolation is important because the syntax trees produced by ANTLR consume large amounts of memory so it is not possible to hold all the Java files for a project in memory simultaneously.
-}\DIFaddend \newline
+.Likewise, with JavaScript , we have adopted an existing corpus used by the team that developed }\DIFdelend \DIFaddbegin \DIFadd{The process for analysing a Java project follows a pipeline structure where each file is parsed and analysed in isolation. The resulting statistics of each file are then aggregated to form the overall statistics across the projects. This file isolation is important because the syntax trees produced by ANTLR consume large amounts of memory so it is not possible to hold all the Java files for a project in memory simultaneously.
+}\newline
 
-\DIFdelbegin \DIFdel{For the other studied languages, Python, Lua , andScala, quality existing corpora could not be found }\DIFdelend \DIFaddbegin \begin{center}
+\begin{center}
 	\captionof{figure}{Java Analysis Pipeline}
 	\includegraphics[scale=0.70]{AntlrPipeline.pdf}
 \end{center}
@@ -520,10 +524,7 @@ Each of these tools helps to extract valuable information from one of more of th
 	\end{tabular}\newline\newline
 \end{center}
 
-\DIFadd{As a result of the wide ranging methods of implementing classical inheritance in JavaScript, the effort required to do so accurately is great. Prior work in the field made the JavaScript analysis in this study possible, primarily the existence of tool JSClassFinder~\mbox{%DIFAUXCMD
-\cite{JSClassFinder}
-}%DIFAUXCMD
-. The JavaScript analysis in this study consisted mainly of a recreation of the JSClassFinder study. JSClassFinder is a tool created by a team of researchers to analyse the extent to which JavaScript developers use classes in their projects. In addition to this, Grep was used to identify use of delegation.
+\DIFadd{As a result of the wide ranging methods of implementing classical inheritance in JavaScript, the effort required to do so accurately is great. Prior work in the field made the JavaScript analysis in this study possible, primarily the existence of tool }\DIFaddend JSClassFinder~\cite{JSClassFinder}. \DIFaddbegin \DIFadd{The JavaScript analysis in this study consisted mainly of a recreation of the JSClassFinder study. JSClassFinder is a tool created by a team of researchers to analyse the extent to which JavaScript developers use classes in their projects.
 }
 
 \section{\DIFadd{Lua Analysis}}
@@ -531,9 +532,9 @@ Each of these tools helps to extract valuable information from one of more of th
 \cite{LuaObjectOrientation}
 }%DIFAUXCMD
 . The analysis in this study attempts to uncover the proportion of the Lua corpus which is making use of object oriented paradigms and, to achieve this, analyses the code of each file to detect the particular patterns found in the object orientation tutorial.
-}\newline
+}\DIFaddend \newline
 
-\DIFadd{The first of these patterns is the presence of }\code{[identifier] = setmetatable()} \DIFadd{in a Lua program. The }\code{setmetatable()} \DIFadd{function is the core of all suggested object orientation implementations so the detection of this pattern is vital. Unfortunately, while the use of this function is typically considered necessary for object orientation to exist in a Lua program, the pattern is often encapsulated in a function of a different name which makes the actual extent of object orientation usage more difficult to measure. In response to the practice of encapsulation of these patterns, this study has also included measures of the presence of two function names which are typically used to wrap these classical inheritance behaviours. These are the }\code{class()} \DIFadd{and }\code{new()} \DIFadd{functions}\DIFaddend .
+\DIFdelbegin \DIFdel{For the other studied languages, Python, Lua , andScala, quality existing corpora could not be found }\DIFdelend \DIFaddbegin \DIFadd{The first of these patterns is the presence of }\code{[identifier] = setmetatable()} \DIFadd{in a Lua program. The }\code{setmetatable()} \DIFadd{function is the core of all suggested object orientation implementations so the detection of this pattern is vital. Unfortunately, while the use of this function is typically considered necessary for object orientation to exist in a Lua program, the pattern is often encapsulated in a function of a different name which makes the actual extent of object orientation usage more difficult to measure. In response to the practice of encapsulation of these patterns, this study has also included measures of the presence of two function names which are typically used to wrap these classical inheritance behaviours. These are the }\code{class()} \DIFadd{and }\code{new()} \DIFadd{functions}\DIFaddend .
 \DIFdelbegin \DIFdel{For each of these languages, the top 25 open source projects were sourced from GitHub's "Trending this month" list for June, 2016. This source was chosen because it provides a group of projects for each language which are in active development as measured by GitHub, and which are easy to access. This helps to ensure that the analysis performed will be as relevant as possible to modern software development.
 }\DIFdelend 
 
@@ -989,7 +990,7 @@ class Program : SuperProgram
 %DIFAUXCMD
 \addtocounter{section}{-1}%DIFAUXCMD
 \DIFdel{The corpora for each of the remaining languages have been collected and the next stage is to analyse each to gather statistics which can be compared to those gathered for Java and JavaScript. The aim is to have a paper ready for the upcoming ECOOP paper submission deadline.
-}\DIFdelend \DIFaddbegin \DIFadd{This indicates that, in the median project in the JavaScript corpus, over a third of all functions are modelling some form of class or method behaviour. A value of this magnitude shows that the use of classical inheritance in JavaScript is highly prevalent despite the language's lack of native support for its implementation.
+}\DIFdelend \DIFaddbegin \DIFadd{This indicates that, in the median project in the JavaScript corpus, 15\% of all functions are modelling some form of class or method behaviour. A value of this magnitude shows that the use of classical inheritance in JavaScript is highly prevalent despite the language's lack of native support for its implementation.
 }
 
 \section{\DIFadd{Lua}}
@@ -1080,13 +1081,16 @@ class Program : SuperProgram
 %DIF >  \newpage \chapter{Discussion}\label{C:discussion}
 \DIFadd{TODO - Possibly merged with results }\DIFaddend \newpage 
  \newpage \chapter{Conclusions}\label{C:con}
-Some conclusions can be drawn from the data gathered thus far. This data covers the analyses of Java and JavaScript corpus data. It was found that there was a reasonable amount of crossover between the native support offered by each language and the patterns used by developers:
+Some conclusions can be drawn from the data gathered \DIFdelbegin \DIFdel{thus far. This data covers the analyses of Java and JavaScript corpus data. }\DIFdelend \DIFaddbegin \DIFadd{in this study. }\DIFaddend It was found that there was a reasonable amount of crossover between the native support offered by each language and the patterns used by developers:
 \begin{itemize}
 	\item In Java, where classical inheritance is natively supported, 6.09\% of classes used forwarding patterns and 4.45\% of classes used delegation patterns.
 	\item In JavaScript, where delegation is natively supported, \DIFdelbegin \DIFdel{36}\DIFdelend \DIFaddbegin \DIFadd{15}\DIFaddend \% of the functions in the median project were used to emulate class or method behaviour.
 	\DIFaddbegin \item \DIFadd{In Lua, where delegation is natively supported, 17.04\% of all files contained patterns indicative of class behaviour.
 }\DIFaddend \end{itemize}
-From these numbers, it appears developers are more wiling to use inheritance structures,  thus ignoring native delegation. Further research on other languages will help to clarify this claim. \newpage 
+From these numbers, it appears developers are more \DIFdelbegin \DIFdel{wiling to use }\DIFdelend \DIFaddbegin \DIFadd{willing to use classical }\DIFaddend inheritance structures, thus ignoring native delegation. Further research on other languages will help to clarify this claim. \DIFaddbegin \DIFadd{It is difficult to determine whether this is because classical inheritance is necessary for aspects of the projects or if its use is simply more common because developers find it more comfortable.
+}\newline
+
+\DIFadd{The further findings of this study involve a measurement of the difficulty involved in reimplementing projects built for classical inheritance into a language built for delegation. The main issues for this reimplementation are constructor patterns which are dependent on uniform identity. It was found, through the Java corpus analysis, that 13.83\% of classes made local calls from constructors and 2.05\% stored }\java{this} \DIFadd{from a constructor. Through the C}\# \DIFadd{corpus analysis, it was found that only around 10.3\% of calls to local methods from constructors are dispatched virtually at runtime. In C}\#\DIFadd{, only 0.17\% of classes contained a call from a constructor to a non-static method. }\DIFaddend \newpage 
  \DIFaddbegin \newpage \chapter{\DIFadd{Limitations and Future Work}}\label{C:future}
 \DIFaddend 
 
@@ -1099,7 +1103,7 @@ From these numbers, it appears developers are more wiling to use inheritance str
 \DIFadd{When only analysing source files, it is not possible to collect information about pre-compiled units which are used by those source files at runtime~\mbox{%DIFAUXCMD
 \cite{StaticAnalysisLimits}
 }%DIFAUXCMD
-. An example of where this can limit the effectiveness of the analysis in this study is the absence of information about calls dispatched to a superclass when that superclass is defined in a pre-compiled library. If a source code file defines a class }\code{A} \DIFadd{which extends a class }\code{B} \DIFadd{where }\code{B} \DIFadd{is defined in a library with precompiled or otherwise inaccessible source code, we cannot see the details of the methods defined in }\code{B}\DIFadd{. This becomes an issue because it is no longer possible to determine whether a local call in }\code{A} \DIFadd{which targets a method defined on }\code{B} \DIFadd{will be dispatched statically or virtually because we cannot see the method declaration. This could cause unforeseen changes to the behaviour of the methods on }\code{A} \DIFadd{if another class }\code{C} \DIFadd{were to extend }\code{A} \DIFadd{and override methods from }\code{B} \DIFadd{which we were previously unaware were virtually dispatched calls.
+. An example of where this can limit the effectiveness of the analysis in this study is the absence of information about calls dispatched to a superclass when that superclass is defined in a pre-compiled library. If a source code file defines a class }\code{A} \DIFadd{which extends a class }\code{B} \DIFadd{where }\code{B} \DIFadd{is defined in a library with precompiled or otherwise inaccessible source code, we cannot see the details of the methods defined in }\code{B}\DIFadd{. This becomes an }\textsl{}\DIFadd{issue because it is no longer possible to determine whether a local call in }\code{A} \DIFadd{which targets a method defined on }\code{B} \DIFadd{will be dispatched statically or virtually because we cannot see the method declaration. This could cause unforeseen changes to the behaviour of the methods on }\code{A} \DIFadd{if another class }\code{C} \DIFadd{were to extend }\code{A} \DIFadd{and override methods from }\code{B} \DIFadd{which we were previously unaware were virtually dispatched calls.
 }
 
 \subsection{\DIFadd{Static vs. Dynamic Frequency}}
