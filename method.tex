@@ -1,13 +1,13 @@
 \chapter{Methodology}\label{C:method} 
 
 \section{Selecting Languages}
-The languages explored in this study include Java, C\#, JavaScript and Lua. These languages were were explored because they each have large enough open source communities to gather meaningful corpora of projects and between them they offer a wide range of native object inheritance model implementations. They also offer a helpful division between two languages with native support for classical inheritance object models and two languages with native support for delegation object models.
+The languages explored in this study include Java, C\#, JavaScript and Lua. These languages were were selected because they each have large enough open source communities to gather meaningful corpora of projects and, between them, they offer a wide range of native object inheritance model implementations. They also provide a helpful division between two languages with native support for classical inheritance object models and two languages with native support for delegation object models.
 \newline
 
 Java and C\# both offer native implementations of classical inheritance so can be used to analyse the frequency of use of patterns which surround this classical inheritance model. These languages also allow an analysis of patterns which would behave differently under a delegation object model, representing cases which could be difficult to reimplement in another language with different native support.
 \newline
 
-JavaScript and Lua both offer delegation natively so can provide a measure of how often developers are making use of these delegation features and also how often developers in these languages are choosing to ignore the languages' native features in favour of classical inheritance models.
+JavaScript and Lua both offer delegation natively so can provide a measure of how often developers are making use of these delegation features. They also show how often developers in these languages are choosing to ignore the languages' native features in favour of classical inheritance models.
 
 \section{Assembling Corpora}
 To analyse each language, we first needed to collect a corpus representative of that language's use in real world software development projects. In the case of Java, we adopted The Qualitas Corpus, which is a large collection of open source projects written in the Java language~\cite{QualitasCorpus}. Likewise, with JavaScript, we have adopted an existing corpus used by the team that developed JSClassFinder~\cite{JSClassFinder}.
