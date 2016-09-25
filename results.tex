@@ -140,6 +140,7 @@ class Program : SuperProgram
 	And without information about the contents of \cs{System.Console}, it is not possible to determine that \cs{WriteLine()} is a function defined in that namespace.
 	\item A class extends a class in a pre-compiled library. If a call is made from a constructor to a local virtual or abstract method defined in a pre-compiled superclass then, unless that method has been overridden by the class being analysed, there is no way to know that the method was virtual or abstract.
 \end{itemize}
+While the number of methods which were not found is high at 616, making up 34.9\% of all local method calls in constructors, the remaining 1148 methods which were found were largely without virtual, abstract or override modifiers. Of those 1148 methods only 118, or 10.3\%, had one of these modifiers.
 
 \subsection{Superclasses and Interfaces}
 \label{interfaceNaming}
@@ -175,7 +176,13 @@ The C\# subclassing distribution in \ref{cSharpDistribution} matches the distrib
 \end{center}
 
 \subsection{Outliers}
-An interesting outlier file was found during the C\# analysis carried out in this study. A file titled \code{T\_1247520.cs} is defined in the Roslyn compiler project and is used in testing scenarios. This file contains 10,020 class definitions, each with no superclass, no subclasses, and no method or constructor definitions. The file is found in a \code{Test} directory so the assumption is that it is used as a compiler stress test. This file has been left in the corpus for the results found table \ref{CsResults} because I believe removing it would be making the disingenuous claim that all the file in the other corpora had been investigated to ensure they had no similar outliers. Despite this, it is interesting to see the changes to results when these class definitions are removed.
+An interesting outlier file was found during the C\# analysis carried out in this study. A file titled \code{T\_1247520.cs} is defined in the Roslyn compiler project and is used in testing scenarios. This file contains 10,020 class definitions, each with no superclass, no subclasses, and no method or constructor definitions. The file is found in a \code{Test} directory so the assumption is that it is used as a compiler stress test. This file has been left in the corpus for the results found table \ref{CsResults} because I believe removing it would be making the disingenuous claim that all the file in the other corpora had been investigated to ensure they had no similar outliers. Despite this, it is interesting to see the changes to results when these class definitions are removed, thereby reducing the number of classes found by 10,020 but leaving the remaining counts unchanged.
+\begin{itemize}
+	\item The percentage of classes which extend another class increases from 26.87\% to 31.24\%.
+	\item The percentage of classes which are extended by another class increases from 12.66\% to 14.72\%.
+	\item The percentage of classes which make calls from local methods from a constructor increases from 2.47\% to 2.87\%.
+	\item The percentage of classes with calls to local virtual, override, and abstract methods from their constructors increases proportionately with the change in all calls to local methods from constructors.
+\end{itemize}
 
 \section{JavaScript}
 The JavaScript analysis in this study makes extensive use of the prior work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are choosing not to use the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
@@ -185,7 +192,7 @@ The JavaScript analysis in this study makes extensive use of the prior work in d
 	\item The lower quartile CUR across the corpus was 0.005, which was heavily impacted by 13 systems which had a CUR of zero
 \end{enumerate}
 
-This indicates that, in the median project in the JavaScript corpus, over a third of all functions are modelling some form of class or method behaviour.
+This indicates that, in the median project in the JavaScript corpus, over a third of all functions are modelling some form of class or method behaviour. A value of this magnitude shows that the use of classical inheritance in JavaScript is highly prevalent despite the language's lack of native support for its implementation.
 
 \section{Lua}
 Table \ref{LuaResults} shows a variety of patterns often representative of class usage and the percentage of files in the corpus which exhibit one or more of those patterns.\newline
@@ -193,6 +200,7 @@ Table \ref{LuaResults} shows a variety of patterns often representative of class
 Often functions called \code{class()} will be created to encapsulate the \java{setmetatable()} logic which is used to create classes. It is also common to declare functions with the name \code{new()} for use as constructors.
 
 \begin{center}
+	\captionof{table}{Lua Analysis Results}
 	\label{LuaResults}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -211,7 +219,7 @@ Often functions called \code{class()} will be created to encapsulate the \java{s
 		& Files with matches & 473    & 17.04\%    \\ \hline
 	\end{tabular}
 	\newline
-	\captionof{table}{Lua Analysis Results}
+	\newline
 \end{center}
 
 These results show that the proportion of Lua developers making use of classical inheritance patterns is high, with around 17\% of all Lua files in the examined corpus presenting class-like behaviour of some kind.
