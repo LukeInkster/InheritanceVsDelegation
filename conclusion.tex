@@ -1,8 +1,11 @@
 \chapter{Conclusions}\label{C:con}
-Some conclusions can be drawn from the data gathered thus far. This data covers the analyses of Java and JavaScript corpus data. It was found that there was a reasonable amount of crossover between the native support offered by each language and the patterns used by developers:
+Some conclusions can be drawn from the data gathered in this study. It was found that there was a reasonable amount of crossover between the native support offered by each language and the patterns used by developers:
 \begin{itemize}
 	\item In Java, where classical inheritance is natively supported, 6.09\% of classes used forwarding patterns and 4.45\% of classes used delegation patterns.
 	\item In JavaScript, where delegation is natively supported, 15\% of the functions in the median project were used to emulate class or method behaviour.
 	\item In Lua, where delegation is natively supported, 17.04\% of all files contained patterns indicative of class behaviour.
 \end{itemize}
-From these numbers, it appears developers are more wiling to use inheritance structures,  thus ignoring native delegation. Further research on other languages will help to clarify this claim.
+From these numbers, it appears developers are more willing to use classical inheritance structures, thus ignoring native delegation. Further research on other languages will help to clarify this claim. It is difficult to determine whether this is because classical inheritance is necessary for aspects of the projects or if its use is simply more common because developers find it more comfortable.
+\newline
+
+The further findings of this study involve a measurement of the difficulty involved in reimplementing projects built for classical inheritance into a language built for delegation. The main issues for this reimplementation are constructor patterns which are dependent on uniform identity. It was found, through the Java corpus analysis, that 13.83\% of classes made local calls from constructors and 2.05\% stored \java{this} from a constructor. Through the C\# corpus analysis, it was found that only around 10.3\% of calls to local methods from constructors are dispatched virtually at runtime. In C\# only 0.17\% of classes contained a call from a constructor to a non-static method

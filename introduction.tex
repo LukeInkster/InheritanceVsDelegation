@@ -1,18 +1,24 @@
 \chapter{Introduction}\label{C:intro}
-The aim of this study is to determine whether delegation is useful in modern programming languages and whether it could replace a classical object inheritance model in existing software projects. This involves first providing a clearer understanding of the ways delegation and classical inheritance are used in real world software development projects across programming languages with varying native support for each. To achieve this, corpora of existing software projects are examined to produce empirical evidence of the frequency at which these two structures are used in typical software projects.
+The aim of this study is to determine the usefulness of delegation in modern programming languages. It also explores replacing classical object inheritance models in existing software projects with that of delegation. A clearer understanding must be formed detailing the use of delegation and classical inheritance in real world software development projects. These projects must cover languages with varying native support for the object inheritance models. In order to produce empirical evidence of the frequency at which these structures are utilised in typical software projects, the corpora of existing projects are examined.
 
 \section{Motivation}
-Code reuse mechanisms are a vital aspect of software development. They allow engineers to write code once and make use of it in various places without duplicating that code. Code reuse aims to reduce the time and resources required to produce a software system by maximising the usefulness of each asset produced. Reuse of code also ensures that, when changes must be made to the system, a single software modification can enact the desired change in more areas of the program.
+Code reuse mechanisms are a vital aspect of software development. They allow engineers to write code once and make use of the code in various places without duplicating it. Code reuse aims to reduce the time and resources required to produce a software system by maximising the use of each asset produced. Reuse of code also ensures that, when changes must be made to the system, a single software modification can enact the desired change in more areas of the program.
 \newline
-Typically, code reuse takes two major forms:
+Typically, code reuse mechanisms take two major forms:
 \begin{itemize}
 	\item Inheritance - Inheriting the properties of some parent object to a child object.
 	\item Delegation - Objects pass messages to other objects, delegating responsibility to them.
 \end{itemize}
-Each of these has its uses and comes with distinct advantages and disadvantages. Languages built with native support for delegation object models typically encourage delegation of responsibility over inheriting properties where possible. In contrast, languages built with native support for classical inheritance will usually encourage developers to reuse code through inheritance relationships between classes.
+Each of these is optimised for different scenarios and comes with distinct advantages and disadvantages. Languages built with native support for delegation object models typically encourage delegation of responsibility over inheriting properties where possible. In contrast, languages built with native support for classical inheritance will usually encourage developers to reuse code through inheritance relationships between classes.
 
 \section{Proposed Solution}
 To determine the use of delegation relative to classical inheritance, this study will compare the prevalence of patterns representative of delegation in inheritance based languages and the prevalence of class usage in languages which do not natively support classical inheritance. This investigation involves employing a variety of code analysis tools to detect these patterns from representative samples of each language. The collected data will be used in an empirical analysis to determine the extent to which programmers in each language are making use of each pattern.
 
 \section{Goals}
-The goal of this study is to answer the question ``Is delegation useful?". The question will be investigated by studying the extent to which developers make use of delegation in their software projects and the ways they could if their language had stronger native support. The results can inform the design of new programming languages which must, to some extent, make a choice between an inheritance or delegation based object model. The study will be a success if it is able to produce information which can drive design decisions in new programming languages by offering an empirical perspective on the use of delegation and inheritance across software development projects in existing languages.
+The goal of this study is to answer the question ``Is delegation useful?". This question will be investigated by studying the extent to which developers make use of delegation in their software projects and whether this might increase with stronger language-level support. The results can inform the design of new programming languages which must, to some extent, make a choice between classical inheritance or a delegation based object model.
+\newline
+
+The next stage is to investigate software written under a classical inheritance model to determine which components of their implementation are dependent on the model. This will provide a collection of examples which would be difficult to reimplement under a delegation model. From these examples, an investigation can be carried out to determine how much effort it would be expected to take to move these projects to a delegation model.
+\newline
+
+The study will be a success if it is able to produce information which can drive design decisions in new programming languages by offering an empirical perspective on the use of delegation and inheritance across software development projects in existing languages.
