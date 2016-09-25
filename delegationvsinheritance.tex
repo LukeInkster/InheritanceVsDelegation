@@ -17,6 +17,7 @@
 \usepackage{appendix}
 
 \usepackage{pgfplots}
+\usepackage{pgfplotstable}
 \pgfplotsset{width=10cm,compat=1.9}
 \usepackage{textcomp}
 \usepackage{siunitx}
@@ -134,10 +135,13 @@
 \bibliographystyle{acm}
 \bibliography{sample}
 
-%\begin{appendices}
+\begin{appendices}
+\chapter{C\# Analysis by Project}
+\label{A:csProjStats} 
+\includepdf[pages=-, scale=0.9]{ProjectSpecificAnalysis.pdf}
 %\chapter{Project Proposal Slides}
 %This appendix includes the presentation slides from the proposal of this project.
 %\includepdf[pages=-]{ProposalSlides.pdf}
-%\end{appendices}
+\end{appendices}
 
 \end{document}
