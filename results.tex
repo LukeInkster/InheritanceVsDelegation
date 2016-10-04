@@ -167,13 +167,9 @@ The C\# analysis conducted as part of this study resulted in an interesting find
 
 \input{cSharpDistribution}
 
-The C\# subclassing distribution in \ref{cSharpDistribution} matches the distribution found through the investigation in \textit{Understanding the Shape of Java Software}~\cite{ShapeOfJava}. The distribution found in the analysis of the Java corpus can be found in figure \ref{JavaSubclassDistribution}.
+The C\# subclassing distribution in \ref{cSharpDistribution} matches the distribution discovered through the investigation in \textit{Understanding the Shape of Java Software}~\cite{ShapeOfJava} and reproduced in this study. The distribution found in the analysis of the Java corpus can be found in figure \ref{JavaSubclassDistribution}.
 
-\begin{center}
-	\captionof{figure}{Distribution of Number of Subclasses in Java (Log Scale)~\cite{ShapeOfJava}}
-	\label{JavaSubclassDistribution}
-	\includegraphics[scale=0.50]{SubclassDistributionJava.png}
-\end{center}
+\input{javaSubclassDistribution}
 
 \subsection{Outliers}
 An interesting outlier file was found during the C\# analysis carried out in this study. A file titled \code{T\_1247520.cs} is defined in the Roslyn compiler project and is used in testing scenarios. This file contains 10,020 class definitions, each with no superclass, no subclasses, and no method or constructor definitions. The file is found in a \code{Test} directory so the assumption is that it is used as a compiler stress test. This file has been left in the corpus for the results found table \ref{CsResults} because I believe removing it would be making the disingenuous claim that all the file in the other corpora had been investigated to ensure they had no similar outliers. Despite this, it is interesting to see the changes to results when these class definitions are removed, thereby reducing the number of classes found by 10,020 but leaving the remaining counts unchanged.
@@ -229,7 +225,7 @@ These results show that the proportion of Lua developers making use of classical
 The accuracy of the results of this study can be measured in terms of false positives against true positives and false negatives against true negatives. These can each be measured in different ways, but the process of testing for false positives is easier and more reliable than testing false negatives.
 \newline
 
-False positives occur when the algorithms used to detect patterns in the corpora claim to have found an instance of that pattern, but the code does not match the definition exactly. Detecting false positives in the data can be achieved by investigating the results returned as matches against the patterns in the analysis to determine whether the are, in fact, exhibiting the behaviour for which the pattern is searching. In cases where the algorithms used to detect the patterns could be modified to ignore the false positives, the were, but in cases where the algorithms could not be easily fixed, this has been explained. Examples of these are as follows.
+False positives occur when the algorithms used to detect patterns in the corpora claim to have found an instance of that pattern, but the code does not match the definition exactly. Detecting false positives in the data can be achieved by investigating the results returned as matches against the patterns in the analysis to determine whether the are, in fact, exhibiting the behaviour for which the pattern is searching. In cases where the algorithms used to detect the patterns could be modified to ignore the false positives, they were. Despite this, there were some cases remaining where the search algorithms could not be easily fixed. Examples of these are as follows.
 \begin{itemize}
 	\item False positives may be returned for extendedness when the interface naming assumption explained in section \ref{interfaceNaming} fails and an interface is named in a way that makes in indistinguishable from a class.
 	\item False positives may be returned for extendedness when the unique class name assumption explained in section \ref{uniqueNames} fails as classes may be considered extended when another class of the identical name is extended.

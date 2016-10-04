@@ -1,15 +1,5 @@
 \chapter{Literature Review}\label{C:us}
 \section{Object Inheritance Models}
-The paper \textit{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}} by Tim Jones discusses a variety of different object inheritance models and the inherent benefits and limitations of each. This paper also describes the Uniform Identity model where objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. From this work, it becomes evident which Java programs are dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Classes which are dependent on the Uniform Identity model can be expected to be more difficult to reimplement in a language without that native support. Additionally, this information shows which patterns could be rewritten under other inheritance models without requiring much modification and, in some cases, more concisely.
-\newline
-
-Henry Lieberman's 1986 paper \textit{Using Prototypical Objects to Implement Shared Behavior in Object Oriented Systems~\cite{UsingPrototypicalObjects}} coins the term ``Delegation" with respect to software language design. Lieberman provides a plain English example of delegation which allows a reader to clearly understand the concept he is describing:
-\begin{displayquote}\textit{
-	When a pen delegates a draw message to a prototypical pen, it is saying ``I don't know how to handle the draw message. I'd like you answer it for me if you can, but if you have any further questions, like what is the value of my x variable, or need anything done, you should come back to me and ask."~\cite{UsingPrototypicalObjects}}
-\end{displayquote}
-Lieberman's definition forms the basis of the delegation patterns considered in this report. This definition is important as delegation is the object inheritance model natively supported by JavaScript.
-\newline
-
 In a 2009 paper titled \textit{Are we Ready for a Safer Construction Environment ~\cite{SaferConstruction}}, Yossi Gil and Tali Shragai discuss the cases where a Java program is dependent on class instances being constructed under the Uniform Identity inheritance model. It covers the three key stages of object creation and how each of these contributes to the issues surrounding the construction of objects within class hierarchies. These stages are:
 \begin{enumerate}
 	\item Memory allocation
@@ -40,12 +30,22 @@ class B extends A{
 \end{lstlisting}
 This can cause issues in some cases because of the order in which constructors are run during the creation of an object. A top down approach is taken for creating an object where the constructor on the least derived type will execute first and then the constructor on each class down the hierarchy to the most derived type will execute. This means that if the \code{m()} method on \code{B} was dependent on some state set in \code{B}'s constructor, that state would not yet be initialised when the invocation was dispatched from the constructor of \code{A}.
 
+\section{Delegation}
+Henry Lieberman's 1986 paper \textit{Using Prototypical Objects to Implement Shared Behavior in Object Oriented Systems~\cite{UsingPrototypicalObjects}} coins the term ``Delegation" with respect to software language design. Lieberman provides a plain English example of delegation which allows a reader to clearly understand the concept he is describing:
+\begin{displayquote}\textit{
+		When a pen delegates a draw message to a prototypical pen, it is saying ``I don't know how to handle the draw message. I'd like you answer it for me if you can, but if you have any further questions, like what is the value of my x variable, or need anything done, you should come back to me and ask."~\cite{UsingPrototypicalObjects}}
+\end{displayquote}
+Lieberman's definition forms the basis of the delegation patterns considered in this report. This definition is important as delegation is the object inheritance model natively supported by JavaScript.
+\newline
+
+The paper \textit{Object Inheritance Without Classes~\cite{InheritanceWithoutClasses}} by Tim Jones et al discusses a variety of different object inheritance models and the inherent benefits and limitations of each. This paper also describes the Uniform Identity model where objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. From this work, it becomes evident which characteristics of some Java programs make them dependent on the Uniform Identity model which is used to construct instances of Java classes within inheritance hierarchies. Classes which are dependent on the Uniform Identity model can be expected to be more difficult to reimplement in a language which follows a different model of object initialisation. Additionally, this information shows which patterns could be rewritten under other inheritance models without requiring much modification and, in some cases, more concisely.
+
 \section{JavaScript Analysis}
-\textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}} explores the prevalence of classical inheritance patterns in a JavaScript corpus. JavaScript is a useful language to investigate for this study because it provides many examples where developers are deliberately using a language built for delegation and object based inheritance to model classical inheritance structures. The paper explores the ways in which JavaScript developers typically model class inheritance and the ways these patterns can be detected in corpora of JavaScript projects. As part of this paper, the researchers also create a tool named JSClassFinder which serves the purpose of identifying both class declaration patterns and method declaration patterns. The statistics returned by this tool can then be analysed to determine the extent to which JavaScript developers are working around the language's inbuilt structures. The researchers also defined the term ``Class Usage Ratio" which is a measure of the proportion of functions in a JavaScript project which are used to model class behaviour. This Class Usage Ratio is defined as:
+\textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}} explores the prevalence of classical inheritance patterns in a JavaScript corpus. JavaScript is a useful language to investigate for this study because it provides many examples where developers are deliberately using a language built for delegation and object based inheritance to model classical inheritance structures. The paper explores the ways in which JavaScript developers typically model class inheritance and the ways these patterns can be detected in corpora of JavaScript projects. As part of this paper, the researchers also create a tool named JSClassFinder which serves the purpose of identifying both class declaration patterns and method declaration patterns. The statistics returned by this tool can then be analysed to determine the extent to which JavaScript developers are working around the language's inbuilt structures. The researchers also defined the ``Class Usage Ratio" metric which is a measure of the proportion of functions in a JavaScript project which are used to model class behaviour. This Class Usage Ratio is defined as:
 \[CUR = \frac{\left\vert methods \right\vert + \left\vert classes \right\vert}{\left\vert functions \right\vert}\]
 In this ratio, a class is considered to be any function which is used to mirror classical inheritance behaviour. Methods are functions which are held as members of instances of classes and perform some action related to that class~\cite{JSClassFinder}.
 
-The corpus used in the JSClassFinder study is also useful because it offers a selection of JavaScript projects which were collected before the release of the ECMAScript 6 language specification which introduces native support for classes~\cite{ES6Spec}~\cite{JSClassFinder}. Analysing code which was created after the addition of native class support would not be interesting for this study because it would not show developers attempting to circumvent language features to achieve their desired outcome.
+The corpus used in the JSClassFinder study is also useful because it offers a selection of JavaScript projects which were collected before the release of the ECMAScript 6 language specification which introduces native support for classes~\cite{ES6Spec}~\cite{JSClassFinder}. Analysing code which was created after the addition of native class support could no longer be considered to be a representation of class usage in a language offering only delegation natively.
 
 \section{Java Analysis}
 \textit{Understanding the Shape of Java Software~\cite{ShapeOfJava}} details an empirical study of a large Java corpus to uncover details about the structure of typical Java programs. The study collected a large set of Java classes and looked at the occurrence frequency of various common patterns including the ways developers are typically making use of inheritance and composition. As a result of this study, it was found that the frequency of several of these patterns, when broken down by project, exhibited a power-law distribution.
@@ -76,11 +76,20 @@ The authors of \textit{How Do Java Programs Use Inheritance? An Empirical Study 
 
 A further contribution of this paper is an explicit discussion of the distinction Java, along with similar languages, makes with regard to its \textit{extends} and \textit{implements} relationships between classes and their superclasses or interfaces respectively. This distinction makes it clear that, in order for code to be reused through inheritance from classes further up the type hierarchy, an \textit{extends} relationship is required.
 
-\section{C\# Object Initialisation}
+\section{C\# Analysis}
 The interesting aspect of the C\# programming language for the purposes of this study is the mandatory inclusion of the \cs{virtual} keyword to allow for dynamic dispatch of a method to occur at runtime. As a result of the requirement of this keyword, C\# integrated developer environments are able to offer useful warnings about questionable practices involving the use of virtually dispatched methods. One of these warnings discourages developers from making calls to virtual methods from constructors of non-sealed class. This rule is outlined in Microsoft Developer Network's usage warning \textit{CA2214: Do not call overridable methods in constructors~\cite{OverridableMethodWarning}} and is discussed by Eric Lippert in \textit{Why Do Initializers Run In The Opposite Order As Constructors?~\cite{NoDowncalls}}.
 \newline
 
 As Lippert describes, \textit{``Calling methods on derived types from constructors is dirty pool, but it is not illegal~\cite{NoDowncalls}."} These warnings exist because of the way object initialisation occurs in C\#. Following the Uniform Identity model, an object's constructors are run from the top of the inheritance hierarchy to the bottom. This means that when a constructor calls to a virtual method which has been overridden on a more derived type, the constructor for that more derived type has not been invoked yet. This means the method is likely to be dispatched to a derived type's implementation which is dependent on vital state of that derived type which has not yet been initialised.
+
+\section{Software Metrics}
+\textit{Towards a Metrics Suite for Object Oriented Design~\cite{MetricsSuite}} includes a variety of useful terms for defining measurements of inheritance within programs written in object oriented languages. These include:
+\begin{itemize}
+	\item \textbf{Depth of Inheritance Tree (DIT)} - A measure of the number of ancestor classes which can potentially affect a given class. For a given class, this can be seen as its depth in the class hierarchy tree from the root object class.
+	\item \textbf{Number of Children (NOC)} - The number of immediate subclasses under a given class in the class hierarchy. This is the number of classes which will, unless explicitly overridden, inherit the methods of the parent class. For a given class, this can be calculated as the number of elements in the type hierarchy tree rooted at that class.
+	\item \textbf{Coupling Between Objects (CBO)} - A measure of the non-inheritance relationships a class shares with other classes. This is an effective measure of the interdependence of classes in a given program which are neither subclasses nor superclasses of eachother.
+	\newline
+\end{itemize}
 
 \section{Analysing Corpora}
 \textit{The Qualitas Corpus: A Curated Collection of Java Code for Empirical Studies~\cite{QualitasCorpus}} discusses many of the choices behind the construction of the Qualitas Corpus. A corpus is defined as \textit{``a collection of writings, conversations, speeches, etc., that people use to study and describe a language"}. In the Qualitas Corpus, the collection is of projects written in the Java programming language. This paper explores the reasoning behind the choices which led to the structure of the corpus as it is. Notably, the paper clarifies that the Java language was chosen for a few specific reasons:
@@ -91,14 +100,6 @@ As Lippert describes, \textit{``Calling methods on derived types from constructo
 
 The paper also justifies the choice of projects in the corpus as they are open source and provide a wide array of different usages of the language to help to ensure variation in the code.
 \newline
-
-\textit{Towards a Metrics Suite for Object Oriented Design~\cite{MetricsSuite}} includes a variety of useful terms for defining measurements of inheritance within programs written in object oriented languages. These include:
-\begin{itemize}
-	\item \textbf{Depth of Inheritance Tree (DIT)} - A measure of the number of ancestor classes which can potentially affect a given class. For a given class, this can be seen as its depth in the class hierarchy tree from the root object class.
-	\item \textbf{Number of Children (NOC)} - The number of immediate subclasses under a given class in the class hierarchy. This is the number of classes which will, unless explicitly overridden, inherit the methods of the parent class. For a given class, this can be calculated as the number of elements in the type hierarchy tree rooted at that class.
-	\item \textbf{Coupling Between Objects (CBO)} - A measure of the non-inheritance relationships a class shares with other classes. This is an effective measure of the interdependence of classes in a given program which are neither subclasses nor superclasses of eachother.
-	\newline
-\end{itemize}
 
 \textit{The Use and Limitations of Static-Analysis Tools to Improve Software Quality~\cite{StaticAnalysisLimits}} provides an outline of some of the limitations which will likely be encountered in this study as a result of analysing corpora rather than runtime execution of projects. Through analysis of source code alone it is not possible to gather information about the dynamic frequency, or frequency of execution, of particular patterns in the analysed code. Corpus analysis also restricts access to information which only becomes available after some number of compilation steps. This means that declarations found in libraries of pre-compiled code are inaccessible to static source code analysis.
 
