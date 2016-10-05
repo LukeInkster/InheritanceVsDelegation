@@ -29,8 +29,8 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 	\end{tabular}\newline\newline
 \end{center}
 
-The presence of two patterns representing delegation is because there are two main ways this behaviour can be represented in Java. The first, call delegation, is where an object passes itself as a parameter to some delegatee and has that delegatee perform some action on its behalf. The second, constructor delegation, is where a delegatee is constructed specifically for the instance of the delegator. This delegatee can then act on that constructor argument when its other methods are called.
-\newline\newline\newline
+We used two patterns to represent delegation in code samples because there are two main ways this behaviour can be represented in Java. The first, call delegation, is where an object passes itself as a parameter to some delegatee. The second, constructor delegation, is where a delegatee is constructed specifically for the instance of the delegator by passing \java{this} as a constructor argument. This delegatee can then act on that constructor argument when its other methods are called.
+\newline\newline
 
 The frequency of occurrence of each of the above patterns was calculated and aggregated to produce corpus level analysis which can be found in the following table:
 
@@ -57,7 +57,7 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 
 \subsection{Detecting Delegation}
 \label{DetectingDelegation}
-Due to the imprecise definition of what it means to model delegation in Java, it is expected that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some of the patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. To continue the example of the \java{Square} class, an instance of \java{Square} could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
+As discussed in Section \ref{falsePositives}, the imprecise definition of what it means to model delegation in Java will mean that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. For example, a instance of a \java{Square} class could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
 \begin{lstlisting}
 public Square(Canvas canvas){
 	canvas.register(this);
@@ -104,11 +104,11 @@ C\# is a useful language to investigate because it requires use of the \cs{virtu
 The full C\# corpus statistics are broken down for each project and have been included as appendix \ref{A:csProjStats}.
 
 \subsection{Fewer Local Method Calls from Constructors}
-The first notable difference between the C\# results and those for Java is the drastic reduction in the number of calls to local methods from constructors, 2.47\% for C\# compared with 13.18\% for Java. There are likely a variety of reasons for this drastic reduction, but of note is that the Microsoft Developer Network Blog strongly discourages this practice~\cite{NoDowncalls}, and the widely used Visual Studio extension ReSharper provides IDE warnings against the practice~\cite{ResharperWarning}.
+The first notable difference between the C\# results and those for Java is the drastic reduction in the number of calls to local methods from constructors, 2.47\% for C\# compared with 13.18\% for Java. There are likely a variety of reasons for this drastic reduction, but of note is that the Microsoft Developer Network Blog strongly discourages this practice~\cite{NoDowncalls}, and the widely used Visual Studio extension ReSharper provides IDE warnings against the practice~\cite{ResharperWarning} as discussed in Section \ref{CSharpLit}.
 \newline
 
 \subsection{Virtual Calls from Constructors are Rare}
-The valuable information gained from the C\# analysis which could not be retrieved in the Java analysis is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.07\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rare occurrence of these cases is valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate potential construction issues under a new object initialisation environment.
+The valuable information gained from the C\# analysis which, as discussed in Section \ref{CSharpLit}, could not be retrieved in a meaningful form from the Java analysis is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.07\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rare occurrence of these cases is valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate potential construction issues under a new object initialisation environment.
 \newline
 
 \subsection{Methods that could not be found}
@@ -162,26 +162,17 @@ To counteract this, the analysis is dependent on the members of the corpus follo
 \subsection{Unique Class Name Assumption}
 The C\# results are dependent on the same assumption of unique class names as Java. The reasons for this match those explained in section \ref{uniqueNames}.
 
-\subsection{Distribution of Number of Subclasses}
+\section{Distribution of Number of Subclasses}
 The C\# analysis conducted as part of this study resulted in an interesting finding relating to the distribution of the number of subclasses across the classes in the corpus. The analysis revealed that the number of subclasses of extended C\# classes approximates a power law distribution, which can be seen in the straight line when the data is rendered onto a log scale. This distribution can be seen in the following chart:
 
 \input{cSharpDistribution}
 
-The C\# subclassing distribution in \ref{cSharpDistribution} matches the distribution discovered through the investigation in \textit{Understanding the Shape of Java Software}~\cite{ShapeOfJava} and reproduced in this study. The distribution found in the analysis of the Java corpus can be found in figure \ref{JavaSubclassDistribution}.
+The C\# subclassing distribution in \ref{cSharpDistribution} matches the distribution discovered through the investigation in \textit{Understanding the Shape of Java Software}~\cite{ShapeOfJava} and reproduced in this study. The distribution found in the analysis of the Java corpus can be found in the following chart: 
 
-\input{javaSubclassDistribution}
-
-\subsection{Outliers}
-An interesting outlier file was found during the C\# analysis carried out in this study. A file titled \code{T\_1247520.cs} is defined in the Roslyn compiler project and is used in testing scenarios. This file contains 10,020 class definitions, each with no superclass, no subclasses, and no method or constructor definitions. The file is found in a \code{Test} directory so the assumption is that it is used as a compiler stress test. This file has been left in the corpus for the results found table \ref{CsResults} because I believe removing it would be making the disingenuous claim that all the file in the other corpora had been investigated to ensure they had no similar outliers. Despite this, it is interesting to see the changes to results when these class definitions are removed, thereby reducing the number of classes found by 10,020 but leaving the remaining counts unchanged.
-\begin{itemize}
-	\item The percentage of classes which extend another class increases from 26.87\% to 31.24\%.
-	\item The percentage of classes which are extended by another class increases from 12.66\% to 14.72\%.
-	\item The percentage of classes which make calls from local methods from a constructor increases from 2.47\% to 2.87\%.
-	\item The percentage of classes with calls to local virtual, override, and abstract methods from their constructors increases proportionately with the change in all calls to local methods from constructors.
-\end{itemize}
+\input{javaSubclassDistribution}.
 
 \section{JavaScript}
-The JavaScript analysis in this study makes extensive use of the prior work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are choosing not to use the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
+The JavaScript analysis in this study makes extensive use of Silva et al's work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are choosing not to use the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
 \begin{enumerate}
 	\item The median CUR across the corpus was 0.15
 	\item The upper quartile CUR across the corpus was 0.36
@@ -221,23 +212,7 @@ Often functions called \code{class()} will be created to encapsulate the \java{s
 These results show that the proportion of Lua developers making use of classical inheritance patterns is high, with around 17\% of all Lua files in the examined corpus presenting class-like behaviour of some kind.
 
 
-\section{Evaluation}
-The accuracy of the results of this study can be measured in terms of false positives against true positives and false negatives against true negatives. These can each be measured in different ways, but the process of testing for false positives is easier and more reliable than testing false negatives.
-\newline
 
-False positives occur when the algorithms used to detect patterns in the corpora claim to have found an instance of that pattern, but the code does not match the definition exactly. Detecting false positives in the data can be achieved by investigating the results returned as matches against the patterns in the analysis to determine whether the are, in fact, exhibiting the behaviour for which the pattern is searching. In cases where the algorithms used to detect the patterns could be modified to ignore the false positives, they were. Despite this, there were some cases remaining where the search algorithms could not be easily fixed. Examples of these are as follows.
-\begin{itemize}
-	\item False positives may be returned for extendedness when the interface naming assumption explained in section \ref{interfaceNaming} fails and an interface is named in a way that makes in indistinguishable from a class.
-	\item False positives may be returned for extendedness when the unique class name assumption explained in section \ref{uniqueNames} fails as classes may be considered extended when another class of the identical name is extended.
-	\item False positives for delegation can occur when developers use code patterns which look identical to those of delegation but are modelling different intents. This is explained in more detail in section \ref{DetectingDelegation}.
-	\newline
-\end{itemize} 
-
-False negatives occur when the algorithms overlook code segments in the corpora which fulfil the criteria to be defined as an instance of the patterns under investigation. Examples of these cases are as follows.
-\begin{itemize}
-	\item There is room for false negatives in the C\# statistics on calls to local methods from constructors. The accuracy of this data is limited by the problem of inaccessible external code and the \cs{using static} pattern as explained in section \ref{MethodNotFound}. This is reflected in the final row of the table which measures the number of calls from constructors where the receiver of the call either could not be found or was another form of method call which was indistinguishable from a local method call.
-	\item False negatives for subclassing in C\# can exist if a class is defined with a name which fulfils the requirements of the naming convention for interfaces as discussed in section \ref{interfaceNaming}.
-\end{itemize}
 
 
 
