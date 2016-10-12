@@ -30,7 +30,7 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 \end{center}
 
 We used two patterns to represent delegation in code samples because there are two main ways this behaviour can be represented in Java. The first, call delegation, is where an object passes itself as a parameter to some delegatee. The second, constructor delegation, is where a delegatee is constructed specifically for the instance of the delegator by passing \java{this} as a constructor argument. This delegatee can then act on that constructor argument when its other methods are called.
-\newline\newline
+\newline
 
 The frequency of occurrence of each of the above patterns was calculated and aggregated to produce corpus level analysis which can be found in the following table:
 
@@ -44,6 +44,7 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 		Classes                                                                                   & 116427 &               &                        \\ \hline
 		Extending Classes                                                                    & 71203  & 61.16\%       &                        \\ \hline
 		Extended Classes                                                           & 20751  & 17.82\%       &                        \\ \hline
+		Classes with delegation                                                                         & 5183   & 4.45\%        &                        \\ \hline
 		Classes with forwarding                                                                         & 7087   & 6.09\%        &                        \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with forwarding\\ that extend another class\end{tabular}     & 3381   & 2.90\%        &                        \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with local\\ method calls in constructors\end{tabular}                                                          & 16101  & 13.83\%       &                        \\ \hline
@@ -51,7 +52,6 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 		\begin{tabular}[c]{@{}l@{}}Classes with local method calls\\ or storing this in constructor\end{tabular} & 17099  & 14.69\%       &                        \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Extended classes with local\\ method calls in constructors\end{tabular}       & 1545   & 1.33\%        & 7.45\%                 \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Extended classes storing\\ this in constructors\end{tabular}         & 178    & 0.15\%        & 0.86\%                 \\ \hline
-		Classes with delegation                                                                         & 5183   & 4.45\%        &                        \\ \hline
 	\end{tabular}
 \end{center}
 
@@ -93,13 +93,13 @@ C\# is a useful language to investigate because it requires use of the \cs{virtu
 		Methods                                                                                                        & 222121 &                    &                    \\ \hline
 		Virtual Methods                                                                                                & 10721  & 4.83\%             &                    \\ \hline
 		Override Methods                                                                                               & 26760  & 12.05\%            &                    \\ \hline
-		Delegates                                                                                               & 738  &             &                    \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ methods in constructors\end{tabular}                  & 1764   &                    & 2.47\%             \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ virtual methods in constructors\end{tabular}          & 48    &                    & 0.07\%             \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ override methods in constructors\end{tabular}         & 55     &                    & 0.08\%             \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with calls to local\\ abstract methods in constructors\end{tabular}         & 15     &                    & 0.02\%             \\ \hline
 		\begin{tabular}[c]{@{}l@{}}Classes with calls to methods\\ that could not be found in constructors\end{tabular} & 616    &                    & 0.86\%             \\ \hline
-	\end{tabular}\newline\newline
+		Delegates                                                                                               & 738  &             &                    \\ \hline
+	\end{tabular}\newline
 \end{center}
 The full C\# corpus statistics are broken down for each project and have been included as appendix \ref{A:csProjStats}.
 

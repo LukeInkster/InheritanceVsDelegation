@@ -2,6 +2,7 @@
 To determine how developers are using delegation and inheritance, the first stage is to define a clear way of identifying the behaviour of each pattern. This is achieved by defining code patterns which, when found in a project, indicate the use of delegation or inheritance. This chapter outlines the patterns which are representative of forwarding, delegation and Uniform Identity. Lastly, it will briefly cover a couple of object inheritance models which were not explored in this study.
 
 \section{Forwarding}
+\label{sec:forwarding}
 Under a forwarding model, calls to \java{this.f(...)} are passed to some \java{other.f(...)}, transferring any necessary information as call parameters.
 \newline
 
@@ -30,6 +31,7 @@ In Java, detecting this behaviour involves searching for patterns where an objec
 If the receiver of a forwarded request were to hold state about an object delegating to it then it would likely run into issues if other objects also forward requests to it. Likewise, if the system were re-implemented with a stateful forwarding recipient in a language which supports forwarding as object inheritance then it would run into the same problems when sharing it between parents.
 
 \section{Delegation}
+\label{sec:delegation}
 Delegation is often described as forwarding \java{this.f(...)} calls to \java{other.f(...)} \textbf{on behalf of this.} That is, dispatch the call to \java{other.f(...)} but have the self reference within that call point back to my self reference. This is explained in further detail in Section \ref{inheritanceModels}.
 \newline
 
@@ -58,6 +60,7 @@ class SquareAreaCalculator{
 Examples in Java which would be well suited to a language with native support for delegation are those where the code is effectively forwarding to an object which accepts \java{this} as either a constructor parameter or as a parameter to many of its public methods. This indicates that the object being called to is designed to do a lot of work which is dependent on the \java{this} reference of another object being passed in. By using a language which supports delegation natively, it would be possible to change the self reference of the delegatee to instead be the self reference of the delegator, removing the need to pass it as a parameter.
 
 \section{Uniform Identity}
+\label{sec:uniformIdentity}
 Under Uniform Identity, objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. This maintains a single object identity throughout construction of the object.
 \newline
 

@@ -81,12 +81,55 @@ The Lua corpus was analysed with \texttt{grep} to identify code patterns and key
 
 The first of these patterns is the presence of \code{identifier = setmetatable()} in a Lua program. The \code{setmetatable()} function is the core of all suggested object orientation implementations so the detection of this pattern is vital. Unfortunately, while the use of this function is typically considered necessary for object orientation to exist in a Lua program, the pattern is often encapsulated in a function of a different name which makes the actual extent of object orientation usage more difficult to measure. In response to the practice of encapsulation of these patterns, this study has also included measures of the presence of two function names which are typically used to wrap these classical inheritance behaviours. These are the \code{class()} and \code{new()} functions.
 
-\section{Metrics}
+\section{Java and C\# Metrics}
+\subsection{Shared Metrics}
+The first few metrics used in the analysis of Java and C\# match in order to develop an understanding of the differences in inheritance use between the languages.
+\begin{enumerate}
+	\item \textbf{Projects} measures the total number of individual projects in the corpus. This number is relevant because it allows us to determine the average size of projects in each corpus, which could possibly influence the results.
+	\item \textbf{Classes} is the total count of class declarations in the corpus. This value acts as the basis for many of the other metrics, allowing values to be expressed as percentages of all classes.
+	\item \textbf{Extending Classes} is a measure of the number of class definitions which include a reference to a superclass. This helps to determine the magnitude of inheritance usage in each language and also to find which classes could be impacted by changes to the object inheritance model.
+	\item \textbf{Extended Classes} shows the number of class definitions which are referenced as a superclass by some other class definition. This value is important because many of the constructor patterns which are explored in this study only pose potential issues when a class is extended. This value is used to determine the percentage of classes which could have unexpected initialisation behaviour under a different object inheritance model.
+\end{enumerate}
 
-\subsection{Java}
-\subsection{C\#}
-\subsection{JavaScript}
-\subsection{Lua}
+\subsection{Java Metrics}
+In addition to these common metrics, we have some additional metrics which are specific to each language. The Java analysis focussed on the use of delegation and forwarding, an indication of a developer desire for those inheritance models. Additionally, the Java analysis investigated the prevalence of constructor patterns which would prevent projects being easily rewritten under a different object inheritance model. These are measured through the following metrics:
+\begin{enumerate}
+	\item \textbf{Classes with delegation} is a simple measure of classes containing the delegation patterns described in Section \ref{sec:delegation}
+	\item \textbf{Classes with forwarding} is a simple count of the classes which contain the forwarding patterns described in Section \ref{sec:forwarding}
+	\item \textbf{Classes with forwarding that extend another class} is the intersection between the previously mentioned \textbf{Classes with forwarding} and \textbf{Extended Classes} metrics.
+	\item \textbf{Classes with local method calls in constructors} shows the number of classes which make a call to a local method from a constructor. This indicates an invocation which could be dispatched to an uninitialised object if the class were extended and the method overridden.
+	\item \textbf{Classes storing this in constructors} shows the number of classes where the self reference of instances was found to be passed out from a constructor. This can occur as a field assignment or as a method parameter. This can present issues under models without Uniform Identity because other models do not always guarantee the self reference will remain the same after initialisation has completed.
+	\item \textbf{Classes with local method calls or storing this in constructors} is a simple union of the two previous metrics, presenting a measure of all classes which could have constructor issues under another object inheritance model.
+	\item \textbf{Extended classes with local method calls in constructors} is an intersection between the \textbf{Classes with local method calls in constructors} and \textbf{Extended Classes} metrics. This is important because local method calls in constructors can only be dispatched to an uninitialised subclass if a subclass exists.
+	\item \textbf{Extended classes storing this in constructors} is an intersection between the \textbf{Classes storing this in constructors} and \textbf{Extended Classes} metrics. Under delegation, references passed out of the constructor from the most derived type in a hierarchy will behave as expected. For this reason, classes storing this in a constructor and which have a more derived type are of primary concern.
+\end{enumerate}
+
+\subsection{C\# Metrics}
+C\# was analysed to provide a clearer understanding of the nature of local method calls made from constructors. The aim was to determine what proportion of those calls were dynamically dispatched and, therefore, could be invoked on a subclass when a call is made from a superclass. This is determined through a few important metrics:
+\begin{enumerate}
+	\item \textbf{Methods} is a count of all method definitions in the corpus. This is used as a baseline for determining the proportions of methods which exhibit certain properties.
+	
+	\item \textbf{Virtual Methods} measures the number of methods which are declared with a virtual modifier. This modifier is required to allow a method to be overridden by subclasses.
+	
+	\item \textbf{Override Methods} is a measure of the number of methods definitions which contain an override modifier. This means that the method has overridden some method on a superclass.
+	
+	\item \textbf{Classes with calls to local methods in constructors} is the number of classes which make a call to a local method from one or more of their constructors. This indicates an invocation which could be dispatched to an uninitialised object if the class were extended and the method overridden.
+	
+	\item \textbf{Classes with calls to local virtual methods in constructors} is the number of the local method calls from constructors where a matching method definition was found which contained a virtual modifier.
+	
+	\item \textbf{Classes with calls to local override methods in constructors} is the number of the local method calls from constructors where a matching method definition was found which contained an override modifier. This also implies the method was declared as virtual somewhere further up the hierarchy.
+	
+	\item \textbf{Classes with calls to local abstract methods in constructors} measures the same value as the previous two metrics, but matches against abstract modifiers. This is equivalent to a virtual definition except that the method \textit{must} be overridden by subclasses.
+	
+	\item \textbf{Classes with calls to methods that could not be found in constructors} measures the potential inaccuracy of the previous three metrics. This is discussed in detail in Section \ref{MethodNotFound}.
+		
+	\item \textbf{Delegates} is a measure of the prevalence of delegate usage in C\# projects. This was included because delegates relate to delegation but the numbers were very low so it was not investigated further.
+\end{enumerate}
+
+\section{JavaScript Metrics}
+The JavaScript portion of this study is a reproduction of \textit{Does JavaScript Software Embrace Classes} by Silva et al~\cite{JSClassFinder}. The important metric drawn from this tool is the Class Usage Ratio (CUR) which measures the proportion of functions in a JavaScript project which exhibit class or method behaviour. The tool and this metric are described in more detail in Section \ref{sec:litJavaScript}.
+
+\section{Lua Metrics}
 
 
 \section{Evaluation}
