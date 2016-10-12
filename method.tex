@@ -81,9 +81,16 @@ The Lua corpus was analysed with \texttt{grep} to identify code patterns and key
 
 The first of these patterns is the presence of \code{identifier = setmetatable()} in a Lua program. The \code{setmetatable()} function is the core of all suggested object orientation implementations so the detection of this pattern is vital. Unfortunately, while the use of this function is typically considered necessary for object orientation to exist in a Lua program, the pattern is often encapsulated in a function of a different name which makes the actual extent of object orientation usage more difficult to measure. In response to the practice of encapsulation of these patterns, this study has also included measures of the presence of two function names which are typically used to wrap these classical inheritance behaviours. These are the \code{class()} and \code{new()} functions.
 
+\section{Metrics}
+
+\subsection{Java}
+\subsection{C\#}
+\subsection{JavaScript}
+\subsection{Lua}
+
+
 \section{Evaluation}
 The accuracy of the results of this study can be measured in terms of false positives against true positives and false negatives against true negatives. These can each be measured in different ways, but the process of testing for false positives is easier and more reliable than testing false negatives.
-\newline
 
 \subsection{False Positives}
 \label{falsePositives}
@@ -92,7 +99,6 @@ False positives occur when the algorithms used to detect patterns in the corpora
 	\item False positives may be returned for extendedness when the interface naming assumption explained in section \ref{interfaceNaming} fails and an interface is named in a way that makes it indistinguishable from a class.
 	\item False positives may be returned for extendedness when the unique class name assumption explained in section \ref{uniqueNames} fails as classes may be considered extended when another class of the identical name is extended.
 	\item False positives for delegation can occur when developers use code patterns which look identical to those of delegation but are modelling different intents. This is explained in more detail in section \ref{DetectingDelegation}.
-	\newline
 \end{itemize} 
 
 \subsection{False Negatives}
