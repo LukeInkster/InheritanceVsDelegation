@@ -1,25 +1,25 @@
 \chapter{Methodology}\label{C:method} 
 
 \section{Selecting Languages}
-The languages explored in this study include Java, C\#, JavaScript and Lua. These languages were were selected because they each have large enough open source communities to gather meaningful corpora of projects and, between them, they offer a wide range of native object inheritance model implementations. They also provide a helpful division between two languages with native support for classical inheritance object models and two languages with native support for delegation object models.
+The languages explored in this study include Java, C\#, JavaScript and Lua. These languages were were selected because they each have large enough open source communities to gather meaningful corpora of projects and, between them, offer a wide range of native object inheritance model implementations. They also provide a helpful division between two languages with native support for classical inheritance object models and two languages with native support for delegation object models.
 \newline
 
 Java and C\# both offer native implementations of classical inheritance so can be used to analyse the frequency of use of patterns which surround this classical inheritance model. These languages also allow an analysis of patterns which would behave differently under a delegation object model, representing cases which could be difficult to reimplement in another language with different native support.
 \newline
 
-JavaScript and Lua both offer delegation natively so can provide a measure of how often developers are making use of these delegation features. They also show how often developers in these languages are choosing to ignore the languages' native features in favour of classical inheritance models.
+JavaScript and Lua both offer delegation natively so can provide a measure of how often developers are making use of these delegation features. They also show how often developers in these languages ignore the languages' native features in favour of classical inheritance models.
 
 \section{Assembling Corpora}
 To analyse the use of each language, we first needed to collect a corpus representative of that language's use in real world software development projects. In the case of Java, we adopted The Qualitas Corpus, which is a large collection of open source projects written in the Java language~\cite{QualitasCorpus}. Likewise, with JavaScript, we have adopted an existing corpus used by the team that developed JSClassFinder~\cite{JSClassFinder}.
 \newline
 
-For Lua and C\#, quality existing corpora could not be found so we had to build our own. For each of these languages, the top 25 open source projects were sourced from GitHub's ``Trending this month" list as of June, 2016. This source was chosen because it provides a group of projects for each language which are in active development as measured by GitHub, and which are easy to access. This helps to ensure that the analysis performed will contain repositories which are currently active so likely make use of newer language features.
+For Lua and C\#, quality existing corpora could not be found so we had to build our own. For each of these languages, the top 25 open source projects were sourced from GitHub's ``Trending this month" list as of June, 2016. This GitHub list was selected as the source because it provides a group of projects for each language which are in active development, and which are easy to access. This helps to ensure that the analysis will contain repositories which are currently receiving contributions, so likely make use of newer language features.
 
 \section{Static Analysis Tools}
 The core of this empirical study is the analysis of corpora of code written in each of the investigated languages. This analysis makes use of many static code analysis methods including the following:
 \begin{itemize}
-	\item \texttt{grep} is used to perform regular expression searches on files. This can detect some of the more simple patterns explored in this paper. More specifically, an implementation of \texttt{grep} known as PCREGrep (Perl Compatible Regular Expression \texttt{grep}) was used to allow multiline analysis which is a requirement of a source code corpus analysis.
-	\item ANTLR (Another Tool For Language Recognition) is a tool which accepts a language grammar as input and produces a lexer and parser. This lexer and parser can then accept a file which conforms to the grammar definition and construct a syntax tree to represent that file.
+	\item \texttt{grep} is used to perform regular expression searches on files. This can detect some of the more simple patterns explored in this paper. More specifically, an implementation of \texttt{grep} known as PCREGrep (Perl Compatible Regular Expression \texttt{grep}~\cite{Pcregrep}) was used to allow multiline analysis which is a requirement of a source code corpus analysis.
+	\item ANTLR (Another Tool For Language Recognition) is a tool which accepts a language grammar as input and produces a lexer and parser. This lexer and parser can then accept a file which conforms to the grammar definition and construct a syntax tree to represent that file. All language grammars used were sourced from the ANTLR v4 grammar repository on GitHub~\cite{AntlrGrammars}.
 	\item JSClassFinder is a tool which detects patterns indicative of class and method declarations in JavaScript projects. It accepts JSON representations of the syntax trees of JavaScript files as input and produces the Class Usage Ratio of the syntax tree as its output~\cite{JSClassFinder}.
 	\item Esprima accepts a JavaScript code file as input and produces a JSON representation of the syntax tree of that file as output. This JSON file can then be used as the input to the JSClassFinder tool.
 \end{itemize}
@@ -40,23 +40,18 @@ The process for analysing a Java project follows a pipeline structure where each
 As with Java, C\# was analysed using a lexer and parser generated by loading a C\# 6 grammar into ANTLR. The analysis for each project in the corpus was performed in three major passes:
 \begin{enumerate}
 	\item Use ANTLR, along with a C\# preprocessor grammar, to perform the first stage towards forming a syntax tree. This stage evaluates preprocessor directives in the program to ensure the remaining file can be transformed into a well formed syntax tree. Included in this stage is the removal of \cs{\#region} tags and conditional directives which exclude and include blocks of source code based on boolean arguments.
+	
 	\item Use ANTLR, along with a C\# program grammar, to create a syntax tree for each C\# code file in the corpus and traverse it to find all class declaration subtrees. Collect these class declarations to be explored in later steps.
+	
 	\item Run a visitor down each class declaration subtree, searching for all the methods and recording their modifiers. A type hierarchy is also established at this step to allow classes to find information about method calls they make which may be dispatched to a method in their superclass.
-	\item Run another visitor down each class declaration tree and find constructors and check which methods are called against the modifiers found in the previous pass to determine which methods could miss their intended target under a different object initialisation model.
+	
+	\item Run another visitor down each class declaration tree and find constructors and check which methods are called against the modifiers found in the previous pass. This information allows us to determine which methods could miss their intended target under a different object initialisation model for reasons discussed in Section \ref{CSharpLit}.
 \end{enumerate}
 The statistics gathered for each file in each project were then aggregated across the corpus to collect information about the corpus as a whole.
 
-\subsection{Outliers}
-The Mono project in the C\# corpus had to be modified to allow the project to be analysed successfully due to technical constraints. As the Mono project sets out to provide an open source implementation of the necessary components of a C\# compiler, it contained a copy of the entire .NET core library. This library was over 500MB in size so, after conversion to syntax trees through ANTLR, could not be reasonably analysed within 16GB of ram. For this reason, and because none of the other projects in this study or in \cite{QualitasCorpus} included copies of the source of their libraries, the .NET core library was removed from the Mono project. Every project across the corpora studied will have some dependency on a library, even if it is just the languages core libraries, so removing a copy of these libraries from Mono will ensure its comparability with the rest of the analysed data.
+\subsection{Outlier Library Removed}
+The Mono project in the C\# corpus had to be modified to allow the project to be analysed successfully due to technical constraints. As the Mono project sets out to provide an open source implementation of the necessary components of a C\# compiler, it contained a copy of the entire .NET core library. This library was over 500MB in size so, after conversion to syntax trees through ANTLR, could not be reasonably analysed within 16GB of RAM. For this reason, and because none of the other projects in this study or in \cite{QualitasCorpus} included copies of the source of their libraries, the .NET core library was removed from the Mono project. Every project across the corpora studied will have some dependency on a library, even if it is just the languages core libraries, so removing a copy of these libraries from Mono will ensure its comparability with the rest of the analysed data.
 \newline
-
-An interesting outlier file was found during the C\# analysis carried out in this study. A file titled \code{T\_1247520.cs} is defined in the Roslyn compiler project and is used in testing scenarios. This file contains 10,020 class definitions, each with no superclass, no subclasses, and no method or constructor definitions. The file is found in a \code{Test} directory so the assumption is that it is used as a compiler stress test. This file has been left in the corpus for the results found in Table \ref{CsResults} because I believe removing it would be making the disingenuous claim that all the file in the other corpora had been investigated to ensure they had no similar outliers. Despite this, it is interesting to see the changes to results when these class definitions are removed, thereby reducing the number of classes found by 10,020 but leaving the remaining counts unchanged.
-\begin{itemize}
-	\item The percentage of classes which extend another class increases from 26.87\% to 31.24\%.
-	\item The percentage of classes which are extended by another class increases from 12.66\% to 14.72\%.
-	\item The percentage of classes which make calls from local methods from a constructor increases from 2.47\% to 2.87\%.
-	\item The percentage of classes with calls to local virtual, override, and abstract methods from their constructors increases proportionately with the change in all calls to local methods from constructors.
-\end{itemize}
 
 \section{JavaScript Analysis}
 In JavaScript, there are many ways developers make use of classical inheritance patterns despite the lack of native support in the language. This is largely a result of the numerous libraries which offer their own implementation of classical inheritance behaviour. Some examples of these patterns can be found in the following table:
@@ -65,15 +60,15 @@ In JavaScript, there are many ways developers make use of classical inheritance 
 	\begin{tabular}{|p{5cm}|p{9cm}|}
 		\hline
 		\multicolumn{2}{|c|}{JavaScript}                                                                                                                                                                  \\ \hline
-		Inheritance 1                  & \code{var a = function( b )\{    c.call ( this , d );\}}                                                                                      \\ \hline
-		Inheritance 2                  & \code{function Bar( x , y )\{    Foo.call ( this , x ) ;\}}                                                                                 \\ \hline
-		Inheritance 3                  & \code{Foo.prototype = object.create ( Bar.prototype )}                                                                                      \\ \hline
-		Inheritance 4 - Node.js        & \code{var className = defineClass(...)}                                                                                                           \\ \hline
-		Inheritance 5 - Node.js        & \code{ util.inherits(...)}                                                                                                                         \\ \hline
+		Native JavaScript                  & \code{var a = function( b )\{    c.call ( this , d );\}}                                                                                      \\ \hline
+		Native JavaScript                  & \code{function Bar( x , y )\{    Foo.call ( this , x ) ;\}}                                                                                 \\ \hline
+		Native JavaScript                  & \code{Foo.prototype = object.create ( Bar.prototype )}                                                                                      \\ \hline
+		Node.js        & \code{var className = defineClass(...)}                                                                                                           \\ \hline
+		Node.js        & \code{ util.inherits(...)}                                                                                                                         \\ \hline
 	\end{tabular}\newline\newline
 \end{center}
 
-As a result of the wide ranging methods of implementing classical inheritance in JavaScript, the effort required to do so accurately is great. Prior work in the field made the JavaScript analysis in this study possible, primarily the existence of tool JSClassFinder~\cite{JSClassFinder}. The JavaScript analysis in this study consisted mainly of a recreation of the JSClassFinder study. JSClassFinder is a tool created by a team of researchers to analyse the extent to which JavaScript developers use classes in their projects.
+As a result of the number of methods for implementing classical inheritance in JavaScript, the effort required to measure its use accurately is great. Prior work in the field made the JavaScript analysis in this study possible, primarily the existence of tool JSClassFinder~\cite{JSClassFinder}. The JavaScript analysis in this study consisted mainly of a replication of the JSClassFinder study. JSClassFinder is a tool to analyse JavaScript developers' use of ``classes'' in their projects.
 
 \section{Lua Analysis}
 The Lua corpus was analysed with \texttt{grep} to identify code patterns and keywords associated with class usage. There exists a variety of patterns used to implement classical inheritance in Lua as described by the Lua-Users Wiki~\cite{LuaObjectOrientation}. The analysis in this study attempts to uncover the proportion of the Lua corpus which is making use of object oriented paradigms and, to achieve this, analyses the code of each file to detect the particular patterns found in the object orientation tutorial.
@@ -83,25 +78,32 @@ The first of these patterns is the presence of \code{identifier = setmetatable()
 
 \section{Java and C\# Metrics}
 \subsection{Shared Metrics}
-The first few metrics used in the analysis of Java and C\# match in order to develop an understanding of the differences in inheritance use between the languages.
+The first few metrics used in the analysis of Java and C\# are common between the two in order to develop an understanding of the differences in inheritance use between the languages.
 \begin{enumerate}
-	\item \textbf{Projects} measures the total number of individual projects in the corpus. This number is relevant because it allows us to determine the average size of projects in each corpus, which could possibly influence the results.
+	\item \textbf{Projects} measures the total number of individual projects in the corpus. This number is relevant because it allows us to determine the average size of projects in each.
 	\item \textbf{Classes} is the total count of class declarations in the corpus. This value acts as the basis for many of the other metrics, allowing values to be expressed as percentages of all classes.
-	\item \textbf{Extending Classes} is a measure of the number of class definitions which include a reference to a superclass. This helps to determine the magnitude of inheritance usage in each language and also to find which classes could be impacted by changes to the object inheritance model.
-	\item \textbf{Extended Classes} shows the number of class definitions which are referenced as a superclass by some other class definition. This value is important because many of the constructor patterns which are explored in this study only pose potential issues when a class is extended. This value is used to determine the percentage of classes which could have unexpected initialisation behaviour under a different object inheritance model.
+	\item \textbf{Extending Classes} is a measure of the number of class definitions which include a reference to a superclass. This helps to determine inheritance usage in each language and also to find which classes could be impacted by changes to the object inheritance model.
+	\item \textbf{Extended Classes} is a measure of the number of class definitions which are referenced as a superclass of some other class definition. This value is important because many of the constructor patterns which are explored in this study only pose potential issues when a class is extended. This value is used to determine the percentage of classes which could have unexpected initialisation behaviour under a different object inheritance model.
+	
+	\item \textbf{Classes with local method calls in constructors} shows the number of classes which make a call to a local method from a constructor. This indicates an invocation which could be dispatched to an uninitialised object if the class were extended and the method overridden.
 \end{enumerate}
 
 \subsection{Java Metrics}
 In addition to these common metrics, we have some additional metrics which are specific to each language. The Java analysis focussed on the use of delegation and forwarding, an indication of a developer desire for those inheritance models. Additionally, the Java analysis investigated the prevalence of constructor patterns which would prevent projects being easily rewritten under a different object inheritance model. These are measured through the following metrics:
 \begin{enumerate}
-	\item \textbf{Classes with delegation} is a simple measure of classes containing the delegation patterns described in Section \ref{sec:delegation}
-	\item \textbf{Classes with forwarding} is a simple count of the classes which contain the forwarding patterns described in Section \ref{sec:forwarding}
-	\item \textbf{Classes with forwarding that extend another class} is the intersection between the previously mentioned \textbf{Classes with forwarding} and \textbf{Extended Classes} metrics.
-	\item \textbf{Classes with local method calls in constructors} shows the number of classes which make a call to a local method from a constructor. This indicates an invocation which could be dispatched to an uninitialised object if the class were extended and the method overridden.
-	\item \textbf{Classes storing this in constructors} shows the number of classes where the self reference of instances was found to be passed out from a constructor. This can occur as a field assignment or as a method parameter. This can present issues under models without Uniform Identity because other models do not always guarantee the self reference will remain the same after initialisation has completed.
-	\item \textbf{Classes with local method calls or storing this in constructors} is a simple union of the two previous metrics, presenting a measure of all classes which could have constructor issues under another object inheritance model.
-	\item \textbf{Extended classes with local method calls in constructors} is an intersection between the \textbf{Classes with local method calls in constructors} and \textbf{Extended Classes} metrics. This is important because local method calls in constructors can only be dispatched to an uninitialised subclass if a subclass exists.
-	\item \textbf{Extended classes storing this in constructors} is an intersection between the \textbf{Classes storing this in constructors} and \textbf{Extended Classes} metrics. Under delegation, references passed out of the constructor from the most derived type in a hierarchy will behave as expected. For this reason, classes storing this in a constructor and which have a more derived type are of primary concern.
+	\item \textbf{Classes with delegation} is a count of classes containing the delegation patterns described in Section \ref{sec:delegation}.
+	
+	\item \textbf{Classes with forwarding} is a count of the classes which contain the forwarding patterns described in Section \ref{sec:forwarding}.
+	
+	\item \textbf{Classes with forwarding that extend another class} is the intersection between the results retrieved for the \textbf{Classes with forwarding} and \textbf{Extended Classes} metrics.
+	
+	\item \textbf{Classes storing this in constructors} shows the number of classes where the self reference of instances was found to be stored somewhere during the execution of a constructor. This can occur as a field assignment or by being passed out as a method parameter. This can present issues under inheritance models without Uniform Identity because other models do not always guarantee the self reference will remain the same after initialisation has completed.
+	
+	\item \textbf{Classes with local method calls or storing this in constructors} is a union of the results for those classing storing this and those making local method calls from constructors. This presents a measure of all classes which could have constructor issues under another object inheritance model as described in Section \ref{inheritanceModels}.
+	
+	\item \textbf{Extended classes with local method calls in constructors} is an intersection between the results retrieved for the \textbf{Classes with local method calls in constructors} and \textbf{Extended Classes} metrics. This is important because local method calls in constructors can only be dispatched to an uninitialised subclass if a subclass exists.
+	
+	\item \textbf{Extended classes storing this in constructors} is an intersection between the results retrieved for the \textbf{Classes storing this in constructors} and \textbf{Extended Classes} metrics. Under delegation, references passed out of the constructor from the most derived type in a hierarchy will behave as expected. For this reason, classes storing this in a constructor and which have a more derived type are of primary concern.
 \end{enumerate}
 
 \subsection{C\# Metrics}
@@ -109,17 +111,15 @@ C\# was analysed to provide a clearer understanding of the nature of local metho
 \begin{enumerate}
 	\item \textbf{Methods} is a count of all method definitions in the corpus. This is used as a baseline for determining the proportions of methods which exhibit certain properties.
 	
-	\item \textbf{Virtual Methods} measures the number of methods which are declared with a virtual modifier. This modifier is required to allow a method to be overridden by subclasses.
+	\item \textbf{Virtual Methods} measures the number of methods which are declared with a virtual modifier. This modifier is required to allow a method to be overridden by subclasses and, therefore, can help to restrict the search space of methods which could be overridden.
 	
 	\item \textbf{Override Methods} is a measure of the number of methods definitions which contain an override modifier. This means that the method has overridden some method on a superclass.
 	
-	\item \textbf{Classes with calls to local methods in constructors} is the number of classes which make a call to a local method from one or more of their constructors. This indicates an invocation which could be dispatched to an uninitialised object if the class were extended and the method overridden.
+	\item \textbf{Classes with calls to local virtual methods in constructors} is the number of classes with local method calls from constructors where a matching method definition was found which contained a virtual modifier.
 	
-	\item \textbf{Classes with calls to local virtual methods in constructors} is the number of the local method calls from constructors where a matching method definition was found which contained a virtual modifier.
+	\item \textbf{Classes with calls to local override methods in constructors} is the number of classes with local method calls from constructors where a matching method definition was found which contained an override modifier. This also implies the method was declared as virtual somewhere further up the hierarchy.
 	
-	\item \textbf{Classes with calls to local override methods in constructors} is the number of the local method calls from constructors where a matching method definition was found which contained an override modifier. This also implies the method was declared as virtual somewhere further up the hierarchy.
-	
-	\item \textbf{Classes with calls to local abstract methods in constructors} measures the same value as the previous two metrics, but matches against abstract modifiers. This is equivalent to a virtual definition except that the method \textit{must} be overridden by subclasses.
+	\item \textbf{Classes with calls to local abstract methods in constructors}  is the number of classes with local method calls from constructors where a matching method definition was found which contained an abstract modifier. This is equivalent to a virtual definition except that the method \textit{must} be overridden by subclasses.
 	
 	\item \textbf{Classes with calls to methods that could not be found in constructors} measures the potential inaccuracy of the previous three metrics. This is discussed in detail in Section \ref{MethodNotFound}.
 		
@@ -130,7 +130,12 @@ C\# was analysed to provide a clearer understanding of the nature of local metho
 The JavaScript portion of this study is a reproduction of \textit{Does JavaScript Software Embrace Classes} by Silva et al~\cite{JSClassFinder}. The important metric drawn from this tool is the Class Usage Ratio (CUR) which measures the proportion of functions in a JavaScript project which exhibit class or method behaviour. The tool and this metric are described in more detail in Section \ref{sec:litJavaScript}.
 
 \section{Lua Metrics}
-
+This study included an analysis of Lua in order to determine how often developers are making use of class based inheritance despite the language's preference for delegation. These are measured through three metrics, each of which measures the frequency of a pattern which is commonly representative of classical inheritance.
+\begin{enumerate}
+	\item \code{identifier = setmetatable()} - The \cs{setmetatable()} function is at the core of all recommended implementations of classical inheritance in the language.
+	\item \code{class()} - While the \cs{setmetatable()} above is at the core of implementations of classical inheritance, it is often wrapped in a function to encapsulate the behaviour. The most common function name for this is simply ``class".
+	\item \code{function identifier.new()} - Definitions of a \code{new()} function are included for the same reasons described for \code{class()}. These definitions are less frequent than those for \code{class()}, but are still common enough to contribute substantially to the overall statistics.
+\end{enumerate}
 
 \section{Evaluation}
 The accuracy of the results of this study can be measured in terms of false positives against true positives and false negatives against true negatives. These can each be measured in different ways, but the process of testing for false positives is easier and more reliable than testing false negatives.

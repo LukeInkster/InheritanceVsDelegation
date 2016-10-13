@@ -142,6 +142,14 @@ class Program : SuperProgram
 \end{itemize}
 While the number of methods which were not found is high at 616, making up 34.9\% of all local method calls in constructors, the remaining 1148 methods which were found were largely without virtual, abstract or override modifiers. Of those 1148 methods only 118, or 10.3\%, had one of these modifiers.
 
+\subsection{Outlier Data}
+An interesting outlier file was found during the C\# analysis carried out in this study. A file titled \code{T\_1247520.cs} is defined in the Roslyn compiler project and is used in testing scenarios. This file contains 10,020 class definitions, each with no superclass, no subclasses, and no method or constructor definitions. The file is found in a \code{Test} directory so the assumption is that it is used as a compiler stress test. This file has been left in the corpus for the results found in Table \ref{CsResults}. This because I believe its removal would imply that all files in the other corpora had been investigated to ensure they had no similar outliers but, due to time constraints, they have not been. Despite this, it is interesting to see the changes to results when these class definitions are removed, thereby reducing the number of classes found by 10,020 but leaving the remaining counts unchanged.
+\begin{itemize}
+	\item The percentage of classes which extend another class increases from 26.87\% to 31.24\%.
+	\item The percentage of classes which are extended by another class increases from 12.66\% to 14.72\%.
+	\item The percentage of classes which make calls to local methods from a constructor increases from 2.47\% to 2.87\%. Those to virtual methods increases from 0.07\% to 0.08\% and those to override methods increased from 0.08\% to 0.09\%.
+\end{itemize}
+
 \subsection{Superclasses and Interfaces}
 \label{interfaceNaming}
 In Java, source code alone clearly identifies the distinction between extending a class and implementing an interface. An inheritance relationship is written as
