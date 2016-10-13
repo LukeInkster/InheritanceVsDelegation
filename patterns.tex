@@ -1,5 +1,5 @@
 \chapter{Code Patterns}\label{C:bg}
-To determine how developers are using delegation and inheritance, the first stage is to define a clear way of identifying the behaviour of each pattern. This is achieved by defining code patterns which, when found in a project, indicate the use of delegation or inheritance. This chapter outlines the patterns which are representative of forwarding, delegation and Uniform Identity. Lastly, it will briefly cover a couple of object inheritance models which were not explored in this study.
+To determine how developers are using delegation and inheritance, the first stage is to define a clear way of identifying the structure of each pattern. This is achieved by defining code patterns which, when found in a project, indicate the use of delegation or inheritance. This chapter outlines the patterns which are representative of forwarding, delegation and Uniform Identity. Lastly, it will briefly cover a couple of object inheritance models which were not explored in this study.
 
 \section{Forwarding}
 \label{sec:forwarding}
@@ -61,10 +61,9 @@ Examples in Java which would be well suited to a language with native support fo
 
 \section{Uniform Identity}
 \label{sec:uniformIdentity}
-Under Uniform Identity, objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. This maintains a single object identity throughout construction of the object.
-\newline
+All examples of classical inheritance in Java follow the Uniform Identity construction model as this is built into the language's semantics. Because of this, the analysis undertaken for Uniform Identity will only briefly touch on the use of Uniform Identity by seeking typical uses of inheritance in Java where a subclass makes some use of functionality from the parent class. In addition to this, we seek examples of code which would not function properly under another object inheritance model, for reasons discussed in Section \ref{inheritanceModels}. These potential issues include the presence of constructors which store the self reference outside the class or which make a local method call which is dispatched to a method which could be overridden.
 
-In this example, the \java{Square} class inherits from another class which knows how to calculate the area of a more general figure so can also be used to offer the same functionality to the \java{Square}. 
+Under Uniform Identity, objects are constructed by first going up the object hierarchy setting up fields, then going back down the hierarchy calling initialiser functions. This maintains a single object identity throughout construction of the object~\cite{InheritanceWithoutClasses}. In this example, the \java{Square} class inherits from another class which knows how to calculate the area of a more general figure so can also be used to offer the same functionality to the \java{Square}. Under Uniform Identity, when constructing an instance of the \code{Square} class the \code{Square} type will have its fields initialised to default values first, followed by the \code{Rectangle} supertype. After this, the constructors will run in the opposite order, \code{Rectangle} first then \code{Square} second. Because of this, if the \code{Rectangle}'s constructor calls to a method declared on \cs{Square}, that method will reach an object which has not yet had its constructor called. This is an issue because an object which has not yet had its constructor called will likely be dependent on state which has not been initialised.
 \begin{lstlisting}
 class Rectangle{
 	int x, y, wd, ht;
@@ -81,7 +80,7 @@ class Square extends Rectangle{
 }
 \end{lstlisting}
 
-All examples of classical inheritance in Java follow the Uniform Identity construction model. Therefore, to find examples supporting the need for Uniform Identity, we must simply look for typical uses of inheritance in Java where a subclass makes some use of functionality from the parent class. Uniform Identity is the object inheritance model underlying Java's class inheritance structure but Merged Identity, as used in C++, can also model the behaviour fairly closely. Most examples of Java class based inheritance could also function in a Merged Identity model. Uniform Identity is the implementation Java's class based inheritance model encourages so it is expected to be the most common across corpus data. Because of this, any substantial use of forwarding or delegation would indicate that developers are intentionally dismissing Java's in-built language features as they believe it is possible to produce better code with other patterns.
+Uniform Identity is the implementation Java's class based inheritance model encourages so it is expected to be the most common across corpus data. Because of this, any substantial use of forwarding or delegation would indicate that developers are intentionally dismissing Java's in-built language features as they believe it is possible to produce better code with other patterns.
 
 \section{Other Object Inheritance Models}
 This study is not an exhaustive investigation of all existing object inheritance models, but it is worthwhile mentioning those which were not explored for the sake of completeness. These models were excluded from the study due to time constraints and the difficulty in attaining corpora for languages with support for the models.

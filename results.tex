@@ -219,6 +219,24 @@ Often functions called \code{class()} will be created to encapsulate the \java{s
 
 These results show that the proportion of Lua developers making use of classical inheritance patterns is high, with around 17\% of all Lua files in the examined corpus presenting class-like behaviour of some kind.
 
+\section{Evaluation}
+The accuracy of the results of this study can be measured in terms of false positives against true positives and false negatives against true negatives. These can each be measured in different ways, but the process of testing for false positives is easier and more reliable than testing false negatives.
+
+\subsection{False Positives}
+\label{falsePositives}
+False positives occur when the algorithms used to detect patterns in the corpora claim to have found an instance of that pattern, but the code does not match the definition exactly. Detecting false positives in the data can be achieved by investigating the results returned as matches against the patterns in the analysis to determine whether the are, in fact, exhibiting the behaviour for which the pattern is searching. In cases where the algorithms used to detect the patterns could be modified to ignore the false positives, they were. Despite this, there were some cases remaining where the search algorithms could not be easily fixed. The following are three cases where this has can occur
+\begin{itemize}
+	\item False positives may be returned for being extended in C\# when the interface naming assumption explained in section \ref{interfaceNaming} fails and an interface is named in a way that makes it indistinguishable from a class.
+	\item False positives may be returned for being extended in C\# or Java when the unique class name assumption explained in section \ref{uniqueNames} fails as classes may be considered extended when another class of the identical name is extended.
+	\item False positives for delegation in Java can occur when developers use code patterns which look identical to those of delegation but are modelling different intents. This is explained in more detail in section \ref{DetectingDelegation}.
+\end{itemize} 
+
+\subsection{False Negatives}
+False negatives occur when the algorithms overlook code segments in the corpora which match the intent of a given metric, but are not picked up by the analysis algorithms. Two of these cases are as follows.
+\begin{itemize}
+	\item There is room for false negatives in the C\# statistics on calls to local methods from constructors. The accuracy of this data is limited by the problem of inaccessible external code and the \cs{using static} pattern as explained in section \ref{MethodNotFound}. This is reflected in the final row of the table which measures the number of calls from constructors where the receiver of the call either could not be found or was another form of method call which was indistinguishable from a local method call.
+	\item False negatives for subclassing in C\# can exist if a class is defined with a name which fulfils the requirements of the naming convention for interfaces as discussed in section \ref{interfaceNaming}.
+\end{itemize}
 
 
 
