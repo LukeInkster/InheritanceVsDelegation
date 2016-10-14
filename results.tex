@@ -1,6 +1,6 @@
 \chapter{Results}\label{C:results} 
 \section{Java}
-The intent in analysing the Qualitas Corpus of Java code is to determine the extent to which developers are making use of Java's inbuilt language features and what developers are doing to work around these language features. Specifically, a Java developers' usage of class inheritance will represent them conforming to the classical inheritance model encouraged by the Java language. In contrast, instances of code which model call forwarding or call delegation will represent cases where the developer could have expressed themselves more concisely through other object inheritance models where delegation and forwarding are supported natively. The following patterns are used to identify instances of each model of reuse within the Java projects.
+The intent in analysing the Qualitas Corpus of Java code is to determine the extent to which developers are making use of Java's inbuilt language features and what developers are doing to work around these language features. Specifically, a Java developer's use of class inheritance will represent them conforming to the classical inheritance model encouraged by the Java language. In contrast, instances of code which model call forwarding or call delegation will represent cases where the developer could have expressed themselves more concisely through other object inheritance models where delegation and forwarding are supported natively. The following patterns are used to identify instances of each model of reuse within the Java projects.
 
 \begin{center}
 	\captionof{table}{Java Patterns}
@@ -29,6 +29,7 @@ The intent in analysing the Qualitas Corpus of Java code is to determine the ext
 	\end{tabular}\newline\newline
 \end{center}
 
+\subsection{Two Delegation Patterns}
 We used two patterns to represent delegation in code samples because there are two main ways this behaviour can be represented in Java. The first, call delegation, is where an object passes itself as a parameter to some delegatee. The second, constructor delegation, is where a delegatee is constructed specifically for the instance of the delegator by passing \java{this} as a constructor argument. This delegatee can then act on that constructor argument when its other methods are called.
 \newline
 
@@ -57,7 +58,7 @@ The frequency of occurrence of each of the above patterns was calculated and agg
 
 \subsection{Detecting Delegation}
 \label{DetectingDelegation}
-As discussed in Section \ref{falsePositives}, the imprecise definition of what it means to model delegation in Java will mean that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some patterns which meet the criteria outlined in \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. For example, a instance of a \java{Square} class could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
+The imprecise definition of what it means to model delegation in Java will mean that some of the results which are returned in the search for these delegation patterns will be false positives. Upon manual inspection of some of the corpus files, some patterns which meet the criteria outlined in Table \ref{JavaPatterns} would not generally be considered to exhibit the true behaviour delegation. An example of this is object self registration where and object registers itself with some other object which will make use of the registered object in some way. For example, an instance of a \java{Square} class could, at construction time,  register itself to a \java{Canvas} so that the \java{Canvas} can call back to the \java{Square} to request details necessary for drawing. The \java{Square} class would have a constructor parameter which is a reference to the \java{Canvas} object:
 \begin{lstlisting}
 public Square(Canvas canvas){
 	canvas.register(this);
@@ -69,7 +70,7 @@ void addSquare(){
 	Square s = new Square(this);
 }
 \end{lstlisting}
-This matches the pattern of Constructor Delegation in \ref{JavaPatterns} but , in reality, is modelling a different intent. Because of this, the statistics gathered for delegation should be treated as an upper bound on the actual frequency of occurrence of the behaviour.
+This matches the pattern of Constructor Delegation in Table \ref{JavaPatterns} but, in reality, is modelling a different intent. Because of this, the statistics gathered for delegation should be treated as an upper bound on the actual frequency of occurrence of the behaviour.
 \newline
 
 \subsection{Unique Class Name Assumption}
@@ -108,12 +109,12 @@ The first notable difference between the C\# results and those for Java is the d
 \newline
 
 \subsection{Virtual Calls from Constructors are Rare}
-The valuable information gained from the C\# analysis which, as discussed in Section \ref{CSharpLit}, could not be retrieved in a meaningful form from the Java analysis is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.07\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rare occurrence of these cases is valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate potential construction issues under a new object initialisation environment.
+The valuable information gained from the C\# analysis which, as discussed in Section \ref{CSharpLit}, could not be retrieved in a meaningful form from the Java analysis is the breakdown of classes with local method calls based on whether those method calls are static or virtual dispatch. The analysis showed that only 0.07\% of all classes contained a call to a method where a virtual, abstract or override declaration was found for that method. These are the method calls which would potentially miss their intended target in a construction environment different from Uniform Identity so the rarity of these cases provides valuable information. Across the corpus of 71,162 total classes, only 190 would need to be modified to mitigate these potential construction issues under a new object initialisation environment.
 \newline
 
 \subsection{Methods that could not be found}
 \label{MethodNotFound}
-As with Java, there were some limitations to the accuracy of the analysis performed due to some of the limitations of pure source code analysis. The limits are most obvious in the final row of table \ref{CsResults} where we find that 0.86\% of classes contained a local method call where the destination of that call could not be found. This can occur when the analysis comes across a couple of cases.
+As with Java, there were some limitations to the accuracy of the analysis performed due to some of the limitations of pure source code analysis. The limits are most obvious in the final row of Table \ref{CsResults}, where we find that 0.86\% of classes contained a local method call where the destination of that call could not be found. This can occur when the analysis tool comes across a couple of situations:
 \begin{itemize}
 	\item A constructor contains a non-local method call which is indistinguishable from a local method call without more information. An example of this is the use of C\#'s \cs{using static} syntax which imports the static functions from another namespace and a allows those functions to be called in a way that looks identical to a local method call. The \cs{using static} pattern allows the following code:
 	\begin{lstlisting}[language=cs]
@@ -137,8 +138,8 @@ class Program : SuperProgram
 	} 
 }
 	\end{lstlisting}
-	And without information about the contents of \cs{System.Console}, it is not possible to determine that \cs{WriteLine()} is a function defined in that namespace.
-	\item A class extends a class in a pre-compiled library. If a call is made from a constructor to a local virtual or abstract method defined in a pre-compiled superclass then, unless that method has been overridden by the class being analysed, there is no way to know that the method was virtual or abstract.
+	And without information about the contents of \cs{System.Console}, it is not possible to determine that \cs{WriteLine()} is a function defined in that namespace, rather than on some superclass.
+	\item A class extends a class in a pre-compiled library. If a call is made from a constructor to a local virtual or abstract method defined in a pre-compiled superclass then, unless that method has been overridden by the class being analysed, there is no way to know that the method was defined as virtual or abstract without the libraries source.
 \end{itemize}
 While the number of methods which were not found is high at 616, making up 34.9\% of all local method calls in constructors, the remaining 1148 methods which were found were largely without virtual, abstract or override modifiers. Of those 1148 methods only 118, or 10.3\%, had one of these modifiers.
 
@@ -165,10 +166,10 @@ In C\#, however, this distinction cannot be determined from source code alone as
 class Square : Rectangle { }
 class Square : IShape { }
 \end{lstlisting}
-To counteract this, the analysis is dependent on the members of the corpus following the C\# naming conventions for interfaces as outlined by Microsoft~\cite{InterfaceNaming}. This study considers any base type to be an interface when the name of that type is a capital ``I'' character followed by any other uppercase character.
+To counteract this, the analysis is dependent on the members of the corpus following the C\# naming conventions for interfaces as outlined by Microsoft~\cite{InterfaceNaming}. This study considers any base type to be an interface when the name of that type begins with a capital ``I'' character followed immediately by any other uppercase character.
 
 \subsection{Unique Class Name Assumption}
-The C\# results are dependent on the same assumption of unique class names as Java. The reasons for this match those explained in section \ref{uniqueNames}.
+The C\# results are dependent on the same assumption of unique class names as Java. The reasons for this match those explained in Section \ref{uniqueNames}.
 
 \section{Distribution of Number of Subclasses}
 The C\# analysis conducted as part of this study resulted in an interesting finding relating to the distribution of the number of subclasses across the classes in the corpus. The analysis revealed that the number of subclasses of extended C\# classes approximates a power law distribution, which can be seen in the straight line when the data is rendered onto a log scale. This distribution can be seen in the following chart:
@@ -180,7 +181,7 @@ The C\# subclassing distribution in \ref{cSharpDistribution} matches the distrib
 \input{javaSubclassDistribution}.
 
 \section{JavaScript}
-The JavaScript analysis in this study makes extensive use of Silva et al's work in developing the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are choosing not to use the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
+The JavaScript analysis in this study makes extensive use of prior work by Silva et al in the development of the JSClassFinder application~\cite{JSClassFinder}. The aim here is to find the cases where JavaScript developers are choosing not to use the native delegation support of the language and are instead modelling their programs with classical inheritance structures. The important factor here is the Class Usage Ratio (CUR) of a JavaScript project as defined in \textit{Does JavaScript Software Embrace Classes?~\cite{JSClassFinder}}. Across a corpus of 50 JavaScript projects, the JSClassFinder returns interesting results about the prevalence of class usage in the language.
 \begin{enumerate}
 	\item The median CUR across the corpus was 0.15
 	\item The upper quartile CUR across the corpus was 0.36
@@ -190,9 +191,9 @@ The JavaScript analysis in this study makes extensive use of Silva et al's work 
 This indicates that, in the median project in the JavaScript corpus, 15\% of all functions are modelling some form of class or method behaviour. A value of this magnitude shows that the use of classical inheritance in JavaScript is highly prevalent despite the language's lack of native support for its implementation.
 
 \section{Lua}
-Table \ref{LuaResults} shows a variety of patterns often representative of class usage and the percentage of files in the corpus which exhibit one or more of those patterns.\newline
+Table \ref{LuaResults} shows a variety of patterns often representative of class usage and the percentage of files in the corpus which exhibit one or more instances of those patterns.\newline
 
-Often functions called \code{class()} will be created to encapsulate the \java{setmetatable()} logic which is used to create classes. It is also common to declare functions with the name \code{new()} for use as constructors.
+Often functions called \code{class()} will be created to encapsulate the \java{setmetatable()} logic which is used to create classes. It is also common to declare functions with the name \code{new()} for use as constructors. This is explained in further detail in Section \ref{luaMethod}.
 
 \begin{center}
 	\captionof{table}{Lua Analysis Results}
@@ -200,13 +201,13 @@ Often functions called \code{class()} will be created to encapsulate the \java{s
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		Pattern                 & Test               & Result & Percentage \\ \hline
-		= setmetatable(        &                    &        &            \\ \hline
+		= setmetatable()        &                    &        &            \\ \hline
 		& Total matches      & 135    &            \\ \hline
 		& Files with matches & 74     & 2.67\%     \\ \hline
-		class(                  &                    &        &            \\ \hline
+		class()                  &                    &        &            \\ \hline
 		& Total matches      & 487    &            \\ \hline
 		& Files with matches & 380    & 13.69\%    \\ \hline
-		function something.new( &                    &        &            \\ \hline
+		function something.new() &                    &        &            \\ \hline
 		& Total matches      & 31     &            \\ \hline
 		& Files with matches & 30     & 1.08\%     \\ \hline
 		Union of all three      &                    &        &            \\ \hline
@@ -220,7 +221,12 @@ Often functions called \code{class()} will be created to encapsulate the \java{s
 These results show that the proportion of Lua developers making use of classical inheritance patterns is high, with around 17\% of all Lua files in the examined corpus presenting class-like behaviour of some kind.
 
 \section{Evaluation}
-The accuracy of the results of this study can be measured in terms of false positives against true positives and false negatives against true negatives. These can each be measured in different ways, but the process of testing for false positives is easier and more reliable than testing false negatives.
+The accuracy of the results of this study can be measured in terms of two values:
+\begin{enumerate}
+	\item \textbf{Precision} - The proportion of all returned results which are true positives.
+	\item \textbf{Recall} - The proportion of all true positives which are returned.
+\end{enumerate}
+The calculation of these values is dependent on a measure of the number of false positives and negatives returned by the analysis. These can each be measured in different ways but this study is intended as a measure of developer intent which cannot always be determined by an algorithm or a manual inspection. For this reason, no exact values are reported. Instead, a sample of files were investigated to help to determine some of the cases which can cause these incorrect results, along with bounds on their frequency where possible.
 
 \subsection{False Positives}
 \label{falsePositives}
