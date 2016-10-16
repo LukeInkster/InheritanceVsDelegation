@@ -82,9 +82,14 @@ The first of these patterns is the presence of \code{identifier = setmetatable()
 The first few metrics used in the analysis of Java and C\# are common between the two in order to develop an understanding of the differences in inheritance use between the languages. These shared metrics also allow a comparison of the distributions of some values across the two languages.
 \begin{enumerate}
 	\item \textbf{Projects} measures the total number of individual projects in the corpus. This number is relevant because it allows us to determine the average size of projects in each.
+	
 	\item \textbf{Classes} is the total count of class declarations in the corpus. This value acts as the basis for many of the other metrics, allowing values to be expressed as percentages of all classes.
+	
 	\item \textbf{Extending Classes} is a measure of the number of class definitions which include a reference to a superclass. This helps to determine inheritance usage in each language and also to find which classes could be impacted by changes to the object inheritance model.
+	
 	\item \textbf{Extended Classes} is a measure of the number of class definitions which are referenced as a superclass of some other class definition. This value is important because many of the constructor patterns which are explored in this study only pose potential issues when a class is extended. This value is used to determine the percentage of classes which could have unexpected initialisation behaviour under a different object inheritance model.
+	
+	\item \textbf{Classes storing this in constructors} shows the number of classes where the self reference of instances was found to be stored somewhere during the execution of a constructor. This can occur as a field assignment or by being passed out as a method parameter. This can present issues under inheritance models without Uniform Identity because other models do not always guarantee the self reference will remain the same after initialisation has completed.
 	
 	\item \textbf{Classes with local method calls in constructors} shows the number of classes which make a call to a local method from a constructor. This indicates an invocation which could be dispatched to an uninitialised object if the class were extended and the method overridden.
 \end{enumerate}
@@ -97,8 +102,6 @@ In addition to these common metrics, we have some additional metrics which are s
 	\item \textbf{Classes with forwarding} is a count of the classes which contain the forwarding patterns described in Section \ref{sec:forwarding}.
 	
 	\item \textbf{Classes with forwarding that extend another class} is the intersection between the results retrieved for the \textbf{Classes with forwarding} and \textbf{Extended Classes} metrics.
-	
-	\item \textbf{Classes storing this in constructors} shows the number of classes where the self reference of instances was found to be stored somewhere during the execution of a constructor. This can occur as a field assignment or by being passed out as a method parameter. This can present issues under inheritance models without Uniform Identity because other models do not always guarantee the self reference will remain the same after initialisation has completed.
 	
 	\item \textbf{Classes with local method calls or storing this in constructors} is a union of the results for those classing storing this and those making local method calls from constructors. This presents a measure of all classes which could have constructor issues under another object inheritance model as described in Section \ref{inheritanceModels}.
 	
